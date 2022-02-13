@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Write up Hacker101 – Encrypted Pastebin | WRNET:Sec</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://sec.wonderingraven.net/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="https://sec.wonderingraven.net/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<meta name="robots" content="max-image-preview:large">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link href="https://fonts.gstatic.com/" crossorigin="" rel="preconnect">
+<link rel="alternate" type="application/rss+xml" title="WRNET:Sec » Feed" href="https://sec.wonderingraven.net/feed/">
+<link rel="alternate" type="application/rss+xml" title="WRNET:Sec » Comments Feed" href="https://sec.wonderingraven.net/comments/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/sec.wonderingraven.net\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.3"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/style.css" type="text/css" media="all">
+<style id="wp-block-library-theme-inline-css" type="text/css">
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style>
+<link rel="stylesheet" id="twentytwelve-fonts-css" href="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-style-css" href="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/style_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-block-style-css" href="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/blocks.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://sec.wonderingraven.net/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/jquery.js" id="jquery-core-js"></script>
+<script type="text/javascript" src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/jquery-migrate.js" id="jquery-migrate-js"></script>
+<link rel="https://api.w.org/" href="https://sec.wonderingraven.net/wp-json/"><link rel="alternate" type="application/json" href="https://sec.wonderingraven.net/wp-json/wp/v2/posts/78"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://sec.wonderingraven.net/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://sec.wonderingraven.net/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.8.3">
+<link rel="canonical" href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-encrypted-pastebin/">
+<link rel="shortlink" href="https://sec.wonderingraven.net/?p=78">
+<link rel="alternate" type="application/json+oembed" href="https://sec.wonderingraven.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fsec.wonderingraven.net%2Fhacker-ctf%2Fwrite-up-hacker101-encrypted-pastebin%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://sec.wonderingraven.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fsec.wonderingraven.net%2Fhacker-ctf%2Fwrite-up-hacker101-encrypted-pastebin%2F&amp;format=xml">
+<link rel="icon" href="https://sec.wonderingraven.net/wp-content/uploads/2021/02/cropped-catlogo-32x32.png" sizes="32x32">
+<link rel="icon" href="https://sec.wonderingraven.net/wp-content/uploads/2021/02/cropped-catlogo-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://sec.wonderingraven.net/wp-content/uploads/2021/02/cropped-catlogo-180x180.png">
+<meta name="msapplication-TileImage" content="https://sec.wonderingraven.net/wp-content/uploads/2021/02/cropped-catlogo-270x270.png">
+</head>
+
+<body class="post-template-default single single-post postid-78 single-format-standard wp-embed-responsive custom-font-enabled single-author">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="https://sec.wonderingraven.net/" title="WRNET:Sec" rel="home">WRNET:Sec</a></h1>
+			<h2 class="site-description">Making InfoSec fun!</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+			<div class="nav-menu"><ul>
+<li><a href="https://sec.wonderingraven.net/">Home</a></li><li class="page_item page-item-62"><a href="https://sec.wonderingraven.net/challenge-blogs/">Challenge Blogs</a></li>
+<li class="page_item page-item-12"><a href="https://sec.wonderingraven.net/contact-us/">Contact Us</a></li>
+<li class="page_item page-item-10"><a href="https://sec.wonderingraven.net/services/">Services</a></li>
+<li class="page_item page-item-135 page_item_has_children current_page_parent"><a href="https://sec.wonderingraven.net/blog-cast/">V-Blog</a>
+<ul class="children">
+	<li class="page_item page-item-26"><a href="https://sec.wonderingraven.net/blog-cast/talkshows-podcasts/">Pre Podcast</a></li>
+	<li class="page_item page-item-137"><a href="https://sec.wonderingraven.net/blog-cast/wrnetsec-eps1-redux/">WRNet:Sec v1.2 – Redux</a></li>
+</ul>
+</li>
+</ul></div>
+		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-78" class="post-78 post type-post status-publish format-standard hentry category-hacker-ctf">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">Write up Hacker101 – Encrypted Pastebin</h1>
+								</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<blockquote><p><em>note: Keep in mind, I have had over 20+ years in 
+cyber security, I started out as a blackhat in the golden age of 
+insecure internet. I also ran Slackware Linux since 1998 as my main OS 
+so this is a double challenge with Hacker101 and Doing it all from 
+Slackware Linux (NO Kali Linux ewww.)&nbsp;</em></p></blockquote>
+<p><img loading="lazy" class="alignnone size-full wp-image-80" src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/4_002.png" alt="" srcset="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/4.png 923w, Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/4-300x24.png 300w, Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/4-768x61.png 768w, Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/4-624x49.png 624w" sizes="(max-width: 923px) 100vw, 923px" width="923" height="73"></p>
+<p>This one needed attention as this is both easy but yet it is hard.</p>
+<p>Couple of things I’ve learned from this one is that You have to focus
+ on what this is actually vulnerable to…&nbsp; the CVE is there so you 
+have to keep that in mind this isn’t all about Nostalgia<br>
+Tools used here:</p>
+<ul>
+<li><a href="https://github.com/GDSSecurity/PadBuster">Padbuster</a></li>
+<li>Custom Python Scripts</li>
+</ul>
+<p>What do we know?</p>
+<ul>
+<li>From the obvious, AES-128 CBC</li>
+<li>Not SSL (https)</li>
+<li>Doesn’t get stored in a database</li>
+<li>url/ dymanic directory / dymanic query?post=dynamic encrypted key.</li>
+<li>4 exploits are to be found here for 4 ^FLAGS^</li>
+</ul>
+<ul>
+<li>Flag 1</li>
+</ul>
+<p>This one is a given, the easiest of them all. Just delete a character
+ in the encrypted key and it dumps the first flag but it also dumps alot
+ of RICH information, I highly recommend to always pay attention to 
+detail.</p>
+<ul>
+<li>Flag 2</li>
+</ul>
+<p>FIrst clue was the Incorrect padding, this right of the bat we now know this is a <a href="https://en.wikipedia.org/wiki/Padding_oracle_attack">poodle attack</a>
+ or something similar. Thanks to kali linux I found PadBuster that took 
+care of this attack with decrypting the AES-128 that would also dump the
+ key and the second flag.</p>
+<ul>
+<li>Flag 3</li>
+</ul>
+<p>This clue is to know about the padded oracle attack that the first 
+one was to decrypt it via Chain Blocking, this side I needed to decode 
+it again with a Stream, RC4 Style. But… any tools I can find required an
+ not encrypted key…. so I had to build something, that would cross, this
+ took hours of running flag 2 over and over and how the data is being 
+decrypted.&nbsp; So in thought lets see if I can use the website to 
+decode it for me.</p>
+<p>My thought was {Flag: ^flag2^ id: x , key: dynamic key} a clue,<br>
+and b64d = lambda x: base64.decodestring(x.replace(‘~’, 
+‘=’).replace(‘!’, ‘/’).replace(‘-‘, ‘+’)) was placed right there oh heck
+ another clue I found was post = 
+json.loads(decryptLink(postCt).decode(‘utf8’)).</p>
+<p>So, I couldn’t find a tool I had to decode this in a streamline fashion.<br>
+In Python, I wrote. (<a href="https://sec.wonderingraven.net/wp-content/uploads/2020/04/test3.zip">test3</a>)</p>
+<blockquote><p>import base64 //because base64<br>
+import requests //using requests with web forms.</p>
+<p>Decode the data defined.<br>
+def decode(data):<br>
+return base64.b64decode(data.replace(‘~’, ‘=’).replace(‘!’, ‘/’).replace(‘-‘, ‘+’))</p>
+<p>Re-encode the data defined,<br>
+def encode(data):<br>
+return base64.b64encode(data).decode(‘utf-8’).replace(‘=’, ‘~’).replace(‘/’, ‘!’).replace(‘+’, ‘-‘)</p>
+<p>#Remember XOR: was a hint, so we need to use XOR not decrypt it.<br>
+#So defining Bit XOR.<br>
+def bxor(b1, b2): # use xor for bytes<br>
+result = b””<br>
+for b1, b2 in zip(b1, b2):<br>
+result += bytes([b1 ^ b2])<br>
+return result</p>
+<p>#now define the url padding.<br>
+def test(url, data):<br>
+r = requests.get(url+’?post={}’.format(data))<br>
+if ‘PaddingException’ in r.text:<br>
+return False<br>
+else:<br>
+return True</p>
+<p>#now to define the iv calculations<br>
+def generate_iv_list(tail):<br>
+iv = b’\x00′ * (16 – len(tail) -1)<br>
+return [iv+bytes([change])+tail for change in range(0x00, 0xff+1)]</p>
+<p>#last is now we need to define the padding oracle.<br>
+def padding_oracle(real_iv, url, data):<br>
+index = 15<br>
+plains = bytes()<br>
+tail = bytes()<br>
+while index &gt;= 0:<br>
+for iv in generate_iv_list(tail):<br>
+if test(url, encode(iv+data)):<br>
+plains = bytes([(16-index) ^ iv[index]]) + plains<br>
+index -= 1<br>
+tail = bytes([plain ^ (16-index) for plain in plains])<br>
+break<br>
+return bxor(real_iv, plains)</p>
+<p>now with some trial and error I came up with this.<br>
+post = ‘original encrypted dynmaic data’<br>
+data = decode(post)[16*(1+5):]<br>
+iv_6 = decode(post)[16*(1+4):16*(1+5)]<br>
+immediate = bxor(b’$FLAG$”, “id”: “‘, iv_6)<br>
+iv = bxor(immediate, b'{“id”:”1″, “i”:”‘)<br>
+print(encode(iv+data))</p>
+<p>This dumped data, encrypted but it was like in reverse and I took 
+that and when used in the ?post= dropped flag 3 with another error.</p></blockquote>
+<ul>
+<li>Flag 4</li>
+</ul>
+<p>Now this one caught me with if they didn’t store data in an sql database doesn’t mean they don’t use SQL for defining data.</p>
+<p>So we need to basically brute force attack the decryption using their stuff, using a SQL Injection.&nbsp; Here is what I wrote.</p>
+<blockquote><p>if __name__ == ‘__main__’:<br>
+url = ‘http://URL/Dynamic Folder/’<br>
+post = ‘Dynamic Encrypted Post’<br>
+ciphertext = decode(post)[16*6:16*7]<br>
+immediate = bxor(b’$FLAG$”, “id”: “‘, decode(post)[16*(1+4):16*(1+5)])</p>
+<p>plains = ‘{“id”:”0 UNION SELECT group_concat(headers), \’\’ from tracking”,”key”:”Dynamic Enc Key”}’<br>
+data = pad(plains.encode(‘utf-8’), 16)<br>
+block_amount = int(len(data) / 16)<br>
+index = block_amount<br>
+while True:<br>
+block = data[(index-1)*16: index*16]<br>
+print(‘meow：’)<br>
+print(block)<br>
+iv = bxor(immediate, block)<br>
+ciphertext = iv + ciphertext<br>
+index -= 1<br>
+if index &gt; 0:<br>
+immediate = padding_oracle_decrypt(url, iv)<br>
+else:<br>
+break<br>
+print(encode(ciphertext))</p></blockquote>
+<p>This one threw me off because it dropped another key, this key 
+dropped a new error that I didn’t pick up until I kept running it a few 
+times (each time took over an hour)<br>
+but the error also http://127.0.0.1/url/?post=Another Encrypted Data Dynamic Key.<br>
+So I took that new encrypted data key and it dropped Flag 1 and a new flag 4.</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="https://sec.wonderingraven.net/category/hacker-ctf/" rel="category tag">CTF Challenges</a> on <a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-encrypted-pastebin/" title="10:27 pm" rel="bookmark"><time class="entry-date" datetime="2020-04-18T22:27:44+00:00">April 18, 2020</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://sec.wonderingraven.net/author/admin/" title="View all posts by admin" rel="author">admin</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-micro-cms-v2/" rel="prev"><span class="meta-nav">←</span> Write up Hacker101- Micro-CMS v2</a></span>
+					<span class="nav-next"><a href="https://sec.wonderingraven.net/hacker-ctf/photo-gallery-3-flags-3-3-complete/" rel="next">Write up Hacker101 – Photo Gallery <span class="meta-nav">→</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+			<aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://sec.wonderingraven.net/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></aside>
+		<aside id="recent-posts-2" class="widget widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/wrnetsec-1-6-slackware-part-1-soon/">WRNET:Sec 1.6 – Slackware part 1. (Soon)</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-1-5-how-i-stumbled-upon-an-embarassing-security-hole-on-twitch/">WRnet:sec 1.5 – How I stumbled upon an Embarassing Security Hole on Twitch</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-1-4-battle-from-within-part-3/">WRNet:Sec 1.4 – Battle from within part 3</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-1-4-battle-from-within-part-2/">WRNet:Sec 1.4 – Battle from within part 2</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-1-4-battle-from-within-part-1/">WRNet:Sec 1.4 – Battle from within part 1</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-part-1-3-battle-for-lvn/">WRnet:sec Part 1.3 – Battle for LVN</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/blogcast/wrnetsec-eps2-indevel/">WRNET:Sec 1.0 and 1.1</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-petshop-pro/">Write up Hacker101 –  Petshop Pro</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-tickettastic-demo-live-instance/">Write up Hacker101 – Tickettastic Demo &amp; Live instance.</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-postbook/">Write up Hacker101 – Postbook</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-codys-first-blog/">Write up Hacker101 – Cody’s First Blog</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/photo-gallery-3-flags-3-3-complete/">Write up Hacker101 – Photo Gallery</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-encrypted-pastebin/" aria-current="page">Write up Hacker101 – Encrypted Pastebin</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-micro-cms-v2/">Write up Hacker101- Micro-CMS v2</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-micro-cms-v1/">Write up Hacker101- Micro-CMS v1</a>
+									</li>
+											<li>
+					<a href="https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-a-little-something-to-get-you-started/">Write up Hacker101- A little something to get you started</a>
+									</li>
+					</ul>
+
+		</aside>		</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+							</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type="text/javascript" src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/navigation.js" id="twentytwelve-navigation-js"></script>
+<script type="text/javascript" src="Write%20up%20Hacker101%20%E2%80%93%20Encrypted%20Pastebin%20|%20WRNET%20Sec_files/wp-embed.js" id="wp-embed-js"></script>
+
+
+</body></html>

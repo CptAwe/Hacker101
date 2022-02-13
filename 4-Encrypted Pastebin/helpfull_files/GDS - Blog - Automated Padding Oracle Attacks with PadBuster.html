@@ -1,0 +1,2341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="wf-loading" lang="en"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+  
+   <meta name="Robots" content="index,follow">  
+  
+  
+  <!-- gdssecurity -->
+
+  <link rel="shortcut icon" href="https://blog.gdssecurity.com/favicon.ico" type="image/x-icon">
+
+  <link id="primaryStylesheet" rel="stylesheet" type="text/css" href="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/common.css">
+  
+  <link id="slideShowStylesheet" rel="stylesheet" type="text/css" href="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/squarespace-gallery-slideshow.css">
+  
+  
+    <link rel="alternate" type="application/atom+xml" title="ATOM" href="https://blog.gdssecurity.com/labs/atom.xml">
+  
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.gdssecurity.com/labs/rss.xml">
+  
+    <link rel="alternate" type="application/rdf+xml" title="RDF" href="https://blog.gdssecurity.com/labs/rdf.xml">
+  
+  
+  <!-- Google Web Fonts -->
+  <script type="text/javascript" async="" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/ga.js"></script><script src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/webfont.js" type="text/javascript" async=""></script><script type="text/javascript">
+    	WebFontConfig = {};
+  
+   
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
+
+  <script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/connection_core-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/json-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/animation-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/selector.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/element.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/global.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/lightbox.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/api.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/base64.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/census.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/yahoo-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/event-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/event-mouseenter-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/element-min.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/social.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/datefmt.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/yui2-yui3-bridge.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/squarespace-gallery-slideshow.js"></script>
+
+
+  <script type="text/javascript">
+  // <![CDATA[
+
+    Squarespace.Constants.SS_AUTHKEY = encodeURIComponent("");
+    Squarespace.Constants.WEBSITE_TITLE =  "GDS Blog"; 
+    
+     Squarespace.Constants.CURRENT_MODULE_ID = "11268292"; 
+    
+    
+    
+    Squarespace.Constants.ADMINISTRATION_UI =  false; 
+    
+    
+     Squarespace.Constants.OBJECT_PERMALINK = "http://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html"; 
+    Squarespace.Constants.CORE_APPLICATION_DOMAIN = "squarespace.com";
+    Squarespace.Constants.CORE_V6_APPLICATION_DOMAIN = "squarespace.com";
+    Squarespace.Constants.V5_FRONTSITE = "http://www.squarespace.com";
+    Squarespace.Constants.WEBSITE_ID = "936190";
+
+    
+
+    
+
+    
+
+  // ]]>
+  </script>
+
+      <title>GDS - Blog - Automated Padding Oracle Attacks with&nbsp;PadBuster</title>
+    <meta property="og:title" content="GDS - Blog - Automated Padding Oracle Attacks with&nbsp;PadBuster"> 
+  
+
+      <meta property="og:description" content=" There&amp;rsquo;s been a lot of buzz recently about Padding Oracle Attacks, an attack vector demon...">
+  
+
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig1_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig2_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig3_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig4_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig5_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig6_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig7_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig8_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig9_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig10_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_pb1_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_pb2_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig11_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_fig12_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_pb3_sm.png">
+  
+      <meta property="og:image" content="http://s3.media.squarespace.com/production/936190/11268292/l/po_pb4_sm.png">
+  
+
+  <!-- End Heading -->
+
+  <script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/prototype.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/scriptaculous.js"></script><script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/effects.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/gds.js"></script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/modernizr.js"></script>
+
+<meta name="google-site-verification" content="JxPJSLte657MH7uG1GeeM04r7mZxJyJiLotM61y_DaU">
+
+<script type="text/javascript">
+Modernizr.load([
+  {
+    test : Modernizr.borderradius,
+    nope : '/storage/js/niftycube2.js',
+    callback : function (url, result, key) {
+      if (!result){
+        Nifty("#main_nav","normal transparent top");
+      }
+    }
+  }
+]);
+
+//Event.observe(window, 'load', function() {});
+
+function init() {
+initNav();
+new Effect.Opacity('hdr', { from: 0.0, to: 1.0, duration: 0.5 });
+}
+YAHOO.util.Event.onDOMReady(init);
+</script>
+
+<!--[if gte IE 9]>
+<script type="text/javascript">
+function initIE9() {
+$('hdr').addClassName('noscript');
+}
+YAHOO.util.Event.onDOMReady(initIE9);
+</script>
+<![endif]-->
+
+<!--[if lte IE 8]>
+<style type="text/css">
+.submenus {height:300px !important;}
+</style>
+<![endif]-->
+
+<!--[if lte IE 7]>
+<style type="text/css">
+#hdrLinks {margin-top:-25px !important;}
+</style>
+<![endif]-->
+
+<!--[if lte IE 6]>
+<style type="text/css">
+#hdrLogo {behavior: url(/storage/layout/iepngfix/iepngfix.htc);}
+</style>
+<![endif]-->
+
+  <script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/cookie-min.js"></script>
+  <script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/eu-cookie-policy.js"></script>
+
+<script src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/jquery.js" type="text/javascript"></script></head>
+
+<body id="modulePage11268292" class="objectId12210343">
+
+  <script type="text/javascript">
+  YAHOO.util.Event.onDOMReady(function() {
+    if (document.location.href.indexOf("SSLogoutOk=true") != -1) {
+      new Squarespace.FixedPositionTip("Logout Successful", "You have been successfully logged out.", { xMargin: 15, yMargin: 15, icon: "/universal/images/helptip-info.png", orientation: "upper-right", viewportFixed: true, autoHide: 1800 }).show();
+    }
+  });
+</script>
+
+    
+
+  <script type="text/javascript">
+    YAHOO.util.Event.onDOMReady(function() { new Squarespace.Census.hit(); } );
+  </script>
+
+  <script type="text/javascript">
+    YAHOO.util.Event.addListener(document, "keyup", function (e) { if (!e) { e = event; } if (e.keyCode == 27) { document.location.href = "https://blog.gdssecurity.com/display/Login?returnUrl=%2Flabs%2F2010%2F9%2F14%2Fautomated-padding-oracle-attacks-with-padbuster.html"; } });
+  </script>
+
+
+
+
+  
+
+  <div id="canvasWrapper"><div id="canvas">
+  
+      
+    <div id="hdr" class="" style="">
+<script type="text/javascript">
+$('hdr').removeClassName('noscript');
+</script>
+
+	<a href="http://www.gdssecurity.com/"><img id="hdrLogo" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/gds_logo_2.png" width="226" height="75"></a>
+	<div id="hdrLinks">
+<a href="http://www.gdssecurity.com/g/a.php">About</a>|<a href="http://www.gdssecurity.com/g/ca.php">Careers</a>|<a href="http://www.gdssecurity.com/g/pr.php">Press</a>|<a href="http://www.gdssecurity.com/g/ne.php">News</a>|<a href="http://www.gdssecurity.com/g/cs.php">Case Studies</a>|<a href="http://www.gdssecurity.com/l/t.php">Tools</a>|<a href="https://blog.gdssecurity.com/">Blog</a>
+	</div>
+</div>
+  
+
+  <div id="pageHeaderWrapper"><div id="pageHeader">
+
+    
+    
+     
+      
+      <span style="background-color:#b2d5d8;width:900px; text-align:center;display:block;"> 
+	<div id="main_nav"> 
+		<div class="main_nav" id="mainNav"> 
+			<a href="http://www.gdssecurity.com/st/" id="SecurityTesting">Security Testing</a> 
+			<a href="http://www.gdssecurity.com/sdl/" id="SecureDevelopment">Secure Development Lifecycle (SDL)</a> 
+			<a href="http://www.gdssecurity.com/c/" id="ConsultingServices">Consulting Services</a> 
+			<a href="http://www.gdssecurity.com/l/" id="Labs" style="border:none;">Research Labs</a> 
+		</div> 
+	</div> 
+</span> 
+
+<div class="submenus_wrapper" id="subnavs"> 
+	<div class="submenus" id="SecurityTesting_submenu" style="z-index: 1; overflow: visible; display: none; height: 200px;"> 
+		<a href="http://www.gdssecurity.com/st/bb.php">Black Box Application Testing</a> 
+		<a href="http://www.gdssecurity.com/st/sd.php">Source Code Review</a> 
+		<a href="http://www.gdssecurity.com/st/pt.php">Penetration Testing</a> 
+		<a href="http://www.gdssecurity.com/st/rt.php">Red Team Testing</a>
+                <a href="http://www.gdssecurity.com/st/et.php">Embedded Security Testing</a>
+		<a href="http://www.gdssecurity.com/st/vr.php">Vulnerability Remediation</a> 
+		<a href="http://www.gdssecurity.com/st/se.php">Social Engineering</a> 
+		<a href="http://www.gdssecurity.com/st/ch.php">CESG (CHECK) IT Health Checks</a> 
+		<a href="http://www.gdssecurity.com/st/cb.php">CBEST/CREST STAR Testing</a>
+		<a href="http://www.gdssecurity.com/st/ce.php">Cyber Essentials Certification</a>
+		<img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/subnav_bottom.gif" style="float:left; height:8px;" alt=""> 
+		<div class="clear"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/spacer.gif" alt=""></div> 
+	</div> 
+	<div class="submenus" id="SecureDevelopment_submenu" style="z-index: 1; overflow: visible; display: none; height: 200px;"> 
+		<a href="http://www.gdssecurity.com/sdl/tm.php">Threat Modelling</a> 
+		<a href="http://www.gdssecurity.com/sdl/da.php">Security Design and Architecture</a> 
+		<a href="http://www.gdssecurity.com/sdl/sd.php">Secure Development Training</a> 
+		<a href="http://www.gdssecurity.com/sdl/tr.php">SDL Transformation</a> 
+		<a href="http://www.gdssecurity.com/sdl/in.php">SDL Tools Integration</a> 
+		<a href="http://www.gdssecurity.com/sdl/sa.php">Staff Augmentation</a> 
+		<img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/subnav_bottom.gif" style="float:left; height:8px;" alt=""> 
+		<div class="clear"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/spacer.gif" alt=""></div> 
+	</div> 
+	<div class="submenus" id="ConsultingServices_submenu" style="z-index: 1; overflow: visible; display: none; height: 200px;"> 
+		<a href="http://www.gdssecurity.com/c/1.php">Risk Management and Compliance</a> 
+		<a href="http://www.gdssecurity.com/c/2.php">Security Project Management</a> 
+		<a href="http://www.gdssecurity.com/c/3.php">Audit Assistance</a> 
+		<a href="http://www.gdssecurity.com/c/4.php">Custom Consulting Services</a> 
+		<img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/subnav_bottom.gif" style="float:left; height:8px;" alt=""> 
+		<div class="clear"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/spacer.gif" alt=""></div> 
+	</div> 
+	<div class="submenus" id="Labs_submenu" style="z-index: 1; overflow: visible; display: none; height: 200px;"> 
+		<a href="https://blog.gdssecurity.com/" style="width:124px;">Blog</a> 
+		<a href="http://www.gdssecurity.com/l/t.php" style="width:124px;">Tools</a> 
+		<img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/subnavSm_bottom.gif" style="float:left; height:8px;" alt="" width="142" height="8"> 
+		<div class="clear"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/spacer.gif" alt=""></div> 
+	</div> 
+</div> 
+      
+    
+    
+
+    
+
+  </div></div>
+  
+      
+    <img id="insideBanner" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/GDS_insidebanner.jpg">
+
+
+  
+
+  
+
+  
+  <div id="pageBodyWrapper"><div id="pageBody">
+  
+  <div id="sidebar1Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar1" class="verticalNavigationBar">
+
+  
+
+    <div id="sectionContent4518301" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Search</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884494" class="widget-wrapper  widget-type-search"><div id="moduleContent10884494">
+
+
+<!-- <form method="get" action="/display/Search">
+	<div class="search-form-pt-wrapper">
+	  <div class="search-form-pt">
+	    <span class="queryFieldWrapper"><input type="text" class="text queryField" name="searchQuery" value=""/></span>
+	    <span class="queryButtonWrapper"><input type="submit" class="button queryButton" value="&raquo;"/></span>
+	    <input type="hidden" name="moduleId" value="10884494"/>
+	    <br class="clearer"/>
+	  </div>
+	</div>
+</form> -->
+
+<form method="get" action="/display/Search">
+	<input type="hidden" name="moduleId" value="10884494">
+	<table class="search-form-pt-wrapper search-form-table" cellspacing="0" cellpadding="0" border="0">
+		<tbody><tr class="search-form-pt search-form-row">
+			<td class="queryFieldCell search-form-cell">
+				<span class="queryFieldWrapper">
+					<input type="text" class="text queryField" name="searchQuery">
+				</span>
+			</td>
+			<td class="queryButtonCell search-form-cell">
+				<span class="queryButtonWrapper">
+					<input type="submit" class="button queryButton" value="→">
+				</span>
+			</td>
+		</tr>
+	</tbody></table> 
+</form></div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent4518209" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Categories</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884292" class="widget-wrapper  widget-type-journalarchive"><div id="moduleContent10884292">
+
+
+
+
+  <ul class="archive-item-list-pt">
+     <li><a href="https://blog.gdssecurity.com/labs/category/application-security">Application Security</a> <span class="entry-count">(69)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/cloud-security">Cloud Security</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/custom-rules">Custom Rules</a> <span class="entry-count">(5)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/embedded-security">Embedded Security</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/general-security">General Security</a> <span class="entry-count">(14)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/infrastructure-security">Infrastructure Security</a> <span class="entry-count">(14)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/mobile-security">Mobile Security</a> <span class="entry-count">(11)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/tools">Tools</a> <span class="entry-count">(34)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/web-security">Web Security</a> <span class="entry-count">(6)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/category/wireless-security">Wireless Security</a> <span class="entry-count">(1)</span></li> 
+  </ul>
+
+
+
+
+
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent4518210" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Archives</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884293" class="widget-wrapper  widget-type-journalarchive"><div id="moduleContent10884293">
+
+
+
+
+
+
+
+
+
+  <ul class="archive-item-list-pt">
+     <li><a href="https://blog.gdssecurity.com/labs/month/june-2019">June 2019</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2019">May 2019</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2019">April 2019</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2019">March 2019</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2019">February 2019</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2018">July 2018</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2018">June 2018</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2018">April 2018</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2018">January 2018</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2017">October 2017</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2017">September 2017</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2017">August 2017</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2017">July 2017</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2017">May 2017</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2017">April 2017</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2017">March 2017</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2017">January 2017</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2016">December 2016</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2016">August 2016</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2016">June 2016</a> <span class="entry-count">(4)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2016">May 2016</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2016">March 2016</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2016">January 2016</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2015">December 2015</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2015">November 2015</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2015">October 2015</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2015">September 2015</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2015">August 2015</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2015">July 2015</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2015">June 2015</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2015">May 2015</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2015">April 2015</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2015">March 2015</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2015">February 2015</a> <span class="entry-count">(4)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2015">January 2015</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2014">December 2014</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2014">October 2014</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2014">September 2014</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2014">August 2014</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2014">July 2014</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2014">June 2014</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2014">April 2014</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2014">February 2014</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2013">December 2013</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2013">November 2013</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2013">October 2013</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2013">September 2013</a> <span class="entry-count">(4)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2013">August 2013</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2013">June 2013</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2013">May 2013</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2013">March 2013</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2013">February 2013</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2012">December 2012</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2012">August 2012</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2012">July 2012</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2012">June 2012</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2012">May 2012</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2012">March 2012</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2011">November 2011</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2011">September 2011</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2011">August 2011</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2011">June 2011</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2011">May 2011</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2011">April 2011</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2010">November 2010</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2010">October 2010</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2010">September 2010</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2010">August 2010</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/july-2010">July 2010</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2010">May 2010</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2010">April 2010</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2010">March 2010</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2010">February 2010</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2010">January 2010</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2009">November 2009</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2009">October 2009</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2009">August 2009</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2009">April 2009</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2009">March 2009</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2009">February 2009</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2008">December 2008</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2008">October 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/september-2008">September 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/august-2008">August 2008</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/june-2008">June 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/may-2008">May 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/april-2008">April 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/march-2008">March 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/february-2008">February 2008</a> <span class="entry-count">(2)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/january-2008">January 2008</a> <span class="entry-count">(1)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/december-2007">December 2007</a> <span class="entry-count">(4)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/november-2007">November 2007</a> <span class="entry-count">(3)</span></li>  <li><a href="https://blog.gdssecurity.com/labs/month/october-2007">October 2007</a> <span class="entry-count">(2)</span></li> 
+  </ul>
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  <div id="sidebar2Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar2" class="verticalNavigationBar">
+
+  
+
+    <div id="sectionContent4518205" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Recent Posts</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884284" class="widget-wrapper  widget-type-journalarchive"><div id="moduleContent10884284">
+
+
+
+
+
+
+
+  <ul class="archive-item-list-pt">
+     <li><a href="https://blog.gdssecurity.com/labs/2019/6/7/rce-using-caller-id-multiple-vulnerabilities-in-fusionpbx.html">RCE Using Caller ID - Multiple Vulnerabilities in FusionPBX</a></li>  <li><a href="https://blog.gdssecurity.com/labs/2019/5/28/ssrf-and-xxe-vulnerabilities-in-pdfreactor.html">SSRF and XXE Vulnerabilities in PDFreactor</a></li>  <li><a href="https://blog.gdssecurity.com/labs/2019/4/15/unauthenticated-remote-code-execution-in-kentico-cms.html">Unauthenticated Remote Code Execution in Kentico CMS</a></li>  <li><a href="https://blog.gdssecurity.com/labs/2019/3/28/remote-code-execution-in-blogenginenet.html">Remote Code Execution in BlogEngine.NET</a></li>  <li><a href="https://blog.gdssecurity.com/labs/2019/2/11/wowza-streaming-engine-manager-directory-traversal-and-local.html">Wowza Streaming Engine Manager Directory Traversal and Local File Inclusion</a></li> 
+  </ul>
+
+
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent8177230" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">RSS Feed</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper19661133" class="widget-wrapper  widget-type-rss-syndicate"><div id="moduleContent19661133">
+
+
+
+  <ul class="feed-list-inline">
+    
+          <li><a href="https://blog.gdssecurity.com/labs/rss.xml" class="feed-link">Blog RSS</a></li>
+        
+  </ul>
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent4518292" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Twitter</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884489" class="widget-wrapper  widget-type-twitter"><div id="moduleContent10884489">
+
+<style type="text/css">
+    <!--
+      #twitter-wrapper-10884489 {
+        display: block;
+        visibility: hidden;
+      }
+            
+    -->
+</style>
+
+<div id="twitter-loading-wrapper-10884489" style="display:none; background:#353535; -moz-border-radius:8px; -webkit-border-radius:8px; height:300px; ">
+  <div id="twitter-loading-img-10884489" style="height:100%; background:url(/universal/images/loading.png) no-repeat center center transparent;"></div>
+</div>
+
+<div id="twitter-error-wrapper-10884489" style="display: none; background: rgb(53, 53, 53) none repeat scroll 0% 0%; border-radius: 8px; height: 300px; opacity: 0;">
+  <a id="twitter-error-img-10884489" style="display:block; height:100%; background:url(/universal/images/loading-refresh.png) no-repeat center center transparent;" href="javascript:void(0);" onclick="javascript: twitterWidget10884489.show();">&nbsp;</a>
+</div>
+
+
+
+  <div id="twitter-wrapper-10884489" class="twitter-wrapper basic" style="display: block; opacity: 1; visibility: visible;">
+    <div class="twitter-content">
+    
+      <div id="twitter-page-10884489">
+      
+        <div id="tweet-item-10884489-1" class="twitter-item-basic highlight gdssecurity" style="display: block;">
+          <div class="twitter-item-content-basic">
+            
+                        <div class="twitter-username"><a id="tweet-username-link-10884489-1" href="http://www.twitter.com/gdssecurity" target="_blank">@gdssecurity</a></div>
+            
+            <span id="tweet-content-10884489-1">RT <a target="new" rel="nofollow" href="http://www.twitter.com/Joshbal4">@Joshbal4</a>: this is who all your failed sudos get reported to https://t.co/lPrG9J1R9j</span>
+          </div>
+          <div class="twitter-item-slug">
+                        <div class="twitter-date"><a id="tweet-date-10884489-1" href="http://twitter.com/gdssecurity/statuses/1097423241768067073" target="_blank">about 2 years ago</a></div>
+            
+            <div class="clearer"></div>            
+          </div>
+        </div>
+
+        
+                <div id="tweet-item-10884489-2" class="twitter-item-basic gdssecurity" style="display: block;">
+                  <div class="twitter-item-content-basic">
+                    
+                                <div class="twitter-username"><a id="tweet-username-link-10884489-2" href="http://www.twitter.com/gdssecurity" target="_blank">@gdssecurity</a></div>
+                    
+                    <span id="tweet-content-10884489-2">RT <a target="new" rel="nofollow" href="http://www.twitter.com/NCSC">@NCSC</a>: Don't be held to ransom - stay protected against this ever growing global cyber security threat!
+https://t.co/wfDMLE5ZfD https://…</span>
+                  </div>
+                  <div class="twitter-item-slug">
+                                <div class="twitter-date"><a id="tweet-date-10884489-2" href="http://twitter.com/gdssecurity/statuses/1097422916583591937" target="_blank">about 2 years ago</a></div>
+                    
+                    <div class="clearer"></div>            
+                  </div>
+                </div>
+                              
+      </div>
+
+            <div class="twitter-nav-buttons secondary">
+        <a id="twitter-newer-link-10884489" href="javascript:void(0);" onclick="javascript: twitterWidget10884489.prevPage();" class="twitter-button-newer" style="visibility: hidden;">Newer</a>
+        <a id="twitter-older-link-10884489" href="javascript:void(0);" onclick="javascript: twitterWidget10884489.nextPage();" class="twitter-button-older" style="visibility: visible;">Older</a>
+        <div class="clearer"></div>
+      </div>
+      
+    
+    </div>
+
+    
+          
+  </div>
+
+
+
+
+
+
+<script type="text/javascript">
+<!--
+
+  var twitterWidget10884489;
+
+  E.onDOMReady( function() {
+
+    twitterWidget10884489 = new Squarespace.Social.TwitterWidget(10884489, { preset : 'basic-preset', pageSize : 2, followMeText : 'Follow @username', filter : '', filterType : 'all', filterAtReplies: false, filterRetweets : false, userIds : '56579613,' });
+    twitterWidget10884489.show();      
+    
+  });
+  
+  
+//-->
+</script></div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent4518305" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Tags</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper10884512" class="widget-wrapper  widget-type-tagcloud"><div id="moduleContent10884512">
+
+
+
+  <style type="text/css">
+    #tagcloudwrapper-10884512 a { display:inline-block; }
+  </style>
+  
+  <div id="tagcloudwrapper-10884512" class="tagcloud-widget-wrapper">
+    <div class="tagcloud">
+      <a href="https://blog.gdssecurity.com/labs/tag/net"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">.NET</span></a> <a href="https://blog.gdssecurity.com/labs/tag/101"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">101</span></a> <a href="https://blog.gdssecurity.com/labs/tag/alienvault"><span style="z-index:1; font-size: 1em; opacity:0.35;">AlienVault</span></a> <a href="https://blog.gdssecurity.com/labs/tag/amf"><span style="z-index:1; font-size: 1em; opacity:0.35;">AMF</span></a> <a href="https://blog.gdssecurity.com/labs/tag/android"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Android</span></a> <a href="https://blog.gdssecurity.com/labs/tag/antixss"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">AntiXSS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/api"><span style="z-index:1; font-size: 1em; opacity:0.35;">API</span></a> <a href="https://blog.gdssecurity.com/labs/tag/appsec"><span style="z-index:1; font-size: 1em; opacity:0.35;">AppSec</span></a> <a href="https://blog.gdssecurity.com/labs/tag/april-fools"><span style="z-index:1; font-size: 1em; opacity:0.35;">April Fools</span></a> <a href="https://blog.gdssecurity.com/labs/tag/aspnet"><span style="z-index:1; font-size: 1em; opacity:0.35;">ASP.NET</span></a> <a href="https://blog.gdssecurity.com/labs/tag/azure"><span style="z-index:1; font-size: 1em; opacity:0.35;">Azure</span></a> <a href="https://blog.gdssecurity.com/labs/tag/blazeds"><span style="z-index:1; font-size: 1em; opacity:0.35;">BlazeDS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/blazentoo"><span style="z-index:1; font-size: 1em; opacity:0.35;">Blazentoo</span></a> <a href="https://blog.gdssecurity.com/labs/tag/blockchain"><span style="z-index:1; font-size: 1em; opacity:0.35;">blockchain</span></a> <a href="https://blog.gdssecurity.com/labs/tag/boot"><span style="z-index:1; font-size: 1em; opacity:0.35;">Boot</span></a> <a href="https://blog.gdssecurity.com/labs/tag/bsideslv"><span style="z-index:1; font-size: 1em; opacity:0.35;">bsideslv</span></a> <a href="https://blog.gdssecurity.com/labs/tag/burp"><span style="z-index:34; font-size: 2em; opacity:0.57;">Burp</span></a> <a href="https://blog.gdssecurity.com/labs/tag/burpee"><span style="z-index:1; font-size: 1em; opacity:0.35;">Burpee</span></a> <a href="https://blog.gdssecurity.com/labs/tag/casbah"><span style="z-index:1; font-size: 1em; opacity:0.35;">casbah</span></a> <a href="https://blog.gdssecurity.com/labs/tag/certificates"><span style="z-index:1; font-size: 1em; opacity:0.35;">Certificates</span></a> <a href="https://blog.gdssecurity.com/labs/tag/check"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">CHECK</span></a> <a href="https://blog.gdssecurity.com/labs/tag/cloud"><span style="z-index:45; font-size: 2.33em; opacity:0.64;">Cloud</span></a> <a href="https://blog.gdssecurity.com/labs/tag/code-review"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Code Review</span></a> <a href="https://blog.gdssecurity.com/labs/tag/conference"><span style="z-index:100; font-size: 4em; opacity:1;">Conference</span></a> <a href="https://blog.gdssecurity.com/labs/tag/configuration"><span style="z-index:1; font-size: 1em; opacity:0.35;">Configuration</span></a> <a href="https://blog.gdssecurity.com/labs/tag/crypto"><span style="z-index:78; font-size: 3.33em; opacity:0.86;">Crypto</span></a> <a href="https://blog.gdssecurity.com/labs/tag/csaw"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">CSAW</span></a> <a href="https://blog.gdssecurity.com/labs/tag/csi"><span style="z-index:1; font-size: 1em; opacity:0.35;">CSI</span></a> <a href="https://blog.gdssecurity.com/labs/tag/csp"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">CSP</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ctf"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">CTF</span></a> <a href="https://blog.gdssecurity.com/labs/tag/custom-rules"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Custom Rules</span></a> <a href="https://blog.gdssecurity.com/labs/tag/cve"><span style="z-index:45; font-size: 2.33em; opacity:0.64;">CVE</span></a> <a href="https://blog.gdssecurity.com/labs/tag/defcon"><span style="z-index:1; font-size: 1em; opacity:0.35;">defcon</span></a> <a href="https://blog.gdssecurity.com/labs/tag/deflate"><span style="z-index:1; font-size: 1em; opacity:0.35;">Deflate</span></a> <a href="https://blog.gdssecurity.com/labs/tag/distributed-applications"><span style="z-index:1; font-size: 1em; opacity:0.35;">distributed applications</span></a> <a href="https://blog.gdssecurity.com/labs/tag/docker"><span style="z-index:1; font-size: 1em; opacity:0.35;">Docker</span></a> <a href="https://blog.gdssecurity.com/labs/tag/dojo"><span style="z-index:1; font-size: 1em; opacity:0.35;">Dojo</span></a> <a href="https://blog.gdssecurity.com/labs/tag/dotnetnuke"><span style="z-index:1; font-size: 1em; opacity:0.35;">DotNetNuke</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ec2"><span style="z-index:1; font-size: 1em; opacity:0.35;">EC2</span></a> <a href="https://blog.gdssecurity.com/labs/tag/elb"><span style="z-index:1; font-size: 1em; opacity:0.35;">ELB</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ethereum"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">ethereum</span></a> <a href="https://blog.gdssecurity.com/labs/tag/event-validation"><span style="z-index:1; font-size: 1em; opacity:0.35;">Event Validation</span></a> <a href="https://blog.gdssecurity.com/labs/tag/evil-maid"><span style="z-index:1; font-size: 1em; opacity:0.35;">Evil Maid</span></a> <a href="https://blog.gdssecurity.com/labs/tag/evil-twin"><span style="z-index:1; font-size: 1em; opacity:0.35;">evil twin</span></a> <a href="https://blog.gdssecurity.com/labs/tag/exploitation"><span style="z-index:1; font-size: 1em; opacity:0.35;">Exploitation</span></a> <a href="https://blog.gdssecurity.com/labs/tag/f5"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">F5</span></a> <a href="https://blog.gdssecurity.com/labs/tag/fast-infoset"><span style="z-index:1; font-size: 1em; opacity:0.35;">fast infoset</span></a> <a href="https://blog.gdssecurity.com/labs/tag/findbugs"><span style="z-index:1; font-size: 1em; opacity:0.35;">findbugs</span></a> <a href="https://blog.gdssecurity.com/labs/tag/fix"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">FIX</span></a> <a href="https://blog.gdssecurity.com/labs/tag/flex"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">Flex</span></a> <a href="https://blog.gdssecurity.com/labs/tag/fortify"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">Fortify</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ftp"><span style="z-index:1; font-size: 1em; opacity:0.35;">FTP</span></a> <a href="https://blog.gdssecurity.com/labs/tag/fuzzing"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Fuzzing</span></a> <a href="https://blog.gdssecurity.com/labs/tag/gdscon"><span style="z-index:1; font-size: 1em; opacity:0.35;">GDSCon</span></a> <a href="https://blog.gdssecurity.com/labs/tag/gwt"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">GWT</span></a> <a href="https://blog.gdssecurity.com/labs/tag/gwtenum"><span style="z-index:1; font-size: 1em; opacity:0.35;">GWTEnum</span></a> <a href="https://blog.gdssecurity.com/labs/tag/gwtparse"><span style="z-index:1; font-size: 1em; opacity:0.35;">GWTParse</span></a> <a href="https://blog.gdssecurity.com/labs/tag/htlm5"><span style="z-index:1; font-size: 1em; opacity:0.35;">HTLM5</span></a> <a href="https://blog.gdssecurity.com/labs/tag/iis"><span style="z-index:1; font-size: 1em; opacity:0.35;">IIS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/internet-of-things"><span style="z-index:1; font-size: 1em; opacity:0.35;">Internet of Things</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ios"><span style="z-index:45; font-size: 2.33em; opacity:0.64;">iOS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ironwasp"><span style="z-index:1; font-size: 1em; opacity:0.35;">IronWasp</span></a> <a href="https://blog.gdssecurity.com/labs/tag/issd"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">ISSD</span></a> <a href="https://blog.gdssecurity.com/labs/tag/java"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Java</span></a> <a href="https://blog.gdssecurity.com/labs/tag/javascript"><span style="z-index:1; font-size: 1em; opacity:0.35;">JavaScript</span></a> <a href="https://blog.gdssecurity.com/labs/tag/jetty"><span style="z-index:1; font-size: 1em; opacity:0.35;">jetty</span></a> <a href="https://blog.gdssecurity.com/labs/tag/karma"><span style="z-index:1; font-size: 1em; opacity:0.35;">karma</span></a> <a href="https://blog.gdssecurity.com/labs/tag/logjam"><span style="z-index:1; font-size: 1em; opacity:0.35;">logjam</span></a> <a href="https://blog.gdssecurity.com/labs/tag/metasploit"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Metasploit</span></a> <a href="https://blog.gdssecurity.com/labs/tag/mobile"><span style="z-index:89; font-size: 3.67em; opacity:0.93;">Mobile</span></a> <a href="https://blog.gdssecurity.com/labs/tag/mobile-security"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Mobile Security</span></a> <a href="https://blog.gdssecurity.com/labs/tag/mvc"><span style="z-index:1; font-size: 1em; opacity:0.35;">MVC</span></a> <a href="https://blog.gdssecurity.com/labs/tag/nessus"><span style="z-index:1; font-size: 1em; opacity:0.35;">Nessus</span></a> <a href="https://blog.gdssecurity.com/labs/tag/network"><span style="z-index:34; font-size: 2em; opacity:0.57;">Network</span></a> <a href="https://blog.gdssecurity.com/labs/tag/network-security-tools"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Network Security Tools</span></a> <a href="https://blog.gdssecurity.com/labs/tag/nimbus"><span style="z-index:1; font-size: 1em; opacity:0.35;">Nimbus</span></a> <a href="https://blog.gdssecurity.com/labs/tag/nmap"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">Nmap</span></a> <a href="https://blog.gdssecurity.com/labs/tag/nodejs"><span style="z-index:1; font-size: 1em; opacity:0.35;">Node.js</span></a> <a href="https://blog.gdssecurity.com/labs/tag/nslog"><span style="z-index:1; font-size: 1em; opacity:0.35;">nslog</span></a> <a href="https://blog.gdssecurity.com/labs/tag/oracle"><span style="z-index:1; font-size: 1em; opacity:0.35;">oracle</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ossim"><span style="z-index:1; font-size: 1em; opacity:0.35;">OSSIM</span></a> <a href="https://blog.gdssecurity.com/labs/tag/osx"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">OSX</span></a> <a href="https://blog.gdssecurity.com/labs/tag/owasp"><span style="z-index:89; font-size: 3.67em; opacity:0.93;">OWASP</span></a> <a href="https://blog.gdssecurity.com/labs/tag/padbuster"><span style="z-index:34; font-size: 2em; opacity:0.57;">PadBuster</span></a> <a href="https://blog.gdssecurity.com/labs/tag/padding-oracle"><span style="z-index:45; font-size: 2.33em; opacity:0.64;">Padding Oracle</span></a> <a href="https://blog.gdssecurity.com/labs/tag/pentesting"><span style="z-index:78; font-size: 3.33em; opacity:0.86;">Pentesting</span></a> <a href="https://blog.gdssecurity.com/labs/tag/plugin"><span style="z-index:1; font-size: 1em; opacity:0.35;">plugin</span></a> <a href="https://blog.gdssecurity.com/labs/tag/pmd"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">PMD</span></a> <a href="https://blog.gdssecurity.com/labs/tag/privileged-identities"><span style="z-index:1; font-size: 1em; opacity:0.35;">privileged identities</span></a> <a href="https://blog.gdssecurity.com/labs/tag/rails"><span style="z-index:1; font-size: 1em; opacity:0.35;">Rails</span></a> <a href="https://blog.gdssecurity.com/labs/tag/random-numbers"><span style="z-index:1; font-size: 1em; opacity:0.35;">random numbers</span></a> <a href="https://blog.gdssecurity.com/labs/tag/real-world"><span style="z-index:1; font-size: 1em; opacity:0.35;">Real World</span></a> <a href="https://blog.gdssecurity.com/labs/tag/remote-code-execution"><span style="z-index:1; font-size: 1em; opacity:0.35;">Remote Code Execution</span></a> <a href="https://blog.gdssecurity.com/labs/tag/responseredirect"><span style="z-index:1; font-size: 1em; opacity:0.35;">Response.Redirect</span></a> <a href="https://blog.gdssecurity.com/labs/tag/rfc"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">RFC</span></a> <a href="https://blog.gdssecurity.com/labs/tag/rogue-access-points"><span style="z-index:1; font-size: 1em; opacity:0.35;">rogue access points</span></a> <a href="https://blog.gdssecurity.com/labs/tag/saml"><span style="z-index:1; font-size: 1em; opacity:0.35;">saml</span></a> <a href="https://blog.gdssecurity.com/labs/tag/sca"><span style="z-index:1; font-size: 1em; opacity:0.35;">SCA</span></a> <a href="https://blog.gdssecurity.com/labs/tag/scala"><span style="z-index:1; font-size: 1em; opacity:0.35;">scala</span></a> <a href="https://blog.gdssecurity.com/labs/tag/sdl"><span style="z-index:1; font-size: 1em; opacity:0.35;">SDL</span></a> <a href="https://blog.gdssecurity.com/labs/tag/secure-coding"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">Secure Coding</span></a> <a href="https://blog.gdssecurity.com/labs/tag/security"><span style="z-index:1; font-size: 1em; opacity:0.35;">Security</span></a> <a href="https://blog.gdssecurity.com/labs/tag/sendsafely"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">SendSafely</span></a> <a href="https://blog.gdssecurity.com/labs/tag/servertransfer"><span style="z-index:1; font-size: 1em; opacity:0.35;">Server.Transfer</span></a> <a href="https://blog.gdssecurity.com/labs/tag/shellshock"><span style="z-index:1; font-size: 1em; opacity:0.35;">shellshock</span></a> <a href="https://blog.gdssecurity.com/labs/tag/simulator"><span style="z-index:1; font-size: 1em; opacity:0.35;">Simulator</span></a> <a href="https://blog.gdssecurity.com/labs/tag/social-engineering"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Social Engineering</span></a> <a href="https://blog.gdssecurity.com/labs/tag/source"><span style="z-index:1; font-size: 1em; opacity:0.35;">SOURCE</span></a> <a href="https://blog.gdssecurity.com/labs/tag/spf"><span style="z-index:67; font-size: 3em; opacity:0.78;">SPF</span></a> <a href="https://blog.gdssecurity.com/labs/tag/spring"><span style="z-index:1; font-size: 1em; opacity:0.35;">Spring</span></a> <a href="https://blog.gdssecurity.com/labs/tag/sql-injection"><span style="z-index:56; font-size: 2.67em; opacity:0.71;">SQL Injection</span></a> <a href="https://blog.gdssecurity.com/labs/tag/sqlbrute"><span style="z-index:1; font-size: 1em; opacity:0.35;">SqlBrute</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ssh"><span style="z-index:1; font-size: 1em; opacity:0.35;">ssh</span></a> <a href="https://blog.gdssecurity.com/labs/tag/ssltls"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">SSL/TLS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/static-analysis"><span style="z-index:34; font-size: 2em; opacity:0.57;">Static Analysis</span></a> <a href="https://blog.gdssecurity.com/labs/tag/stocktrader"><span style="z-index:1; font-size: 1em; opacity:0.35;">StockTrader</span></a> <a href="https://blog.gdssecurity.com/labs/tag/struts"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Struts</span></a> <a href="https://blog.gdssecurity.com/labs/tag/threat-modeling"><span style="z-index:1; font-size: 1em; opacity:0.35;">Threat Modeling</span></a> <a href="https://blog.gdssecurity.com/labs/tag/tools"><span style="z-index:1; font-size: 1em; opacity:0.35;">tools</span></a> <a href="https://blog.gdssecurity.com/labs/tag/tracer"><span style="z-index:1; font-size: 1em; opacity:0.35;">Tracer</span></a> <a href="https://blog.gdssecurity.com/labs/tag/training"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Training</span></a> <a href="https://blog.gdssecurity.com/labs/tag/transformernet"><span style="z-index:1; font-size: 1em; opacity:0.35;">Transformer.NET</span></a> <a href="https://blog.gdssecurity.com/labs/tag/umbraco"><span style="z-index:1; font-size: 1em; opacity:0.35;">Umbraco</span></a> <a href="https://blog.gdssecurity.com/labs/tag/vcenter"><span style="z-index:1; font-size: 1em; opacity:0.35;">vCenter</span></a> <a href="https://blog.gdssecurity.com/labs/tag/vmware"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">VMWare</span></a> <a href="https://blog.gdssecurity.com/labs/tag/vuln-disclosure"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">vuln disclosure</span></a> <a href="https://blog.gdssecurity.com/labs/tag/wcf"><span style="z-index:23; font-size: 1.67em; opacity:0.49;">WCF</span></a> <a href="https://blog.gdssecurity.com/labs/tag/web-20"><span style="z-index:1; font-size: 1em; opacity:0.35;">Web 2.0</span></a> <a href="https://blog.gdssecurity.com/labs/tag/web-security"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Web Security</span></a> <a href="https://blog.gdssecurity.com/labs/tag/weblogic"><span style="z-index:1; font-size: 1em; opacity:0.35;">weblogic</span></a> <a href="https://blog.gdssecurity.com/labs/tag/webmatrix"><span style="z-index:1; font-size: 1em; opacity:0.35;">WebMatrix</span></a> <a href="https://blog.gdssecurity.com/labs/tag/whitepaper"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">whitepaper</span></a> <a href="https://blog.gdssecurity.com/labs/tag/wifi"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">Wifi</span></a> <a href="https://blog.gdssecurity.com/labs/tag/windows"><span style="z-index:1; font-size: 1em; opacity:0.35;">Windows</span></a> <a href="https://blog.gdssecurity.com/labs/tag/wireless"><span style="z-index:1; font-size: 1em; opacity:0.35;">wireless</span></a> <a href="https://blog.gdssecurity.com/labs/tag/xml"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">xml</span></a> <a href="https://blog.gdssecurity.com/labs/tag/xss"><span style="z-index:45; font-size: 2.33em; opacity:0.64;">XSS</span></a> <a href="https://blog.gdssecurity.com/labs/tag/xss-worm"><span style="z-index:1; font-size: 1em; opacity:0.35;">XSS worm</span></a> <a href="https://blog.gdssecurity.com/labs/tag/xxe"><span style="z-index:12; font-size: 1.33em; opacity:0.42;">xxe</span></a> 
+    </div>
+  </div>
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  
+  
+
+  <div id="contentWrapper"><div id="content">
+    
+          
+    
+
+
+  
+
+  
+  
+      
+  <div class="journal-entry-navigation">
+
+    
+       <a class="journal-entry-navigation-prev" href="https://blog.gdssecurity.com/labs/2010/9/28/new-version-of-padbuster-available-for-download.html">« New Version of PadBuster Available for Download</a> | 
+      <a class="journal-entry-navigation-main" href="https://blog.gdssecurity.com/labs/">Main</a>
+       | <a class="journal-entry-navigation-next" href="https://blog.gdssecurity.com/labs/2010/8/10/constricting-the-web-the-gds-burp-api.html">Constricting the Web: The GDS Burp API »</a> 
+
+    
+
+  </div>
+
+
+  
+  
+  <div class="single-journal-entry-wrapper">
+    
+
+
+<div class="journal-entry-wrapper post-text authored-by-bholyfield category-application-security category-tools">
+<div id="item12210343" class="journal-entry">
+
+  <div class="journal-entry-float-day"><span class="name">Tuesday</span></div><div class="journal-entry-float-date"><span class="month">Sep</span><span class="date">14</span><span class="year">2010</span></div>
+  
+  
+  
+  <div class="journal-entry-text">
+  
+      
+      <h2 class="title">
+    
+        
+    
+        <a class="journal-entry-navigation-current" href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html">Automated Padding Oracle Attacks with&nbsp;PadBuster</a>  
+     
+         
+    
+      </h2>
+      
+       <div class="journal-entry-tag journal-entry-tag-post-title"><span class="posted-on">   <img title="Date" alt="Date" class="inline-icon date-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Tuesday, September 14, 2010 at 10:20AM</span> </div> 
+
+    
+  
+      
+      <div class="body">
+  
+        
+        
+        
+          <p>There’s been a lot of buzz recently about Padding Oracle Attacks, an attack vector demonstrated by <a href="http://netifera.com/research/" target="_">Juliano Rizzo and Thai Duong</a>
+ during their presentation at BlackHat Europe earlier this summer. While
+ padding oracles are relatively easy to exploit, the act of exploiting 
+them can be time consuming if you don’t have a good way of automating 
+the attack. The lack of good tools for identifying and exploiting 
+padding oracles led us to develop our own internal padding oracle 
+exploit script, PadBuster, which we’ve decided to share with the 
+community. <a href="https://github.com/GDSSecurity/PadBuster">The tool can be downloaded here</a>, but I’ll spend a little bit of time discussing how the tool works and the various use cases it supports.<br><br><span style="text-decoration: underline;">Update 9/28/10</span>: <a href="https://github.com/GDSSecurity/PadBuster">PadBuster v0.2</a> has been released.<br><br><strong>Some Background</strong></p>
+<p>Before we discuss using PadBuster, let’s briefly discuss the 
+fundamentals of a classic padding oracle attack. As the term implies, a 
+critical concept behind a padding oracle attack is the notion of 
+cryptographic padding. Plaintext messages come in a variety of lengths; 
+however, block ciphers require that all messages be an exact number of 
+blocks. To satisfy this requirement, padding is used to ensure that a 
+given plaintext message can always be divided into an exact number of 
+blocks.</p>
+<p>While several padding schemes exist, one of the most common padding 
+schemes is described in the PKCS#5 standard. With PCKS#5 padding, the 
+final block of plaintext is padded with N bytes (depending on the length
+ of the last plaintext block) of value N. This is best illustrated 
+through the examples below, which show words of varying length (FIG, 
+BANANA, AVOCADO, PLANTAIN, PASSIONFRUIT) and how they would be padded 
+using PKCS#5 padding (the examples below use 8-byte blocks).<br><br><a href="https://s3.amazonaws.com/s3.media.squarespace.com/production/936190/11268292/l/po_fig1.png" target="_"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig1_sm.png" alt=""></a></p>
+<em>Click to Enlarge</em>
+<p><br>Note that at least one padding byte is ALWAYS appended to the end
+ of a string, so a 7-byte value (like AVOCADO) would be padded with 0x01
+ to fill the block, while an 8-byte value (like PLANTAIN) would have a 
+full block of padding added to it.  The value of the padding byte also 
+indicates the number of bytes, so logically final value(s) at the end of
+ the last block of ciphertext must either:</p>
+<ul>
+<li>A single 0x01 byte (0x01)</li>
+<li>Two 0x02 bytes (0x02, 0x02)</li>
+<li>Three 0x03 bytes (0x03, 0x03, 0x03)</li>
+<li>Four 0x04 bytes (0x04, 0x04, 0x04, 0x04)</li>
+<li>...and so on</li>
+</ul>
+<p>If the final decrypted block does not end in one of these valid byte 
+sequences, most cryptographic providers will throw an invalid padding 
+exception.  The fact that this exception gets thrown is critical for the
+ attacker (us) as it is the basis of the padding oracle attack.</p>
+<p><strong>A Basic Padding Oracle Attack Scenario</strong><br><br>To provide a concrete example, consider the following scenario:<br><br><em>An
+ application uses a query string parameter to pass the encrypted 
+username, company id, and role id of a user.  The parameter is encrypted
+ using CBC mode, and each value uses a unique initialization vector (IV)
+ which is pre-pended to the ciphertext. </em><br><br><em>When the application is passed an encrypted value, it responds in one of three ways:</em></p>
+<ul>
+<li><em>When a valid ciphertext is received (one that is properly padded
+ and contains valid data) the application responds normally (200 OK)</em></li>
+<li><em>When an invalid ciphertext is received (one that, when 
+decrypted, does not end with valid padding) the application throws a 
+cryptographic exception (500 Internal Server Error)</em></li>
+<li><em>When a valid ciphertext is received (one that is properly 
+padded) but decrypts to an invalid value, the application displays a 
+custom error message (200 OK)</em></li>
+</ul>
+<p>The scenario described above is a classic Padding Oracle, because we 
+can use the behavior of the application to easily determine whether the 
+supplied encrypted value is properly padded or not.  The term oracle 
+refers to a mechanism that can be used to determine whether a test has 
+passed or failed.</p>
+<p>Now that the scenario has been laid out, let’s take a look at one of 
+the encrypted parameters used by the application.  This parameter is 
+used by the application to store a semi-colon delimited series of values
+ that, in our example, include the user’s name (BRIAN), company id (12),
+ and role id (2).  The value, in plaintext, can be represented as <strong>BRIAN;12;2;</strong>.
+  A sample of the encrypted query string parameter is shown below for 
+reference.  Note that the encrypted UID parameter value is encoded using
+ ASCII Hex representation.</p>
+<p>&nbsp;</p>
+<pre>http://sampleapp/home.jsp?UID=7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6</pre>
+<p>At this point, an attacker would not have any idea what the 
+underlying plaintext is, but for the sake of this example, we already 
+know the plaintext value, the padded plaintext value, and the encrypted 
+value (see diagram below).  As we mentioned previously, the 
+initialization vector is pre-pended to the ciphertext, so the first 
+block of 8 bytes is just that.<br><br><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig2_sm.png" alt=""><br><br>As
+ for the block size, an attacker would see that the length of the 
+encrypted ciphertext is 24 bytes.  Since this number is evenly divisible
+ by 8 and not divisible by 16, one can conclude that you are dealing 
+with a block size of 8 bytes.    Now, for reference take a look at what 
+happens internally when this value is encrypted and decrypted.  We see 
+the process byte-for-byte in the diagram as this information will be 
+helpful later on when discussing the exploit.  Also note that the 
+circled plus sign represents the XOR function. <br> <br><strong>Encryption Diagram (Click to Enlarge):</strong><br><a href="https://s3.amazonaws.com/s3.media.squarespace.com/production/936190/11268292/l/po_fig3.png" target="_"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig3_sm.png" alt=""></a><br><br><strong>Decryption Diagram (Click to Enlarge):</strong><br><a href="https://s3.amazonaws.com/s3.media.squarespace.com/production/936190/11268292/l/po_fig4.png" target="_"><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig4_sm.png" alt=""></a></p>
+<p>It is also worthwhile to point out that the last block (Block 2 of 
+2), when decrypted, ends in a proper padding sequence as expected.  If 
+this were not the case, the cryptographic provider would throw an 
+invalid padding exception.</p>
+<p><strong>The Padding Oracle Decryption Exploit</strong></p>
+<p>Let’s now look at how we can decrypt the value by using the padding 
+oracle attack.  We operate on a single encrypted block at a time, so we 
+can start by isolating just the first block of ciphertext (the one 
+following the IV) and sending it to the application pre-pended with an 
+IV of all NULL values.  The URL and associated response are shown below:</p>
+<p>&nbsp;</p>
+<pre>Request:  http://sampleapp/home.jsp?UID=0000000000000000F851D6CC68FC9537</pre>
+<pre>Response:  500 - Internal Server Error</pre>
+<p>A 500 error response makes sense given that this value is not likely 
+to result in anything valid when decrypted.  The diagram below shows a 
+closer look at what happens underneath the covers when the application 
+attempts to decrypt this value.  You should note that since we are only 
+dealing with a single block of ciphertext (Block 1 of 1), the block MUST
+ end with valid padding in order to avoid an invalid padding exception. <br><br><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig5_sm.png" alt=""></p>
+<p>As shown above, the exception is thrown because the block does not 
+end with a valid padding sequence once decrypted. Now, let’s take a look
+ at what happens when we send the exact same value but with the last 
+byte of the initialization vector incremented by one.</p>
+<p>&nbsp;</p>
+<pre>Request: http://sampleapp/home.jsp?UID=0000000000000001F851D6CC68FC9537</pre>
+<pre>Response: 500 - Internal Server Error</pre>
+<p>Like before, we also get a 500 exception. This is due to the fact 
+that, like before, the value does not end in a valid padding sequence 
+when decrypted. The difference however, is that if we take a closer look
+ at what happens underneath the covers we will see that the final byte 
+value is different than before (0x3C rather than 0x3D).</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig6_sm.png" alt=""></p>
+<p>If we repeatedly issue the same request and increment just the last 
+byte in the IV each time (up to FF) we will inevitably hit a value that 
+produces a valid padding sequence for a single byte of padding (0x01). 
+Only one value (out of the possible 256 different bytes) will produce 
+the correct padding byte of 0x01. When you hit this value, you should 
+end up with a different response than the other 255 requests.</p>
+<p>&nbsp;</p>
+<pre>Request: http://sampleapp/home.jsp?UID=000000000000003CF851D6CC68FC9537</pre>
+<pre>Response: 200 OK</pre>
+<p>Let’s take a look at the same diagram to see what happens this time.</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig7_sm.png" alt=""></p>
+<p>Given this is the case, we can now deduce the intermediary value byte
+ at this position since we know that when XORed with 0x3C, it produces 
+0x01.</p>
+<div align="center"><em><strong>If [Intermediary Byte] ^ 0x3C == 0x01,<br>then [Intermediary Byte] == 0x3C ^ 0x01,<br>so [Intermediary Byte] == 0x3D</strong></em></div>
+<div align="center"><em><strong><br></strong></em></div>
+<p>Taking this one step further, now that we know the intermediary byte 
+value we can deduce what the actual decrypted value is. You'll recall 
+that during the decryption process, each intermediary value byte is 
+XORed with the corresponding byte of the previous block of ciphertext 
+(or the IV in the case of the first block). Since the example above is 
+using the first block from the original sample, then we need to XOR this
+ value with the corresponding byte from the original IV (0x0F) to 
+recover the actual plaintext value. As expected, this gives us 0x32, 
+which is the number "2" (the last plaintext byte in the first block).</p>
+<p>Now that we’ve decrypted the 8th byte of the sample block, it’s time 
+to move onto the 7th byte. In order to crack the 8th byte of the sample,
+ we brute forced an IV byte that would produce a last decrypted byte 
+value of 0x01 (valid padding). In order to crack the 7th byte, we need 
+to do the same thing, but this time both the 7th and 8th byte must equal
+ 0x02 (again, valid padding). Since we already know that the last 
+intermediary value byte is 0x3D, we can update the 8th IV byte to 0x3F 
+(which will produce 0x02) and then focus on brute forcing the 7th byte 
+(starting with 0x00 and working our way up through 0xFF).</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig8_sm.png" alt=""></p>
+<p>Once again, we continue to generate padding exceptions until we hit 
+the only value which produces a 7th decrypted byte value of 0x02 (valid 
+padding), which in this case is 0x24.</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig9_sm.png" alt=""><br><br>Using
+ this technique, we can work our way backwards through the entire block 
+until every byte of the intermediary value is cracked, essentially 
+giving us access to the decrypted value (albeit one byte at a time). The
+ final byte is cracked using an IV that produces an entire block of just
+ padding (0x08) as shown below.</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig10_sm.png" alt=""></p>
+<p><strong>The Decryption Exploit with PadBuster</strong><br><br>Now 
+let’s discuss how to use PadBuster to perform this exploit, which is 
+fairly straightforward. PadBuster takes three mandatory arguments:</p>
+<ul>
+<li>URL - This is the URL that you want to exploit, including query 
+string if present. There are optional switches to supply POST data 
+(-post) and Cookies if needed (-cookies)</li>
+<li>Encrypted Sample - This is the encrypted sample of ciphertext 
+included in the request. This value must also be present in either the 
+URL, post or cookie values and will be replaced automatically on every 
+test request</li>
+<li>Block Size - Size of the block that the cipher is using. This will 
+normally be either 8 or 16, so if you are not sure you can try both</li>
+</ul>
+<p>For this example, we will also use the command switch to specify how 
+the encrypted sample is encoded. By default PadBuster assumes that the 
+sample is Base64 encoded, however in this example the encrypted text is 
+encoded as an uppercase ASCII HEX string. The option for specifying 
+encoding (-encoding) takes one of the following three possible values:</p>
+<ul>
+<li>0: Base64 (default)</li>
+<li>1: Lowercase HEX ASCII</li>
+<li>2: Uppercase HEX ASCII</li>
+</ul>
+<p>The actual command we run will look like the following:</p>
+<p>&nbsp;</p>
+<pre>padBuster.pl http://sampleapp/home.jsp?UID=7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6<br>7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6 8 -encoding 2</pre>
+<p>Notice that we never told PadBuster how to recognize a padding error.
+ While there is a command line option (-error) to specify the padding 
+error message, by default PadBuster will analyze the entire first cycle 
+(0-256) of test responses and prompt the user to choose which response 
+pattern matches the padding exception. Typically the padding exception 
+occurs on all but one of the initial test requests, so in most cases 
+there will only be two response patterns to choose from as shown below 
+(and PadBuster will suggest which one to use).</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_pb1_sm.png" alt=""><br><br>The
+ initial output from PadBuster is shown in the screenshot above. You’ll 
+see that PadBuster re-issues the original request and shows the 
+generated response information before starting its testing. This is 
+useful for authenticated applications to ensure that the authentication 
+cookies provided to PadBuster are working correctly.</p>
+<p>Once a response pattern is selected, PadBuster will automatically 
+cycle through each block and brute force each corresponding plaintext 
+byte which will take, at most, 256 requests per byte. After each block, 
+PadBuster will also display the obtained intermediary byte values along 
+with the calculated plaintext. The intermediary values can be useful 
+when performing arbitrary encryption exploits as we will show in the 
+next section.</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_pb2_sm.png" alt=""></p>
+<p><strong>Encrypting Arbitrary Values</strong></p>
+<p>We've just seen how a padding oracle and PadBuster can be used to 
+decrypt the contents of any encrypted sample one block at a time. Now, 
+let’s take a look at how you can encrypt arbitrary payloads using the 
+same vulnerability.</p>
+<p>You have probably noticed that once we are able to deduce the 
+intermediary value for a given ciphertext block, we can manipulate the 
+IV value in order to have complete control over the value that the 
+ciphertext is decrypted to. So in the previous example of the first 
+ciphertext block that we brute forced, if you want the block to decrypt 
+to a value of "TEST" you can calculate the required IV needed to produce
+ this value by XORing the desired plaintext against the intermediary 
+value. So the string "TEST" (padded with four 0x04 bytes, of course) 
+would be XORed against the intermediary value to produce the needed IV 
+of 0x6D, 0x36, 0x70, 0x76, 0x03, 0x6E, 0x22, 0x39.</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig11_sm.png" alt=""></p>
+<p>This works great for a single block, but what if we want to generate 
+an arbitrary value that is more than one block long? Let’s look at a 
+real example to make it easier to follow. This time we will generate the
+ encrypted string "ENCRYPT TEST" instead of just "TEST". The first step 
+is to break the sample into blocks and add the necessary padding as 
+shown below:</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_fig12_sm.png" alt=""></p>
+<p>When constructing more than a single block, we actually start with 
+the last block and move backwards to generate a valid ciphertext.  In 
+this example, the last block is the same before, so we already know that
+ the following IV and ciphertext will produce the string "TEST".</p>
+<p>&nbsp;</p>
+<pre>Request:  http://sampleapp/home.jsp?UID=6D367076036E2239F851D6CC68FC9537</pre>
+<p>Next, we need to figure out what intermediary value 6D367076036E2239 
+would decrypt to if it were passed as ciphertext instead of just an IV. 
+ We can do this by using the same technique used in the decryption 
+exploit by sending it as the ciphertext block and starting our brute 
+force attack with all nulls.</p>
+<p>&nbsp;</p>
+<pre>Request:  http://sampleapp/home.jsp?UID=00000000000000006D367076036E2239</pre>
+<p>Once we brute force the intermediary value, the IV can be manipulated
+ to produce whatever text we want. The new IV can then be pre-pended to 
+the previous sample, which produces the valid two-block ciphertext of 
+our choice.  This process can be repeated an unlimited number of times 
+to encrypt data of any length.</p>
+<p><strong>Encrypting Arbitrary Values with PadBuster</strong></p>
+<p>PadBuster has the option to automate the process of creating 
+arbitrary encrypted values in addition to decrypting them.  There are 
+three command line switches related to creating ciphertexts:</p>
+<ul>
+<li><em>-plaintext [String]: plaintext to Encrypt</em>This is the 
+plaintext you want to encrypt.  This option is mandatory when using 
+PadBuster to encrypt data, and its presence is what tells PadBuster to 
+perform encryption instead of decryption</li>
+<li><em>-ciphertext [Bytes]: CipherText for Intermediary Bytes (Hex-Encoded)</em>Optional
+ - can be used to provide the starting ciphertext block for encryption. 
+ This option must be used in conjunction with the -intermediary option 
+(see below)</li>
+<li><em>-intermediary [Bytes]: Intermediary Bytes for CipherText (Hex-Encoded)</em>Optional
+ - can be used to provide the corresponding intermediary byte values for
+ the cipher text specified with the -ciphertext option.</li>
+</ul>
+<p>The purpose of the -ciphertext and -intermediary options is to speed 
+up the exploit process as it reduces the number of ciphertext blocks 
+that must be cracked when generating a forged ciphertext sample.   If 
+these options are not provided, PadBuster will start from scratch and 
+brute force all of the necessary blocks for encryption.  Let’s take a 
+look at the actual command syntax used to encrypt data with PadBuster:</p>
+<p>&nbsp;</p>
+<pre>padBuster.pl http://sampleapp/home.jsp?UID=7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6<br>7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6 8 -encoding 2 -plaintext "ENCRYPT TEST"</pre>
+<p>The output from PadBuster is shown in the screenshot below:</p>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_pb3_sm.png" alt=""></p>
+<p>You’ll notice that just like before, PadBuster will first ask you to 
+choose the correct padding error response signature. This step can be 
+skipped if you manually specify the padding error message using the 
+-error option. Also notice that PadBuster performed a brute force of 
+both full ciphertext blocks, because we didn’t specify a starting 
+ciphertext block and associated intermediary value to use. If we had 
+provided these values to PadBuster, the first block would have been 
+calculated instantly and only the second block would require brute force
+ as shown below.</p>
+<p>&nbsp;</p>
+<pre>padBuster.pl http://sampleapp/home.jsp?UID=7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6<br>7B216A634951170FF851D6CC68FC9537858795A28ED4AAC6 8 -encoding 2 -plaintext "ENCRYPT TEST"<br>-ciphertext F851D6CC68FC9537 -intermediary 39732322076A263D</pre>
+<p><img src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/po_pb4_sm.png" alt=""></p>
+<p>As you can see, the first block (Block 2) was calculated before 
+prompting for the response signature since this block was calculated 
+using just the data provided with the -ciphertext and -intermediary 
+options. If you are wondering where these two values came from, remember
+ that PadBuster prints these two values to the screen at the conclusion 
+of each round of block processing.</p>
+<p>So to wrap things up, we are releasing <a href="https://github.com/GDSSecurity/PadBuster">PadBuster</a>
+ because we think that other pen testers can benefit from a flexible 
+exploit script for detecting and exploit padding oracles. We would be 
+interested in hearing if there are other features that would make the 
+tool more useful or practical from a tester’s perspective, so let us 
+know if you have any feedback.</p>
+
+        
+  
+          
+  
+         
+  
+      </div>
+
+    
+
+  </div>
+
+      <div class="journal-entry-tag journal-entry-tag-post-body">
+      <div class="journal-entry-tag-post-body-line1"><span class="posted-by">  <a href="https://blog.gdssecurity.com/labs/author/bholyfield"> <img title="Author" alt="Author" class="inline-icon user-registered-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Brian Holyfield</a></span> |  <span class="post-comments"><a href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html#comments"> <img title="Comment" alt="Comment" class="inline-icon comment-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">46 Comments</a></span> |  <span class="share-item"><a href="javascript:noop();" onclick="Squarespace.Interaction.shareLink(this,'%2Flabs%2F2010%2F9%2F14%2Fautomated-padding-oracle-attacks-with-padbuster.html','Automated%20Padding%20Oracle%20Attacks%20with%20PadBuster');"> <img title="Share Article" alt="Share Article" class="inline-icon share-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Share Article </a></span> </div>
+      <div class="journal-entry-tag-post-body-line2"><span class="tagged-with">tagged <span class="tag-element"><a rel="tag" href="https://blog.gdssecurity.com/labs/tag/padbuster"> <img title="Tag" alt="Tag" class="inline-icon tag-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">PadBuster</a></span>, <span class="tag-element"><a rel="tag" href="https://blog.gdssecurity.com/labs/tag/padding-oracle"> <img title="Tag" alt="Tag" class="inline-icon tag-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Padding Oracle</a></span></span>  <span class="posted-in">in <span class="tag-element"><a rel="tag" href="https://blog.gdssecurity.com/labs/category/application-security"> <img title="Category" alt="Category" class="inline-icon category-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Application Security</a></span>, <span class="tag-element"><a rel="tag" href="https://blog.gdssecurity.com/labs/category/tools"> <img title="Category" alt="Category" class="inline-icon category-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png">Tools</a></span></span>  </div>
+      <div class="journal-entry-tag-post-body-line3"></div>
+    </div>
+  
+  
+  <div class="clearer"></div>
+
+</div>
+</div>
+
+
+
+
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class="journal-comment-area-wrapper">
+    <div id="comments" class="journal-comment-area">
+
+      <h3 class="caption">Reader Comments  (46) </h3>
+
+      
+        
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962924">
+
+    <div id="item13962924" class="body">
+
+      <p>You can make this dramatically faster by trying data bytes in 
+order of their typical probabilities - most probable first. For example 
+printable Ascii characters may be common, along with padding characters 
+such as null. And within the Ascii range, those which score 1 in 
+Scrabble are more likely then those with higher scores.</p>
+
+    </div>
+    <div class="signature">
+
+      September 15, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080867" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Pete Austin
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962920">
+
+    <div id="item13962920" class="body">
+
+      <p>I'll be testing it on my sites this evening.....<br>Anyone else working on this today?</p>
+
+    </div>
+    <div class="signature">
+
+      September 15, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080863" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">sherif
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962921">
+
+    <div id="item13962921" class="body">
+
+      <p>Nice post.  Does PadBuster work on the new .NET padding oracle vulnerability?</p>
+
+    </div>
+    <div class="signature">
+
+      September 15, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080864" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">James Prost
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962922">
+
+    <div id="item13962922" class="body">
+
+      <p>@Pete:  I don't think it's possible to attain an average 
+guess-rate higher than 127.5 tries per byte (brute-force) when dealing 
+with cryptographically random bytes that falls in the range of 0-255, 
+for each byte.</p><p>And not that it matters, printable ASCII characters only account for about 40% of the range.</p>
+
+    </div>
+    <div class="signature">
+
+      September 15, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080865" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Marcin
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962923">
+
+    <div id="item13962923" class="body">
+
+      <p>@Pete:  Marcin is correct.  The value we are sequentially 
+testing is the value used to XOR the intermediary value, which then 
+produces the plaintext.  It’s not the actual plaintext value, so these 
+values are likely to be pretty evenly distributed across the 0-255 byte 
+space.  </p><p>@James:  Yes, I've used PadBuster against encrypted 
+ViewState and it will decrypt it as long as Custom Errors are not turned
+ on (make sure to use a Block Size of 8).  I haven't done much research 
+on the new .NET padding oracle vulnerability but I'm sure we will get 
+more details after the talk at ekoparty later this week.  From what I 
+can tell, the Framework throws a different InnerException when there is 
+invalid padding versus an invalid ViewState (which is how PadBuster is 
+able to decrypt it).</p>
+
+    </div>
+    <div class="signature">
+
+      September 15, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080866" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962918">
+
+    <div id="item13962918" class="body">
+
+      <p>nice job, brian</p>
+
+    </div>
+    <div class="signature">
+
+      September 17, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080861" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">nahsra
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962919">
+
+    <div id="item13962919" class="body">
+
+      <p>Brian,</p><p>  how did you use padbuster against viewstate ? I've tried using the following format:</p><p>  padBuster.pl https://www.testdomain/path/file.aspx VIEWSTATE_VALUE 8 -post "POSTDATA" -verbose</p><p>  POSTDATA includes the complete Post string which include the VIEWSTATE variable.</p><p>  padBuster is failing with 400 (URL must be absolute) and telling me the encrypted sample was not found. </p><p>  The viewstate variable is very large and I'm not sure if this is cause the problem. How you tried with large viewstates ?</p><p>  I have a few sites that use viewstate and I would like to create a demo to developers showing this attack.</p>
+
+    </div>
+    <div class="signature">
+
+      September 18, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080862" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Spawn
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962917">
+
+    <div id="item13962917" class="body">
+
+      <p>@Spawn:  I had a similar problem when testing a large ViewState
+ where the limit of the command line was exceeded.  As a temporary 
+workaround, try hard-coding the $post and $sample variables below the 
+@ARGV parsing section (this should then work regardless of what you pass
+ in for the post data and sample arguments).  I'll see if I can come up 
+with a better option for handling large values in the next version, 
+which also has some additional options for handling encrypted .NET query
+ strings that are vulnerable to the new padding oracle attack 
+(demonstrated last week at ekoparty).  </p><p>It’s also worth noting 
+that if you decrypt the ViewState with v0.1, the first block will be 
+missing (since it is treated by PadBuster as an IV).  This is also fixed
+ in the next version as there will be a “no IV” option.</p>
+
+    </div>
+    <div class="signature">
+
+      September 20, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080860" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962925">
+
+    <div id="item13962925" class="body">
+
+      <p>Doesn't the POET tool released by Rizzo and Duong already do the exact same thing?</p>
+
+    </div>
+    <div class="signature">
+
+      September 22, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080868" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Tomas
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962926">
+
+    <div id="item13962926" class="body">
+
+      <p>@Tomas:  The POET tool released by Rizzo and Duong seems to 
+have been designed more as a proof of concept for the Apache MyFaces 
+exploit.  While the tool itself is great, it lacks certain features that
+ allow it to work against most other applications.  For example it only 
+supports post-backs to the same URL, it doesn't support cookies or any 
+authentication, relies on a hard-coded padding exception message for 
+padding errors, and has many other limitations. </p><p>PadBuster is 
+designed to be a flexible tool that should be able to detect and exploit
+ padding Oracles in virtually any application.  I believe Rizzo and 
+Duong may be releasing an updated version of POET at some point in the 
+future.</p>
+
+    </div>
+    <div class="signature">
+
+      September 22, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080869" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962927">
+
+    <div id="item13962927" class="body">
+
+      <p>Brian, When are you releaseing the next version of PadBuster?</p>
+
+    </div>
+    <div class="signature">
+
+      September 22, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080870" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Sherif
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962928">
+
+    <div id="item13962928" class="body">
+
+      <p>The microsoft advisory implies that this vulnerability can be 
+exploited to ends other than merely decrypting application information. 
+In particular, disclosure of files on the system itself. Has anyone 
+investigated this claim? If this is indeed exploitable, this is a 
+situation which is far more worrisome than the exploit which was 
+demonstrated. </p><p>Also, this tool doesn’t reflect the observation 
+that Thai Duong made – which is that the actual response codes are 
+unnecessary, timing attacks can give the same information.</p>
+
+    </div>
+    <div class="signature">
+
+      September 22, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080871" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Calandale
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962929">
+
+    <div id="item13962929" class="body">
+
+      <p>@Calandale:  Yes, I have looked into this claim and based on my
+ research it is true.  The padding oracle can be used to exploit a 
+separate file retrieval bug within the framework that allows arbitrary 
+files to be served from within the web application directory (including,
+ unfortunately, the web.config).  </p><p>The observations that Rizzo and
+ Duong made during their most recent presentation will be incorporated 
+into a new release of PadBuster once they publish their findings.  We 
+will likely hold on releasing the new version until more details from 
+their research are made publicly available. </p><p>@Sherif:  See above.</p>
+
+    </div>
+    <div class="signature">
+
+      September 22, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080872" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962931">
+
+    <div id="item13962931" class="body">
+
+      <p>If a website does not contain any public resource, meaning the 
+user must authenticate first, the does Padding Oracle attack still 
+apply?</p><p>And for an ASP.NET website, if view state is not used, then
+ along with the site-wide auth requirement, does Padding Oracle attack 
+still apply?</p><p>Or would the attack only be valid once the user has logged in?</p>
+
+    </div>
+    <div class="signature">
+
+      September 24, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080874" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Jiho Han
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962932">
+
+    <div id="item13962932" class="body">
+
+      <p>@Jiho: Without having more details, I would have to say yes…it 
+does apply.  The ViewState is only one of many potential attack vectors 
+for this issue within a typical .NET application.  This issue affects 
+virtually every place that the framework performs MachineKey encryption 
+(ViewState, FormsAuth Tokens, various .AXD handler requests, etc).  Even
+ if you have site-wide authentication enabled, in the case of ASP.NET 
+Forms Authentication, the authentication token mechanism itself may be 
+vulnerable!</p><p>The real question is not whether the vulnerability 
+applies (as it almost always does), but rather the impact an exploit 
+would have.  In other words, would someone just be able to decrypt the 
+encrypted data (which unfortunately is almost always the case), or could
+ they do more serious damage like download the web.config file and forge
+ authentication tokens.  The answer to this question depends on several 
+other factors, like the level of security configured for FormsAuth 
+Tokens, whether your MachineKey and ValidationKey are hard coded in the 
+web.config file, whether certain handlers are anonymously accessible or 
+not, etc.  </p><p>In short, I think you should assume that you are 
+vulnerable and implement the recommended workarounds from Microsoft 
+until an official patch comes out.</p>
+
+    </div>
+    <div class="signature">
+
+      September 24, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080875" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962933">
+
+    <div id="item13962933" class="body">
+
+      <p>Thanks Brian.</p><p>I am definitely implementing what Microsoft is recommending; however, I am still looking for other possible attack routes.</p><p>I
+ am trying to use padbuster on the ASP.NET site and I can't seem to make
+ it work correctly.  I always get "All of the responses were identical".
+  I'm afraid I'm not getting the block size correctly.  What should I 
+use for .ASPXAUTH or d (as in WebResource.axd)?  I've tried 8, 16, and 
+so on.</p><p>And I know I haven't applied the fix to the site, so it is 
+generating a 404 on the normal request but I see all 256 requests 
+returned 500.  How could that be?</p>
+
+    </div>
+    <div class="signature">
+
+      September 24, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080876" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Jiho Han
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962934">
+
+    <div id="item13962934" class="body">
+
+      <p>Could you please be more specific about this "separate file 
+retrieval bug within the framework that allows arbitrary files to be 
+served from within the web application directory".  This statement has a
+ few of my colleagues in a rather alarmed state.  It's a little 
+difficult to have a real discussion about the issue without more 
+information.</p><p>Thank you,</p><p>-- Matthew</p>
+
+    </div>
+    <div class="signature">
+
+      September 24, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080877" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Matthew Shirey
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962936">
+
+    <div id="item13962936" class="body">
+
+      <p>Nice work.</p><p>One question though. If the IV  can not be obtained, and then is it still possible to get the first block of plain text?</p>
+
+    </div>
+    <div class="signature">
+
+      September 25, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080879" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">kakrat
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962937">
+
+    <div id="item13962937" class="body">
+
+      <p>I'm having the same problem as Jiho. I'm 100% positive that the
+ test site has the vulnerability, but the tool keeps showing "All of the
+ responses were identical". I'm using WebResource.axd?d=xxxx.</p><p>any ideas? Thanks.</p>
+
+    </div>
+    <div class="signature">
+
+      September 25, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080880" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Jamie
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962938">
+
+    <div id="item13962938" class="body">
+
+      <p>@Jiho and @Jamie:  The issue you are having is due to the fact 
+that the .axd handlers use a modified Base64 encoding that is safe for 
+passing in query strings (the + / and = characters are substituted).  
+The current version of PadBuster does not support this encoding format, 
+however it will be in the next release. As for FormsAuth tokens, the 
+Uppercase Hex encoding (-encoding 2) should work.</p><p>@Matthew:  Check out the following blog post that has some good information about how this issue can be potentially exploited:</p><p><a target="new" rel="nofollow" href="https://eglasius.blogspot.com/2010/09/aspnet-padding-oracle-how-it-relates-to.html">http://eglasius.blogspot.com/2010/09/aspnet-padding-oracle-how-it-relates-to.html</a></p><p>I
+ understand your frustration.  I think the lack of good information 
+about the full scope of this bug is due to the fact that there is often a
+ fine line between disclosing enough information to understand the full 
+impact of a vulnerability versus disclosing the details that anyone 
+would need to easily exploit the issue.  Unfortunately since there is 
+currently no official patch yet, everyone is being very careful about 
+what gets disclosed.</p>
+
+    </div>
+    <div class="signature">
+
+      September 25, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080881" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Brian Holyfield
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962939">
+
+    <div id="item13962939" class="body">
+
+      <p>@Brian: Thank you Brian for having released Padbuster, it's a beautiful tool.</p><p>Releated
+ to WebResource.axd exploit, I'm still working for having Padbuster 
+working correctly on it. At the moment I'm investigating how to deal 
+with the behaviour of WebResource.axd vs Scriptresource.axd. the 
+UrlToken encoder/decoder was unfortunately the easy part. </p><p>With 
+"Customerrors on", the only way this attack may work (and I'm working on
+ it right now), is to use WebResource.axd to encrypt a valid string for 
+ScriptResource.axd. Webresource.axd needs only 1 pipe ("|") while 
+ScriptreSource needs 3 pipes ("|||"). If a string after decoding still 
+contains a single pipe it will throw a 404 error.</p><p>I think you 
+could use this feature to find a correct formatted and encrypted string,
+ against the Webresource.axd and after using that on ScriptResource.axd.</p>
+
+    </div>
+    <div class="signature">
+
+      September 27, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080882" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Giorgio Fedon
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962940">
+
+    <div id="item13962940" class="body">
+
+      <p>Brian,<br>I have tried encoding 2 with .ASPXAUTH (forms auth). 
+Encoding 0 doesn't work at all (as you suggested), 1 and 2 produce the 
+same result for me, in that they both produce some garbles plaintext 
+values - random letters, funny symbols, etc.  Also the block size 8 
+would produce an "ERROR: No matching response on [Byte 5]" and many 
+others.  A block size of 16 would make it run through the whole thing 
+but like I said, produced a garbles text.</p><p>Thanks for your helpful article and the tool.  However, I'd like to be able to use it as well :)</p><p>I
+ understand your need for sensitivity as to how much you disclose etc. 
+but is it possible for you to do a detailed tutorial on a specific 
+example (like .aspxauth)?  You might also consider it being available as
+ something that you can send via email registration or something like 
+that.</p><p>One more thing, would you include proxy support in your tool?  It'd be very helpful to see the traffic on a tool like fiddler.</p><p>The last thing is, you might want to create a forum for the tool, if you don't want a flood of comments in this post :)</p><p>Thanks again</p>
+
+    </div>
+    <div class="signature">
+
+      September 27, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080883" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">Jiho Han
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962941">
+
+    <div id="item13962941" class="body">
+
+      <p>@Brian -<br>I'm sure you've been busy answering a lot of these questions, and I appreciate the time you've spent on this bug.  </p><p>As
+ a general question, what are the most common error codes that will be 
+seen?  Will you always get a bunch of 500s, or will it be a distribution
+ of 500s, 200s, 404s, etc.?  Could you detect this type of attack based 
+on a large enough amount of any of these errors per minute let's say?  
+Just wondering if you can elaborate - could one attacker get mostly 200 
+responses while another gets almost all 500s?  Thanks in advance,</p>
+
+    </div>
+    <div class="signature">
+
+      September 27, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080884" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">nemadrias
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962942">
+
+    <div id="item13962942" class="body">
+
+      <p>@nemadrias you should get more 500s than 404s, since the 
+earlier happens for each invalid padding, while the 404s happens when 
+the padding matched. This depends on the feature, its best if you look 
+for the exceptions being logged.</p>
+
+    </div>
+    <div class="signature">
+
+      September 27, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080885" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">eglasius
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment13962943">
+
+    <div id="item13962943" class="body">
+
+      <p>@Jiho when you are using the tool to see if you are vulnerable,
+ you don't need to use it to break authentication. Pick any of the other
+ features that use encryption/decryption.</p><p>Besides it, you 
+shouldn't be able to break authentication as easily, since it uses a 
+signed value. Attack demonstrated with POET used a separate 
+vulnerability to retrieve the web.config and then get the machine keys 
+that were in there (default of Dot net nuke).</p>
+
+    </div>
+    <div class="signature">
+
+      September 27, 2010 | 
+  <a href="https://blog.gdssecurity.com/contributor/15080886" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/user-unregistered.png) top left no-repeat;">eglasius
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+
+        
+  <div class="paginationControlWrapper footer">
+
+    <!-- 1 - 25 of 46 (page 1 of 2) -->
+
+    <span class="paginationControlPrefix">
+      
+              Page
+       
+    </span>
+    
+    
+
+    
+              <a class="paginationPageNumber activePage" href="javascript:noop();">1</a>
+      
+    
+              <a class="paginationPageNumber" href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html?currentPage=2#comments">2</a>
+      
+     
+
+    
+
+          <span class="paginationControlNextPageSuffix">
+        <a href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html?currentPage=2#comments">
+          Next 25 Comments
+        </a>
+      </span>
+    
+    
+          <span class="paginationControlLastPageSuffix">
+        <a href="https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html?currentPage=2#comments">
+          Most Recent Comment » 
+        </a>
+      </span>
+    
+
+  </div>
+
+
+
+      
+
+    </div>
+    </div>
+
+    
+      <div class="journal-add-comment-area-wrapper">
+  
+          
+            
+            
+  <script type="text/javascript">
+  // <![CDATA[
+
+    var isAddCommentsVisible = true;
+
+    function toggleReferenceMode() {
+      if (isAddCommentsVisible) {
+        hideObject(document.getElementById("add-comment-area"));
+        showObject(document.getElementById("add-reference-area"));
+      } else {
+        showObject(document.getElementById("add-comment-area"));
+        hideObject(document.getElementById("add-reference-area"));
+      }
+      isAddCommentsVisible = !isAddCommentsVisible;
+    }
+
+    E.addListener("postform", "keydown", Squarespace.SessionAuthorizationKey.acquireAuthKey, '');
+
+  // ]]>
+  </script>
+
+  <form method="post" style="margin: 0; padding: 0;" name="postform" id="postform" action="/process/CreateJournalEntryComment?moduleId=11268292&amp;entryId=12210343"> 
+
+     <input type="hidden" name="currentPage" value="1"> 
+ 
+    <div class="notice-box" style="margin-top: 2em;" id="add-comment-area">
+
+      
+                              <h3 class="caption"><img title="Post" alt="Post" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/comment.png) top left no-repeat;">Post a New Comment</h3>
+          
+        
+
+        <div class="caption-text">
+
+          Enter your information below to add a new comment.
+
+          
+            <br><br>
+            <a href="javascript:toggleReferenceMode();">My response is on my own website »</a>
+
+          
+
+        </div>
+
+        
+
+        <script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/storable-fields.js"></script>
+
+        
+          <div class="input-field">
+            
+            <div id="authorName_title" class="title">
+               Author: 
+
+              &nbsp;<a id="storedFieldControls" style="display: none; font-size: 9px;" href="javascript:forgetSavedFields();">(forget stored information)</a>
+            </div>
+            <input class="text" type="text" style="width: 200px;" name="authorName" id="authorName" maxlength="50" tabindex="2">
+          </div>
+
+          <div class="input-field">
+            
+            <div id="authorEmail_title" class="title"> Author Email (optional): 
+</div>
+            <input class="text" type="text" style="width: 200px;" name="authorEmail" id="authorEmail" maxlength="255" tabindex="3">
+          </div>
+
+          <div class="input-field">
+            
+            <div id="authorUrl_title" class="title"> Author URL (optional): 
+</div>
+            <input class="text" type="text" style="width: 200px;" name="authorUrl" id="authorUrl" maxlength="255" tabindex="4">
+          </div>
+
+          <script type="text/javascript">
+
+            YAHOO.util.Event.addListener(window, "load", function() {
+
+              document.getElementById("storedFieldControls").style.display = (Squarespace.StorableFields.isDataSaved("authorName", "authorEmail", "authorUrl") ? "inline" : "none");
+              Squarespace.StorableFields.recall("authorName", "authorEmail", "authorUrl");
+
+            });
+
+            function forgetSavedFields() {
+
+              Squarespace.StorableFields.forget("authorName", "authorEmail", "authorUrl");
+              document.getElementById("storedFieldControls").style.display = "none";
+
+            }
+
+          </script>
+
+        
+
+        <script type="text/javascript">
+          function expandBody() { b = document.getElementById("body"); b.style.height = (b.offsetHeight + 40) + "px"; }
+          function shrinkBody() { b = document.getElementById("body"); b.style.height = (b.offsetHeight - 40) + "px"; }
+        </script>
+
+        
+        <div id="body_title" style="padding-bottom: 5px; float: left;"> Post: 
+</div>
+        <div style="padding-bottom: 5px; float: right;"><a title="Increase the size of the comment area." href="javascript:expandBody();">↓</a> | <a title="Decrease the size of the comment area." href="javascript:shrinkBody();">↑</a></div>
+        <div class="clearer">&nbsp;</div>
+        <div style="padding-bottom: 5px;"><textarea rows="15" cols="60" name="body" id="body" tabindex="5"></textarea></div>
+        <div style="padding-bottom: 5px;">All HTML will be escaped.  Hyperlinks will be created for URLs automatically.</div>
+
+        
+
+        
+
+        <div class="footer">
+
+                      <div class="notice-box-alert">
+              <div class="icon"><img title="Alert" alt="Alert" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/alert.png) top left no-repeat;"></div>
+              <div class="text">
+                <strong>Comment Moderation Enabled</strong><br>
+                Your comment will not appear until it has been cleared by a website editor.
+              </div>
+            </div>
+          
+
+                    
+            <p style="padding-bottom: 10px;"><input class="checkbox" type="checkbox" name="followOptIn" id="followOptIn" value="true" tabindex="6">
+              <span onclick="toggleNotify()" style="cursor: pointer; cursor: hand">Notify me of follow-up comments via email.</span>
+            </p>
+            <br>
+
+          
+
+          <input type="hidden" id="authKey" name="authKey" value="">
+          <input style="width: 150px;" tabindex="6" class="button" type="button" name="createPostButton" id="createPostButton" value="Create Post" onclick="submitContent(true);"> &nbsp;&nbsp;
+          <input style="width: 150px;" tabindex="7" class="button" type="button" name="previewPostButton" id="previewPostButton" value="Preview Post" onclick="submitContent(false);">
+
+        </div>
+
+      
+
+    </div>
+
+  </form>
+
+  <script type="text/javascript">
+  // <![CDATA[
+
+    function toggleNotify() {
+      document.getElementById("followOptIn").click();
+    }
+              
+    function submitContent(isFinal) {
+      if (isFinal) {
+        document.getElementById("postform").action += "&finalize=true";
+        Squarespace.StorableFields.save("authorName", "authorEmail", "authorUrl");
+      }
+      Squarespace.Form.smartSubmit("postform");
+    }
+
+  // ]]>
+  </script>
+
+  
+    <form method="post" style="margin: 0; padding: 0;" name="postreferenceform" id="postreferenceform" action="/process/CreateReference?moduleId=11268292&amp;entryId=12210343">
+
+      <div class="notice-box" style="margin-top: 2em; display: none;" id="add-reference-area">
+
+                  <h3 class="caption"><img title="Post" alt="Post" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/reference.png) top left no-repeat;">Link an External Response</h3>
+        
+
+        <div class="caption-text">
+
+          Have a response on your own site?
+
+                      Use this area to link to your response directly.
+          
+
+          <br><br>
+
+          <a href="javascript:toggleReferenceMode();">I want to leave a comment directly on this site »</a>
+
+        </div>
+
+        <div class="caption-text" id="directLink">
+
+          <div class="input-field">
+            
+            <div class="title"> Article Title: 
+</div>
+            <div class="control"><input class="text" type="text" name="title" id="title" tabindex="2"></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Article URL: 
+</div>
+            <div class="control"><input class="text" type="text" name="url" id="url" tabindex="3"></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Article Excerpt (optional): 
+</div>
+            <div class="control"><input class="text" type="text" name="excerpt" id="excerpt" tabindex="4"></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Site Name: 
+</div>
+            <div class="control"><input class="text" type="text" name="blog_name" id="blog_name" tabindex="5"></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Site URL (optional): 
+</div>
+            <div class="control"><input class="text" type="text" name="blog_url" id="blog_url" tabindex="5"></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Author Name: 
+</div>
+            <div class="control"><input class="text" type="text" name="author_name" id="author_name" tabindex="6"></div>
+          </div>
+
+        </div>
+
+        <div class="footer">
+
+          
+            <div class="notice-box-alert">
+              <div class="icon"><img title="Alert" alt="Alert" class="inline-icon" rel="smalllight" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/transparent.png" style="background:transparent url(/universal/images/core-resources/icons/smalllight/alert.png) top left no-repeat;"></div>
+              <div class="text"><strong>References will be subject to editor approval before appearing.</strong>  Your reference will not appear until it has been cleared by a website editor.</div>
+            </div>
+
+          
+
+          <input style="width: 150px;" tabindex="7" class="button" type="button" value="Create Reference" onclick="Squarespace.Form.smartSubmit('postreferenceform');">
+
+          
+
+        </div>
+
+      </div>
+
+    </form>
+
+    
+
+  
+
+
+  
+            
+  
+          
+  
+        
+  
+      </div>
+        
+    
+  
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+  
+
+</div></div> <!-- Content -->
+  
+    
+  
+    </div></div> <!-- Page Body -->
+
+    
+    
+    <div id="pageFooterWrapper"><div id="pageFooter">
+  
+              Copyright © 2018 Gotham Digital Science, an Aon Company. All Rights Reserved.
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-890734-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- GDPR -->
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/1.js"></script>
+<script type="text/javascript">
+cookiesDirective("bottom", "", "");
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 959309542;
+var google_conversion_label = "C3QqCJrQlWwQ5s23yQM";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/959309542/?value=1.00&amp;currency_code=USD&amp;label=C3QqCJrQlWwQ5s23yQM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+      
+  
+      
+  
+    </div></div>
+  
+  </div></div> <!-- Canvas -->
+  
+   
+
+
+  <div class="clearer" id="bodyClearer"></div>
+
+  
+
+
+
+
+<div id="sslightbox_title" class="squarespace-lightbox-description" style="color: rgb(233, 233, 233); font: 28px Arial; position: absolute; top: 0px; left: 0px; z-index: 950; display: none; cursor: pointer; opacity: 0;"></div><div id="sslightbox_description" style="color: rgb(233, 233, 233); position: absolute; font: 14px / 20px Arial; top: 0px; left: 0px; z-index: 950; display: none; cursor: pointer; opacity: 0;"></div><div id="sslightbox_overlay" title="Click to Close" style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; z-index: 900; display: none; cursor: pointer; opacity: 0;"></div><a id="sslightbox_previmg" href="javascript:SSLightbox.switchImage(-1);" style="background-color: transparent; background-image: url(&quot;/universal/images/overlay-arrow-left.png&quot;); position: absolute; display: none; width: 35px; height: 50px; left: 8px; z-index: 950; cursor: pointer; opacity: 0;"></a><a id="sslightbox_nextimg" href="javascript:SSLightbox.switchImage(1);" style="background-color: transparent; background-image: url(&quot;/universal/images/overlay-arrow-right.png&quot;); position: absolute; display: none; width: 35px; height: 50px; right: 8px; z-index: 950; cursor: pointer; opacity: 0;"></a><div id="sslightbox_imgholder" style="position: absolute; top: 1542.5px; left: 536px; background-color: rgb(255, 255, 255); opacity: 0; z-index: 950; width: 200px; height: 200px; display: none;"><span id="sslightbox_imgwrapper" classname="thumbnail-wrapper" style="position: absolute; top: 14px; left: 14px;"><img id="sslightbox_img" style="position: absolute; top: 0px; left: 0px; opacity: 0; display: none; z-index: 995; padding: 0px; margin: 0px; border: 0px none; cursor: pointer;"></span></div><img id="sslightbox_loadimg" src="GDS%20-%20Blog%20-%20Automated%20Padding%20Oracle%20Attacks%20with%C2%A0PadBuster_files/loading.gif" style="position: absolute; opacity: 0; width: 48px; height: 54px; z-index: 990; padding: 0px; margin: 0px; border: 0px none; cursor: pointer; left: 612px; top: 1615.5px; display: none;"><a id="sslightbox_scrollrightimg" href="javascript:SSLightbox.scrollThumbnails(1);" class="picture-gallery-thumbnail-scroll-right" style="position: absolute; display: block; z-index: 800; top: -5000px; left: -10000px;"></a><a id="sslightbox_scrollleftimg" href="javascript:SSLightbox.scrollThumbnails(-1);" class="picture-gallery-thumbnail-scroll-left" style="position: absolute; display: block; z-index: 800; top: -5000px; left: -10000px;"></a></body></html>
