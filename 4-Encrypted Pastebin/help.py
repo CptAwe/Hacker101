@@ -1,3 +1,7 @@
+'''
+Helping generic functions
+'''
+
 from requests import get
 
 def replace_chars(text: str, reverse=False):
