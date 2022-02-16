@@ -6,8 +6,10 @@ from help import replace_chars
 from base64 import b64decode
 import os
 
-TARGET = f"http://35.190.155.168/6e75b7be15/?post="
-ORIGINAL_PAYLOAD = "V2UdEul6nB9mssW!ygK6nPsBRMJkzyL7DPXNRblqSApeeBiTzXjnaMrFK72wcXSIZmH7-KI9HTLibbxt4WPL98iCTn4AsD9huJppib6b!rjM6OP8FQDwBRLJV1-ZkHBoayofiyfjR!EqEhVDJew-Qo-xh6A35NaKd9jitAxLUyg7BMnKFrASQbt3H9HEjZAWP8VQxwdSmoWWtDih8WuQug~~"
+__LINK = "http://35.190.155.168/13041c545c/?post=opjdpixztsUmd9FPxsy7-dMpTMdxjSmEFDAU!gyiG6FwTphUDBY-PNzFM3yb0IGqbaD4FQ2hW!S80XB1AYRiMxFXp-cLdKIq068aBXk6HrUQ1w!EfiAwdhaMGZ0Pf3uUmPxlGOcdtrA3QkH5jem!tYH20qr4DYXJtImJ5qVobq1AKC6n-iMJS8w5S0yfsa1yyHhjPQOUxWALAP7Zi6GFVg~~"
+
+TARGET, ORIGINAL_PAYLOAD = __LINK.split("?post=")
+TARGET += "?post="
 
 CBC_BLOCKSIZE = 16
 
