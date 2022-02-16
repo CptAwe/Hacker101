@@ -101,7 +101,7 @@ def __exec_padding_oracle_attack(original_iv: bytes, modifiedDemoData: bytes, nu
                 original_plaintext = xor2bytes(original_iv[num_of_byte:], intermediary)
                 original_plaintext = original_plaintext.decode('utf-8')
 
-                print(f"\nBlock #{num_of_block}: Caught {byte_solution}.\nProgress thus far: <{original_plaintext: >{CBC_BLOCKSIZE}}>")
+                print(f"\nBlock #{num_of_block}: Caught {byte_solution}.\nProgress thus far: <{repr(original_plaintext): >{CBC_BLOCKSIZE+2}}>")
 
                 # Now move on to the next byte, but first make sure to change the byte we found to produce the correct padding on the next try
                 if len(caused_valid_padding) > 1:
@@ -206,7 +206,7 @@ def padding_oracle(use_skips: bool = True):
     text = "".join(text)
 
 
-    print(f"Result:<|{text}|>")
+    print(f"Result:<|{repr(text)}|>")
 
 
     dt = datetime.now() - dtstart
