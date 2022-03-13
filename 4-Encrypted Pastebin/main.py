@@ -12,10 +12,15 @@ This is the main file where the magic happens
 # exit()
 
 #### FLAG 2 ####
+# from flag_2 import byte_flip
+# flag_2 = byte_flip()
+# print(flag_2)
+
+# exit()
+
+
+#### FLAG 3 ####
 from flag_2 import byte_flip
-
-flag_2 = byte_flip()
-print(flag_2)
-
-
+result = byte_flip('a', True)
+print(result.text)
 

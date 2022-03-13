@@ -303,3 +303,46 @@ Which contains flag #2
 * The hacker101 ctf has been updated since the previous commit. The new backend seems to throttle my requests, which becomes especially annoying when executing a padding oracle attack... Instead of 20 minutes it takes 90 (when using threads)...
 * *Werner* has a small, not critical to the execution, typo in how he describes the blocks. Each block must be 16 bytes long. He counts the character `\n` as two characters/bytes.
 
+---
+
+## Flag 2 - ~~Mystery~~ SQL Injection
+
+### Useful Info 3:
+
+The hint for this flag is hilarious!
+
+### Accessing the situation 3:
+
+From the previous flag we see that we can ask the server for any page. If the page we are trying to find doesn't exist then it shows `Attempting to decrypt page with title: [...]`. Let's try to send an invalid id and see what happens.
+
+
+We modify the previous code for the byte flipping so that we can send any character to the server. Let's try sending the character `a`. The payload should look something like this:
+
+```json
+{"id":"a", "i":"2", "key": "kKk5ckIzA7-hBjc8uGnozg~~"}\n\n\n\n\n\n\n\n\n\n
+```
+
+The server responds with:
+
+```
+Traceback (most recent call last):
+  File "./main.py", line 71, in index
+    if cur.execute('SELECT title, body FROM posts WHERE id=%s' % post['id']) == 0:
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/cursors.py", line 255, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+OperationalError: (1054, "Unknown column 'a' in 'where clause'")
+```
+
+Bingo! The SQL is not validated before it is being sent to the database. This means that we can execute an SQL Injection.
+
+
+### Execution 3:
+
+The SQL is quite simple:
+```SQL
+SELECT title, body FROM posts WHERE id = __id__
+```
+
+We can't change more than one character of the payload... YET!

