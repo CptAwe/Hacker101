@@ -1,17 +1,21 @@
 '''
-This is the main 
+This is the main file where the magic happens
 '''
+#### FLAG 0 ####
+# Just cause any 50X error
 
-from flag_2 import padding_oracle
-from sensitive import flag_2
+#### FLAG 1 ####
+# from flag_1 import padding_oracle
+# flag_1 = padding_oracle(use_skips=False)
+# print(flag_1)
 
-# print(load_skips())
+# exit()
 
+#### FLAG 2 ####
+from flag_2 import byte_flip
 
-# flag_2 = padding_oracle(use_skips=False)
-
+flag_2 = byte_flip()
 print(flag_2)
-
 
 
 

@@ -6,7 +6,7 @@ from help import replace_chars
 from base64 import b64decode
 import os
 
-__LINK = "http://35.190.155.168/13041c545c/?post=opjdpixztsUmd9FPxsy7-dMpTMdxjSmEFDAU!gyiG6FwTphUDBY-PNzFM3yb0IGqbaD4FQ2hW!S80XB1AYRiMxFXp-cLdKIq068aBXk6HrUQ1w!EfiAwdhaMGZ0Pf3uUmPxlGOcdtrA3QkH5jem!tYH20qr4DYXJtImJ5qVobq1AKC6n-iMJS8w5S0yfsa1yyHhjPQOUxWALAP7Zi6GFVg~~"
+__LINK = "https://1e6b5b5dda6efd0cf0edeae6ef41e5e0.ctf.hacker101.com/?post=vxkRSNvy4ADEDPB3dDaukJknllu1WWuVI!6uT6kGbAgEwW7xYeja5FhNlQLSKG5Mha0rT6SSEY7-DYOpilR1ixM5Y!Qbh9TY3HyaGIK8!f1MDAVWhF5yrw1fDwo1z87h48V!TkhTXIE5-bGKDK4tJJvCINQ2!eaxH1XUEDkRfKHO9dnIg00M3QEy8xG0hjwZqypbUnqM6YQk494K6NTtRQ~~"
 
 TARGET, ORIGINAL_PAYLOAD = __LINK.split("?post=")
 TARGET += "?post="

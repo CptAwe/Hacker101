@@ -6,7 +6,7 @@ The website seems to work as follows:
 1. The server encrypts the data
 1. The server responds with a 302 response (redirect)
 1. The client is redirected and makes a GET request with the link from the `Location` response header
-`http://__IP__/__ROOM__ /?post=__payload__`
+`http://__IP__/__ROOM__/?post=__payload__`
 1. The server receives the payload, decrypts it and returns an html document if it was decrypted successfully.
 
 Example of a payload: `CVvRvrrD8O-kDeVBHh8-7aX56YGWh59sDqMY8TnNL3xHdNEvaXmFdqqI3aS6iVCUjxEHiq!EYogF0moI2V1Pdare4OzG56pftL!PzaWEMtEID2NhbnSAqs7dUQ5-giVPNh3wYYm1WQZbje!cdPtGV!kzoxPjJMwJayhu1PSHqAdu3P21YiNNWNlk94kPwrn0Jn5NlaqrKOXx9plp8FjSuw~~`
@@ -29,6 +29,7 @@ test
 ```
 
 ---
+
 ## Flag 0 - Improper Error Handling
 
 ### Accessing the situation:
@@ -43,9 +44,11 @@ http:// {IP} / {ROOM} /?post=
 ```
 The backend spits out an error but first it shows the flag
 
+---
+
 ## Flag 1 - Padding Oracle Attack
 
-### Usefull Info:
+### Useful Info 1:
 [How PadBuster works](https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html)
 
 [Writeup on this flag](https://sec.wonderingraven.net/hacker-ctf/write-up-hacker101-encrypted-pastebin/)
@@ -54,7 +57,7 @@ The backend spits out an error but first it shows the flag
 
 [Extremely useful writeup in chinese](https://xz.aliyun.com/t/7054)
 
-### Accessing the situation:
+### Accessing the situation 1:
 
 Making a request `http://__IP__/__ROOM__/?post=` gives this error:
 ```
@@ -151,7 +154,7 @@ UnicodeDecodeError: 'utf8' codec can't decode byte 0xb7 in position 0: invalid s
 * This is one of the errors that the padding was correct, and the server encountered an error while decoding the deciphered data.
 
 
-### Execution:
+### Execution 1:
 
 Pressing the `post` button with no text or title makes a request with this as `__payload__`:
 
@@ -170,7 +173,7 @@ which has a length of 160 bytes. We know (from the above errors) that the initia
 
 Nearly every solution for this flag suggests to use [PadBuster](https://github.com/AonCyberLabs/PadBuster), but I am not a script kiddie. I will DIY this bitch.
 
-Reading on how PadBuster works from the [Info](###-usefull-info:) we can deduce that:
+Reading on how PadBuster works from the [Info](###-useful-info-1:) we can deduce that:
 * The 1st block is the initialization vector
 * The rest 9 blocks are the data that once decrypted should give us the message
 
@@ -193,18 +196,110 @@ When using multiple threads (tested on an i7-1165G7 with 8 threads) it took ~20 
 The deciphered payload should look something like this:
 `b'{"flag": "^FLAG^****************************************************************$FLAG$", "id": "11", "key": "b8pxpJxttgLbgIGtUZ1MDg~~"}\n\n\n\n\n\n\n\n\n'`
 
+---
 
 ## Flag 2 - CBC byte flipping attack
 
+It is known that CBC encryption is vulnerable to the *byte flip attack*. This attack targets a single byte of the ciphertext and changes it to another one. This is usefull for sending custom valid encrypted payloads to a server when the encryption key is not known.
 
-### Usefull Info:
+### Useful Info 2:
+[Extremely useful writeup in chinese (again)](https://xz.aliyun.com/t/7054)
 
 [CBC byte flipping 101](https://resources.infosecinstitute.com/topic/cbc-byte-flipping-attack-101-approach/)
 
 
-### Accessing the situation:
+### Accessing the situation 2:
+Firstly, let's restart the challenge and get a new payload by posting a new "paste".
+
+The payload we want to send looks something like this:
+
+`EgXfVB4r2baM!BivkMadVdZ37FHHYeAzqx!6H0ehX413OJUuVWJu4MVhYMA0wr6bksBISFGyBYGqbDPitgQDzQaJyirYwHDIEFHBUA4KFJ!XT-MOXj6GOdgwPWUuqDqV6vBWYeRdrGVtuvoxowj8IwEWqZIs89WV7QgUD!TY0thvrwq40Te2tSoOGeZV7FmipI0KzizsAUK!3ZNimM5Upg~~`
+
+And after the replacements and the decoding:
+```b'\x12\x05\xdfT\x1e+\xd9\xb6\x8c\xfc\x18\xaf\x90\xc6\x9dU\xd6w\xecQ\xc7a\xe03\xab\x1f\xfa\x1fG\xa1_\x8dw8\x95.Ubn\xe0\xc5a`\xc04\xc2\xbe\x9b\x92\xc0HHQ\xb2\x05\x81\xaal3\xe2\xb6\x04\x03\xcd\x06\x89\xca*\xd8\xc0p\xc8\x10Q\xc1P\x0e\n\x14\x9f\xd7O\xe3\x0e^>\x869\xd80=e.\xa8:\x95\xea\xf0Va\xe4]\xacem\xba\xfa1\xa3\x08\xfc#\x01\x16\xa9\x92,\xf3\xd5\x95\xed\x08\x14\x0f\xf4\xd8\xd2\xd8o\xaf\n\xb8\xd17\xb6\xb5*\x0e\x19\xe6U\xecY\xa2\xa4\x8d\n\xce,\xec\x01B\xbf\xdd\x93b\x98\xceT\xa6'```
+
+And after executing [the padding oracle attack](##-flag-1---padding-oracle-attack) looks something like this when decrypted:
+
+*The IV*  + `{"flag": "^FLAG^****************************************************************$FLAG$", "id": "2", "key": "LZ0AWJzal8-klQaAJiMEZQ~~"}\n\n\n\n\n\n\n\n\n`
+
+Although we have posted only one "paste" we can see that it has an id of *2*. What does id *1* have? Let's find out be performing a byte flip attack.
+
+### Execution 2:
+
+Below is a table that shows what each block of 16 bytes represents (`\n` counts as one character/byte).
+
+| Block # | Plaintext | Payload (bytes) |
+| --- | --- | ---|
+| 0 | *The IV*                     | 12:05:df:54:1e:2b:d9:b6:8c:fc:18:af:90:c6:9d:55 |
+| 1 | `{"flag": "^FLAG^`           | d6:77:ec:51:c7:61:e0:33:ab:1f:fa:1f:47:a1:5f:8d |
+| 2 | `****************`           | 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 |
+| 3 | `****************`           | 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 |
+| 4 | `****************`           | 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 |
+| 5 | `****************`           | 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 |
+| 6 | `$FLAG$", "id": "`           | ea:f0:56:61:e4:5d:ac:65:6d:ba:fa:31:a3:08:fc:23 |
+| 7 | `2", "key": "kKk5`           | 01:16:a9:92:2c:f3:d5:95:ed:08:14:0f:f4:d8:d2:d8 |
+| 8 | `ckIzA7-hBjc8uGno`           | 6f:af:0a:b8:d1:37:b6:b5:2a:0e:19:e6:55:ec:59:a2 |
+| 9 | `zg~~"}\n\n\n\n\n\n\n\n\n\n` | a4:8d:0a:ce:2c:ec:01:42:bf:dd:93:62:98:ce:54:a6 |
+
+First let's try to change the byte that represents `2` to `1` in the 8th block.
+
+To do that we should go to the previous block (7th) and change the value at the same index as the `2` in the 8th block, which is 0.
+
+We XOR the byte of interest of the encrypted payload (after the replacements, etc.) of the 7th block with the value it actually has (`2`) and then with the value we want (`1`). Then we send the modified payload to the server.
+
+The sever responds with:
+
+```
+UnicodeDecodeError: 'utf8' codec can't decode byte 0xc9 in position 83: invalid continuation byte
+```
+
+Which is the error *Werner*, writer of the chinese write up, warned us about. So we will have to slice the payload and remove the flag from it, just like he did.
+
+We only keep the last 5 blocks (block #5 - #9). We have to keep block #5 because it is used as the IV for block #6 which is the block we are interested in.
+
+So we have this payload:
+
+| OLD Block # | NEW Block # | Plaintext | Payload (bytes) |
+| --- | --- | ---| --- |
+| 5 | 0 | `****************`           | 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00 |
+| 6 | 1 | `$FLAG$", "id": "`           | ea:f0:56:61:e4:5d:ac:65:6d:ba:fa:31:a3:08:fc:23 |
+| 7 | 2 | `2", "key": "kKk5`           | 01:16:a9:92:2c:f3:d5:95:ed:08:14:0f:f4:d8:d2:d8 |
+| 8 | 3 | `ckIzA7-hBjc8uGno`           | 6f:af:0a:b8:d1:37:b6:b5:2a:0e:19:e6:55:ec:59:a2 |
+| 9 | 4 | `zg~~"}\n\n\n\n\n\n\n\n\n\n` | a4:8d:0a:ce:2c:ec:01:42:bf:dd:93:62:98:ce:54:a6 |
+
+We have to modify the payload to make it a valid json file again and change the value of the *id* to `1`. Changing block #1 to `{"id":"1", "i":"` will achieve that.
+
+The plaintext message we want the server to receive after its decryption is:
+
+```json
+{"id":"1", "i":"2", "key": "kKk5ckIzA7-hBjc8uGnozg~~"}\n\n\n\n\n\n\n\n\n\n
+```
+
+This will produce errors (eg. there is no `flag` or `i` variable in a valid payload) but thankfully the error we want will be caused sooner than the rest!
+
+Simply bitflipping block #1 won't produce the appropriate payload. The last step of the decryption process is to XOR the freshly decrypted block with the ciphertext of the previous block or, for the 1st block, with the IV. So we want to modify the IV of the new payload so that after the XORing it produces the payload we want.
+
+Firstly, we XOR block #0 (IV) with the value of block #1 (`$FLAG$", "id": "`). Then with the value we want it to have (`{"id":"1", "i":"`). The final step is to send the new payload to the server.
+
+The response is:
+
+```
+Attempting to decrypt page with title: ^FLAG^****************************************************************$FLAG$
+Traceback (most recent call last):
+  File "./main.py", line 74, in index
+    body = decryptPayload(post['key'], body)
+  File "./common.py", line 37, in decryptPayload
+    return unpad(cipher.decrypt(data))
+  File "./common.py", line 22, in unpad
+    raise PaddingException()
+PaddingException
+
+```
+
+Which contains flag #2
 
 
-### Execution:
-
+### Notes:
+* The hacker101 ctf has been updated since the previous commit. The new backend seems to throttle my requests, which becomes especially annoying when executing a padding oracle attack... Instead of 20 minutes it takes 90 (when using threads)...
+* *Werner* has a small, not critical to the execution, typo in how he describes the blocks. Each block must be 16 bytes long. He counts the character `\n` as two characters/bytes.
 

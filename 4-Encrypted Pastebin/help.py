@@ -19,9 +19,11 @@ def replace_chars(text: str, reverse=False):
             text = text.replace(i, replacements[i])
     return text
 
-def make_request(url: str, payload: str = ""):
+def make_request(url: str, payload: str = "", return_raw = False):
     payload = url + str(payload)
     response_raw = get(payload)
+
+    if return_raw: return response_raw
 
     if "PaddingException" in response_raw.text:
         return {'0': "Padding Exception"}
