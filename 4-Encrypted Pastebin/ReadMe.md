@@ -28,6 +28,8 @@ test
 </html>
 ```
 
+All the modules need the full link to a page of a pastebin. First you have to create a page, even with no title or content, and then put the link to the [settins.py](settings.py) in the `__LINK` variable.
+
 ---
 
 ## Flag 0 - Improper Error Handling
@@ -55,7 +57,9 @@ The backend spits out an error but first it shows the flag
 
 [Example solution](https://github.com/richardevcom/padding-oracle-attack)
 
-[Extremely useful writeup in chinese](https://xz.aliyun.com/t/7054)
+[Extremely useful writeup in chinese](https://xz.aliyun.com/t/7054#toc-7)
+
+[SkullSecurity blog post about the attack](https://blog.skullsecurity.org/2013/padding-oracle-attacks-in-depth)
 
 ### Accessing the situation 1:
 
@@ -185,16 +189,21 @@ We start by saving the *IV*. We will use it later. Then we generate a new initia
 
 We then attack as explained in the [How PadBuster works](https://blog.gdssecurity.com/labs/2010/9/14/automated-padding-oracle-attacks-with-padbuster.html) write up.
 
-We care about only two responses. An error response about invalid padding and one about any internal server error. There are internal several errors regarding this flag. Not every single one should be considered as successful attempt in finding a byte. Their frequency should be compared.
+We mainly care about one response. We should expect an error response about invalid padding and any others about any internal server error. There are internal several errors regarding this flag. Not every single one should be considered as successful attempt in finding a byte. Their frequency should be compared.
+
+The errors tell us if we have a found a valid byte of the IV. If the server responds with an error regarding the padding then it means that we have not found a valid byte. Any other error means that the server has checked the padding, found it correct and moved on with decrypting the message, which caused the error.
 
 After we find the correct *proposed_IV* and the original plaintext for that specific block of data we move on to the next pair {(original IV, 1st data block), (1st data block, 2nd data block), (2nd data block, 3rd data block), ...} and make the same attack.
 
-The deciphering for each block is independent of one another. So I run the attack on multiple threads for each block, the server seemed to handle this just fine, and then combined their results.
+The deciphering for each block is independent of one another. So I run the attack on multiple threads for each block which the server seemed to handle this just fine. Then I combined their results.
 
-When using multiple threads (tested on an i7-1165G7 with 8 threads) it took ~20 minutes, instead of ~128 minutes when testing one block after another. The time is cut significantly.
+When using multiple threads (tested on an i7-1165G7 with 8 threads) it took ~20 minutes~ 90 minutes instead of 128 when testing one block after another. ~The time is cut significantly~.
 
 The deciphered payload should look something like this:
 `b'{"flag": "^FLAG^****************************************************************$FLAG$", "id": "11", "key": "b8pxpJxttgLbgIGtUZ1MDg~~"}\n\n\n\n\n\n\n\n\n'`
+
+### Notes:
+* The hacker101 ctf has been updated since the last time I have attempted this flag. The new backend seems to throttle my requests, which becomes especially annoying when executing a padding oracle attack... Instead of 20 minutes it now takes 90 (when using threads)...
 
 ---
 
@@ -300,16 +309,19 @@ Which contains flag #2
 
 
 ### Notes:
-* The hacker101 ctf has been updated since the previous commit. The new backend seems to throttle my requests, which becomes especially annoying when executing a padding oracle attack... Instead of 20 minutes it takes 90 (when using threads)...
 * *Werner* has a small, not critical to the execution, typo in how he describes the blocks. Each block must be 16 bytes long. He counts the character `\n` as two characters/bytes.
 
 ---
 
-## Flag 2 - ~~Mystery~~ SQL Injection
+## Flag 3 - ~~Mystery~~ SQL Injection
 
 ### Useful Info 3:
 
 The hint for this flag is hilarious!
+
+[Extremely useful writeup in chinese (again)](https://xz.aliyun.com/t/7054#toc-8)
+
+[Explanation of the padding oracle encryption by Skull Security](https://blog.skullsecurity.org/2016/going-the-other-way-with-padding-oracles-encrypting-arbitrary-data)
 
 ### Accessing the situation 3:
 
@@ -345,4 +357,77 @@ The SQL is quite simple:
 SELECT title, body FROM posts WHERE id = __id__
 ```
 
-We can't change more than one character of the payload... YET!
+We can't change more than one character of the payload... YET! To achieve that we have to start making custom payloads.
+
+Following the post by Skull Security we create a script that:
+
+* Take a custom message and split it into blocks of 16 bytes.
+* For each message block, it tests against the server a block of zeroes until the server no longer raises a padding error.
+* When that happens it means that we have a block of 16 bytes that when handled correctly can be XORed with a block of the message we want to send.
+* Finally, it does the appropriate XORing and creates the payload
+
+And we use it to encrypt this payload:
+```json
+{"id": "a"}
+```
+It takes only one block, so it should be easy to do. Unfortunately, the server responded with:
+
+```
+Traceback (most recent call last):
+  File "./main.py", line 69, in index
+    post = json.loads(decryptLink(postCt).decode(\'utf8\'))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python2.7/json/decoder.py", line 382, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+ValueError: No JSON object could be decoded
+```
+
+Which means that the decoded json (which we can't unfortunately see) is corrupted.
+
+*Many frustrating moments pass...*
+
+After much debugging and experimentation I found out that I have not been adding the last block of data (the one that contains random data) before sending the payload to the server. After adding that and sending the payload above, the server responds with:
+
+```
+Traceback (most recent call last):
+  File "./main.py", line 71, in index
+    if cur.execute('SELECT title, body FROM posts WHERE id=%s' % post['id']) == 0:
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/cursors.py", line 255, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+OperationalError: (1054, "Unknown column 'a' in 'where clause'")
+```
+At last!
+
+Unfortunately, every time we want to send a new message we have to run the whole process from the beginning. Let's skip ahead and send this payload:
+
+```json
+{"id":"0 UNION SELECT group_concat(headers), '' from tracking", "key": "XjPkmljch5E2sMiNhsNiqg~~"}
+```
+which, when parsed and added to the SQL command produces:
+
+```SQL
+SELECT title, body FROM posts WHERE id = 0 UNION SELECT group_concat(headers), '' from tracking
+```
+
+The response:
+
+```
+Traceback (most recent call last):
+  File "./main.py", line 71, in index
+    if cur.execute('SELECT title, body FROM posts WHERE id=%s' % post['id']) == 0:
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/cursors.py", line 255, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/local/lib/python2.7/site-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from tracking' at line 1")
+```
+
+It took 3 hours to get that result... Thanks *Werner*... Now we know that the database is using MariaDB.
+
+### Notes:
+* The server seems to use a persistent IV, so the solutions are always the same.

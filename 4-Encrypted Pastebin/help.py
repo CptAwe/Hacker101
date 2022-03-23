@@ -3,6 +3,10 @@ Helping generic functions
 '''
 
 from requests import get
+from base64 import b64encode
+
+
+ENCODING = 'utf-8'
 
 def replace_chars(text: str, reverse=False):
 
@@ -19,7 +23,13 @@ def replace_chars(text: str, reverse=False):
             text = text.replace(i, replacements[i])
     return text
 
-def make_request(url: str, payload: str = "", return_raw = False):
+def make_request(url: str, payload: bytes, return_raw = False):
+
+    # prepare the payload
+    payload = b64encode(payload)
+    payload = payload.decode(ENCODING)
+    payload = replace_chars(payload, reverse=True)
+
     payload = url + str(payload)
     response_raw = get(payload)
 
@@ -43,12 +53,14 @@ def make_request(url: str, payload: str = "", return_raw = False):
     if "IndexError: string index out of range" in response_raw.text:
         return {'5': "IndexError"}
     
+    if "404" in response_raw.text:
+        raise ValueError("The target responded with 404. Maybe the level has shut down?")
     
 
-    return {'-1' : response_raw}
+    return {'-1' : response_raw.text}
 
 def add2bytes(byte1: bytes, byte2: bytes):
-    '''Adds two bytes (the result must fit in one byte!)'''
+    '''Adds two bytes'''
 
     result = int.from_bytes(byte1, 'big') + int.from_bytes(byte2, 'big')
     result = result.to_bytes(1, 'big')

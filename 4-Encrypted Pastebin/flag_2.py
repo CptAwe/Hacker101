@@ -1,6 +1,5 @@
-from base64 import b64encode
 from settings import CBC_BLOCKSIZE, ORIGINAL_PAYLOAD, TARGET
-from help import replace_chars, xor2bytes, make_request
+from help import xor2bytes, make_request
 
 def byte_flip(custom_id: str = None, return_raw = False):
 
@@ -28,9 +27,6 @@ def byte_flip(custom_id: str = None, return_raw = False):
 
     # Prepare the new payload for sending
     modified_payload = b''.join(data_of_interest_enc)
-    modified_payload = b64encode(modified_payload)
-    modified_payload = modified_payload.decode('utf-8')
-    modified_payload = replace_chars(modified_payload, reverse=True)
 
     result = make_request(TARGET, modified_payload, True)
     if return_raw:

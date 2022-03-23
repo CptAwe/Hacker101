@@ -6,7 +6,7 @@ from help import replace_chars
 from base64 import b64decode
 import os
 
-__LINK = "https://1e6b5b5dda6efd0cf0edeae6ef41e5e0.ctf.hacker101.com/?post=vxkRSNvy4ADEDPB3dDaukJknllu1WWuVI!6uT6kGbAgEwW7xYeja5FhNlQLSKG5Mha0rT6SSEY7-DYOpilR1ixM5Y!Qbh9TY3HyaGIK8!f1MDAVWhF5yrw1fDwo1z87h48V!TkhTXIE5-bGKDK4tJJvCINQ2!eaxH1XUEDkRfKHO9dnIg00M3QEy8xG0hjwZqypbUnqM6YQk494K6NTtRQ~~"
+__LINK = "https://056e9c8318ac6614e73f0ee49715e414.ctf.hacker101.com/?post=cP!bfCY!X7egyROKxj2EcZymfK14VJ5-vgZ9bkp6Un0t-A86C!-wmcTQOycIN45ITxAoCp-XSipxg5hoXIQn715Dl4IRG5MyDF7FkvQBOZ-q4t78nNoNjSumuNkbI1mkMoRjP6gekBuwNsPpzz5pXx7ijTCqKjWtEyd8cQK2V3qzeERkfU!uMKTDKkBRlQcbLai2!ILnk!Oc8GgoZvllzQ~~"
 
 TARGET, ORIGINAL_PAYLOAD = __LINK.split("?post=")
 TARGET += "?post="
@@ -23,4 +23,5 @@ ORIGINAL_PAYLOAD =  b64decode(ORIGINAL_PAYLOAD)
 NUM_OF_BLOCKS = int(len(ORIGINAL_PAYLOAD)/CBC_BLOCKSIZE)
 
 
-SKIPS_FILE_LOCATION = "4-Encrypted Pastebin"+os.sep+"skips.json"
+FLAG_1_SKIPS_FILE_LOCATION = os.path.join("4-Encrypted Pastebin", "skips", "flag_1_skips.json")
+FLAG_3_SKIPS_FILE_LOCATION = os.path.join("4-Encrypted Pastebin", "skips", "flag_3_skips.json")
