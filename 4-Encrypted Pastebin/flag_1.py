@@ -11,7 +11,7 @@ import json
 import os
 
 
-def load_skips():
+def __load_skips():
     '''
     Loads the skips
     '''
@@ -27,7 +27,7 @@ def load_skips():
     return skips
 
 
-def save_skips(skips: dict):
+def __save_skips(skips: dict):
     '''
     Saves the skips to a json file
     '''
@@ -129,7 +129,7 @@ def padding_oracle(use_skips: bool = True):
 
     skips = None
     if use_skips:
-        skips = load_skips()
+        skips = __load_skips()
     else:
         skips = {}
 
@@ -188,7 +188,7 @@ def padding_oracle(use_skips: bool = True):
     
 
     if not use_skips:
-        save_skips(skips)
+        __save_skips(skips)
 
 
 
