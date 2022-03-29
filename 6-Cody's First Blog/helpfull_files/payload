@@ -1,6 +1,0 @@
-<?php
-// This is the payload for the flag. Hope it works!
-
-echo "Hello"
-
-?>
